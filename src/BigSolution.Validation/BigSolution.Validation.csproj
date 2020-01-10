@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.1;netstandard2.0;netcoreapp3.0;netcoreapp3.1;net471;net472;net48</TargetFrameworks>
+    <AssemblyTitle>BigSolution.Infra.Validation</AssemblyTitle>
+    <RootNamespace>BigSolution</RootNamespace>
+  </PropertyGroup>
+
+
+  <PropertyGroup>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/emmanuelbenitez/BigSolution.Validation</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- https://github.com/ctaggart/SourceLink/issues/276 -->
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <DebugType>portable</DebugType>
+    <SourceLinkCreate>true</SourceLinkCreate>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GeneratePackageOnBuild Condition=" '$(GeneratePackageOnBuild)' == '' ">false</GeneratePackageOnBuild>
+    <PackageId>$(AssemblyTitle)</PackageId>
+    <PackageDescription>$(Description)</PackageDescription>
+    <!--<PackageIconUrl>icon url prop</PackageIconUrl>-->
+    <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
+    <!--<PackageReleaseNotes>release notes prop</PackageReleaseNotes>-->
+    <PackageTags>library extension utility</PackageTags>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

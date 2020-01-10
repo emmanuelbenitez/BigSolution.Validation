@@ -1,0 +1,39 @@
+<!-- see https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2019 -->
+<Project>
+
+  <PropertyGroup>
+    <Prerelease Condition=" '$(Prerelease)' == '' ">false</Prerelease>
+    <DelaySign Condition=" '$(DelaySign)' == '' ">true</DelaySign>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile Condition=" '$(DelaySign)' == 'true' ">..\..\build\bigsolution.public.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile Condition=" '$(DelaySign)' == 'false' ">..\..\build\bigsolution.snk</AssemblyOriginatorKeyFile>
+    <!--<PublicSign Condition=" '$(DelaySign)' == 'false'">True</PublicSign>-->
+
+    <Major Condition=" '$(Major)' == '' ">1</Major>
+    <Minor Condition=" '$(Minor)' == '' ">0</Minor>
+    <Build Condition=" '$(Build)' == '' ">$([System.DateTime]::Now.ToString("yy"))$([System.DateTime]::Now.DayOfYear.ToString("000"))</Build>
+    <Revision Condition=" '$(Revision)' == '' ">0</Revision>
+
+    <!-- https://github.com/dotnet/sdk/issues/2 -->
+    <AssemblyVersion>$(Major).$(Minor).0.0</AssemblyVersion>
+    <Authors>Emmanuel Benitez</Authors>
+    <Company>BigSolution</Company>
+    <Copyright>Copyright © 2019 - $([System.DateTime]::Now.Year) BigSolution. All rights reserved.</Copyright>
+    <FileVersion>$(Major).$(Minor).$(Build).$(Revision)</FileVersion>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageVersion Condition=" '$(Prerelease)' == 'true' ">$(Major).$(Minor).0-preview$(Build)$(Revision)</PackageVersion>
+    <PackageVersion Condition=" '$(Prerelease)' == 'false' ">$(Major).$(Minor).0</PackageVersion>
+    <Product>BigSolutin Infra ($(Configuration) Build)</Product>
+    <Version>$(Major).$(Minor).$(Build).$(Revision)</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\build\bigsolution.public.snk" Link="BigSolution.snk" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+</Project>
