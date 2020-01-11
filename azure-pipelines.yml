@@ -29,12 +29,6 @@ steps:
     secureFile: 'BigSolution.snk'
     retryCount: 5
 
-- task: CmdLine@2
-  enabled: false
-  inputs:
-    script: |
-      copy $(privateKey.secureFilePath) $(Build.SourcesDirectory)\build
-
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
@@ -57,6 +51,15 @@ steps:
       !**\obj\**
     searchFolder: '$(System.DefaultWorkingDirectory)'
     configuration: '$(buildConfiguration)'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(agent.builddirectory)'
+    Contents: '**'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+    CleanTargetFolder: true
+    OverWrite: true
+    preserveTimestamp: true
 
 - task: PublishBuildArtifacts@1
   inputs:
