@@ -40,7 +40,7 @@ steps:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-    msbuildArgs: 'DelaySign=false`;AssemblyOriginatorKeyFile=$(privateKey.secureFilePath)`;Prerelease=$(prerelease)`;Configuration=Release`;GeneratePackageOnBuild=true'
+    msbuildArgs: /property:DelaySign=false;AssemblyOriginatorKeyFile=$(privateKey.secureFilePath);Prerelease=$(prerelease);Configuration=Release;GeneratePackageOnBuild=true
 
 - task: VSTest@2
   enabled: false
