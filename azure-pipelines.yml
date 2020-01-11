@@ -33,7 +33,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    arguments: '-p:DelaySign=false`;AssemblyOriginatorKeyFile=$(privateKey.secureFilePath)`;Prerelease=$(prerelease)`;Configuration=Release`;GeneratePackageOnBuild=true'
+    arguments: '-p:DelaySign=false;AssemblyOriginatorKeyFile=$(privateKey.secureFilePath);Prerelease=$(prerelease);Configuration=Release;GeneratePackageOnBuild=true'
 
 - task: DotNetCoreCLI@2
   inputs:
