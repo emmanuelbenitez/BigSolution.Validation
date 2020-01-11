@@ -13,9 +13,6 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  prerelease: $[variables['prerelease']]
-  versionBuild: $[variables['versionBuild']]
-  versionRevision: $[variables['versionRevision']]
 
 steps:
 - task: NuGetToolInstaller@1
