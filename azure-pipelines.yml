@@ -24,6 +24,7 @@ steps:
 - task: DownloadSecureFile@1
   inputs:
     secureFile: 'BigSolution.snk'
+    retryCount: 5
 
 - task: VSBuild@1
   inputs:
@@ -32,6 +33,7 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - task: VSTest@2
+  displayName: Testing
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
