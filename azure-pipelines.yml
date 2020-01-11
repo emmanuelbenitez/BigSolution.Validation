@@ -14,8 +14,8 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   prerelease: true
-  versionBuild: $(Year:yyyy)$(DayOfYear)
-  versionRevision: $(Rev:r)
+  versionBuild: 0
+  versionRevision: 0
 
 steps:
 - task: NuGetToolInstaller@1
