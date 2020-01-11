@@ -13,6 +13,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  prerelease: true
 
 steps:
 - task: NuGetToolInstaller@1
@@ -29,21 +30,17 @@ steps:
     retryCount: 5
 
 - task: CmdLine@2
+  enabled: false
   inputs:
     script: |
       copy $(privateKey.secureFilePath) $(Build.SourcesDirectory)\build
-      dir $(Build.SourcesDirectory)\build
-- task: PowerShell@2
-  displayName: Build
-  inputs:
-    filePath: 'build/build.ps1'
 
 - task: VSBuild@1
-  enabled: false
   inputs:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+    msbuildArgs: 'DelaySign=false`;AssemblyOriginatorKeyFile=$(privateKey.secureFilePath)`;Prerelease=$(prerelease)`;Configuration=Release`;GeneratePackageOnBuild=true'
 
 - task: VSTest@2
   enabled: false
