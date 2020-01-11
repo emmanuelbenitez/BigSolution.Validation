@@ -31,7 +31,8 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
-      copy $(privateKey.secureFilePath) $(Build.SourcesDirectory)/build
+      copy $(privateKey.secureFilePath) $(Build.SourcesDirectory)\build
+      dir $(Build.SourcesDirectory)\build
 - task: PowerShell@2
   displayName: Build
   inputs:
