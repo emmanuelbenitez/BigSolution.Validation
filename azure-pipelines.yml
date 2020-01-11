@@ -13,17 +13,20 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  prerelease: true
-  versionBuild: 0
-  versionRevision: 0
+  prerelease: $[variables.prerelease]
+  versionBuild: $[variables.versionBuild]
+  versionRevision: $[variables.versionRevision]
 
 steps:
 - task: NuGetToolInstaller@1
 
-- task: NuGetCommand@2
-  enabled: false
+- task: DotNetCoreCLI@2
+  displayName: Restore
   inputs:
-    restoreSolution: '$(solution)'
+    command: 'restore'
+    feedsToUse: 'select'
+    vstsFeed: '1b04fa51-ab33-4e2a-9966-fc900bcff434'
+    includeNuGetOrg: false
 
 - task: DownloadSecureFile@1
   name: privateKey
@@ -32,11 +35,13 @@ steps:
     secureFile: 'BigSolution.snk'
 
 - task: DotNetCoreCLI@2
+  displayName: Build
   inputs:
     command: 'build'
     arguments: '-p:DelaySign=false;AssemblyOriginatorKeyFile=$(privateKey.secureFilePath);Prerelease=$(prerelease);Build=$(versionBuild);Revision=$(versionRevision);Configuration=Release;GeneratePackageOnBuild=true'
 
 - task: DotNetCoreCLI@2
+  displayName: Run Tests
   inputs:
     command: 'test'
 
