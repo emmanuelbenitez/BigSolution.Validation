@@ -25,10 +25,9 @@ steps:
 
 - task: DownloadSecureFile@1
   name: privateKey
-  displayName: Download
+  displayName: GetPrivateKey
   inputs:
     secureFile: 'BigSolution.snk'
-    retryCount: 5
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -38,20 +37,6 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
-
-- task: VSBuild@1
-  enabled: false
-  inputs:
-    solution: '$(solution)'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-    msbuildArgs: /property:DelaySign=false;AssemblyOriginatorKeyFile=$(privateKey.secureFilePath);Prerelease=$(prerelease);Configuration=Release;GeneratePackageOnBuild=true
-
-- task: VSTest@2
-  enabled: false
-  displayName: Testing
-  inputs:
-    platform: '$(buildPlatform)'
 
 - task: CopyFiles@2
   inputs:
