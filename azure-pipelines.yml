@@ -19,6 +19,7 @@ steps:
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
+  enabled: false
   inputs:
     restoreSolution: '$(solution)'
 
@@ -29,7 +30,17 @@ steps:
     secureFile: 'BigSolution.snk'
     retryCount: 5
 
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    arguments: '-p:DelaySign=false`;AssemblyOriginatorKeyFile=$(privateKey.secureFilePath)`;Prerelease=$(prerelease)`;Configuration=Release`;GeneratePackageOnBuild=true'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+
 - task: VSBuild@1
+  enabled: false
   inputs:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
@@ -42,26 +53,13 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
 
-- task: VSTest@2
-  inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-      **\*test*.dll
-      !**\*TestAdapter.dll
-      !**\obj\**
-    searchFolder: '$(System.DefaultWorkingDirectory)'
-    configuration: '$(buildConfiguration)'
-     
-
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(agent.builddirectory)'
     Contents: '**\bin\**'
     TargetFolder: '$(build.artifactstagingdirectory)'
-    flattenFolders: true
     CleanTargetFolder: true
     OverWrite: true
-    preserveTimestamp: true
 
 - task: PublishBuildArtifacts@1
   inputs:
