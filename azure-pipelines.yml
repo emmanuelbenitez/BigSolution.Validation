@@ -31,16 +31,31 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
-      echo $(privateKey.secureFilePath)
+      copy $(privateKey.secureFilePath) $(Build.SourcesDirectory)/build
+- task: PowerShell@2
+  displayName: Build
+  inputs:
+    filePath: 'build/build.ps1'
 
 - task: VSBuild@1
+  enabled: false
   inputs:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
 - task: VSTest@2
+  enabled: false
   displayName: Testing
   inputs:
     platform: '$(buildPlatform)'
+
+- task: VSTest@2
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*test*.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
     configuration: '$(buildConfiguration)'
