@@ -13,8 +13,15 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  test: $(Date:yyyyMMdd)
+  test1: '$(Date:yyyyMMdd)'
 
 steps:
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo $(test)
+      echo $(test1)
 - task: NuGetToolInstaller@1
 
 - task: DownloadSecureFile@1
