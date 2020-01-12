@@ -49,7 +49,7 @@ steps:
   displayName: Build
   inputs:
     command: 'build'
-    arguments: '-p:DelaySign=false;AssemblyOriginatorKeyFile=$(privateKey.secureFilePath);Prerelease=$(prerelease);Major=$(MajorVersion);$Minor=$(MinorVersion);Build=$(BuildVersion);Revision=$(RevisionVersion);Configuration=$(buildConfiguration);GeneratePackageOnBuild=true --no-restore'
+    arguments: '-p:DelaySign=false;AssemblyOriginatorKeyFile=$(privateKey.secureFilePath);Prerelease=$(prerelease);Major=$(MajorVersion);Minor=$(MinorVersion);Build=$(BuildVersion);Revision=$(RevisionVersion);Configuration=$(buildConfiguration);GeneratePackageOnBuild=true --no-restore'
 
 - task: DotNetCoreCLI@2
   displayName: Run Tests
