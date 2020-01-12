@@ -10,14 +10,17 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
-  major: 1
-  minor: 0
+- group: version-variables
+- name: solution
+  value: '**/*.sln'
+- name: buildPlatform
+  value: 'Any CPU'
+- name: buildConfiguration
+  value: 'Release'
 
 steps:
 - task: PowerShell@2
+  enabled: false
   displayName: CalculateVersion
   inputs:
     targetType: 'inline'
@@ -47,7 +50,7 @@ steps:
   displayName: Build
   inputs:
     command: 'build'
-    arguments: '-p:DelaySign=false;AssemblyOriginatorKeyFile=$(privateKey.secureFilePath);Prerelease=$(prerelease);Build=$(versionBuild);Revision=$(versionRevision);Configuration=Release;GeneratePackageOnBuild=true --no-restore'
+    arguments: '-p:DelaySign=false;AssemblyOriginatorKeyFile=$(privateKey.secureFilePath);Prerelease=$(prerelease);Major=$(MajorVerison);$Minor=$(MinorVersion);Build=$(BuildVersion);Revision=$(RevisionVersion);Configuration=$(buildConfiguration);GeneratePackageOnBuild=true --no-restore'
 
 - task: DotNetCoreCLI@2
   displayName: Run Tests
@@ -76,7 +79,7 @@ steps:
     action: 'create'
     target: '$(Build.SourceVersion)'
     tagSource: 'userSpecifiedTag'
-    tag: 'v$(major).$(minor).$(versionBuild).$(versionRevision)'
+    tag: 'v$(MajorVersion).$(MinorVersion).$(BuildVersion).$(RevisionVersion)'
     isDraft: true
     isPreRelease: $(prerelease)
     changeLogCompareToRelease: 'lastFullRelease'
