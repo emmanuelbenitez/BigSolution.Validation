@@ -10,7 +10,7 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-- group: version-variables
+- group: validation-variables
 - name: solution
   value: '**/*.sln'
 - name: buildPlatform
