@@ -14,7 +14,7 @@ namespace BigSolution
         {
             if (value == null) return;
 
-            if (value.CompareTo(valueToCompare) >= 0)
+            if (value.CompareTo(valueToCompare) < 0)
                 throw new ArgumentException($"The value '{value}' must greater than '{valueToCompare}'", name);
         }
 
@@ -63,9 +63,9 @@ namespace BigSolution
         public static void GreaterThan<T>(T value, T valueToCompare, [InvokerParameterName] string name)
             where T : IComparable<T>
         {
-            if (value == null) return;
+            if (value == null) return; 
 
-            if (value.CompareTo(valueToCompare) > 0)
+            if (value.CompareTo(valueToCompare) <= 0)
                 throw new ArgumentException($"The value '{value}' must greater than '{valueToCompare}'", name);
         }
 

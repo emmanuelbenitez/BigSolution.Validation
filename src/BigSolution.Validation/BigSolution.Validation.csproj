@@ -1,23 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworks>netcoreapp3.1;netstandard2.1</TargetFrameworks>
     <AssemblyTitle>BigSolution.Infra.Validation</AssemblyTitle>
     <RootNamespace>BigSolution</RootNamespace>
   </PropertyGroup>
-
 
   <PropertyGroup>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/emmanuelbenitez/BigSolution.Validation</RepositoryUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <!-- https://github.com/ctaggart/SourceLink/issues/276 -->
-    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-    <DebugType>portable</DebugType>
-    <SourceLinkCreate>true</SourceLinkCreate>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -30,6 +22,10 @@
     <PackageTags>validation utility</PackageTags>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp3.1|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
   <ItemGroup>
