@@ -55,6 +55,7 @@ steps:
   displayName: Run Tests
   inputs:
     command: 'test'
+    arguments: '/p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=./lcov'
 
 - task: CopyFiles@2
   inputs:
