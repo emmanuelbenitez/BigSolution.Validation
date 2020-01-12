@@ -22,7 +22,7 @@ steps:
     script: |
       $Build = ('{0:yy}{1:000}' -f [datetime]::Today, [datetime]::Today.DayOfYear)
       Write-Host "##vso[task.setvariable variable=versionBuild]$Build"
-      $Revision = (([datetime]::Now - [datetime]::Today).TotalSeconds / 1.4)
+      $Revision = [int](([datetime]::Now - [datetime]::Today).TotalSeconds / 1.4)
       Write-Host "##vso[task.setvariable variable=versionRevision]$Revision"
 - task: NuGetToolInstaller@1
 
