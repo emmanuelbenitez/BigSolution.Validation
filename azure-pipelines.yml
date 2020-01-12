@@ -13,8 +13,8 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  test: $(Date:yyyyMMdd)
-  test1: '$(Date:yyyyMMdd)'
+  test: $[Date:yyyyMMdd]
+  test1: '$[Date:yyyyMMdd]'
 
 steps:
 - task: CmdLine@2
