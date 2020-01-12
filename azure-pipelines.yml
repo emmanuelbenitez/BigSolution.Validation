@@ -45,7 +45,7 @@ steps:
   displayName: Build
   inputs:
     command: 'build'
-    arguments: '-p:DelaySign=false;AssemblyOriginatorKeyFile=$(privateKey.secureFilePath);Prerelease=$(prerelease);Build=$(versionBuild);Revision=$(versionRevision);Configuration=Release;GeneratePackageOnBuild=true --norestore'
+    arguments: '-p:DelaySign=false;AssemblyOriginatorKeyFile=$(privateKey.secureFilePath);Prerelease=$(prerelease);Build=$(versionBuild);Revision=$(versionRevision);Configuration=Release;GeneratePackageOnBuild=true --no-restore'
 
 - task: DotNetCoreCLI@2
   displayName: Run Tests
