@@ -20,15 +20,14 @@ variables:
 
 steps:
 - task: PowerShell@2
-  enabled: false
   displayName: CalculateVersion
   inputs:
     targetType: 'inline'
     script: |
       $Build = ('{0:yy}{1:000}' -f [datetime]::Today, [datetime]::Today.DayOfYear)
-      Write-Host "##vso[task.setvariable variable=versionBuild]$Build"
+      Write-Host "##vso[task.setvariable variable=BuildVersion]$Build"
       $Revision = [int](([datetime]::Now - [datetime]::Today).TotalSeconds / 1.4)
-      Write-Host "##vso[task.setvariable variable=versionRevision]$Revision"
+      Write-Host "##vso[task.setvariable variable=RevisionVersion]$Revision"
 - task: NuGetToolInstaller@1
 
 - task: DownloadSecureFile@1
@@ -50,7 +49,7 @@ steps:
   displayName: Build
   inputs:
     command: 'build'
-    arguments: '-p:DelaySign=false;AssemblyOriginatorKeyFile=$(privateKey.secureFilePath);Prerelease=$(prerelease);Major=$(MajorVerison);$Minor=$(MinorVersion);Build=$(BuildVersion);Revision=$(RevisionVersion);Configuration=$(buildConfiguration);GeneratePackageOnBuild=true --no-restore'
+    arguments: '-p:DelaySign=false;AssemblyOriginatorKeyFile=$(privateKey.secureFilePath);Prerelease=$(prerelease);Major=$(MajorVersion);$Minor=$(MinorVersion);Build=$(BuildVersion);Revision=$(RevisionVersion);Configuration=$(buildConfiguration);GeneratePackageOnBuild=true --no-restore'
 
 - task: DotNetCoreCLI@2
   displayName: Run Tests
