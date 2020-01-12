@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.0;netcoreapp3.1;netstandard2.1;netstandard2.0;net471;net472;net48</TargetFrameworks>
     <AssemblyTitle>BigSolution.Infra.Validation</AssemblyTitle>
     <RootNamespace>BigSolution</RootNamespace>
   </PropertyGroup>
@@ -22,10 +22,6 @@
     <PackageTags>validation utility</PackageTags>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp3.1|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
   <ItemGroup>
