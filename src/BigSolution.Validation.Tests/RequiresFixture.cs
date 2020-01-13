@@ -16,9 +16,11 @@ namespace BigSolution
         }
 
         [Theory]
-        [InlineData(1, 0)]
-        [InlineData(0, 0)]
-        public void GreaterOrEqualThanSucceeds(int value, int valueToCompare)
+        [InlineData("z", "a")]
+        [InlineData("z", "z")]
+        [InlineData(null, "z")]
+        [InlineData("z", null)]
+        public void GreaterOrEqualThanSucceeds(string value, string valueToCompare)
         {
             Action action = () => Requires.GreaterOrEqualThan(value, valueToCompare, nameof(value));
             action.Should().NotThrow<ArgumentException>();
@@ -39,16 +41,20 @@ namespace BigSolution
         [InlineData(null, null)]
         [InlineData(0, null)]
         [InlineData(null, 0)]
+        [InlineData(1, 0)]
         public void GreaterThanNullableSucceeds(int? value, int? valueToCompare)
         {
             Action action = () => Requires.GreaterThan(value, valueToCompare, nameof(value));
             action.Should().NotThrow<ArgumentException>();
         }
 
-        [Fact]
-        public void GreaterThanSucceeds()
+        [Theory]
+        [InlineData("z", "a")]
+        [InlineData(null, "z")]
+        [InlineData("z", null)]
+        public void GreaterThanSucceeds(string value, string valueToCompare)
         {
-            Action action = () => Requires.GreaterThan(1, 0, "name");
+            Action action = () => Requires.GreaterThan(value, valueToCompare, nameof(value));
             action.Should().NotThrow<ArgumentNullException>();
         }
 

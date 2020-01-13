@@ -351,3 +351,4 @@ MigrationBackup/
 /build/BigSolution.snk
 /build/build.local.ps1
 /src/*/lcov
+/CodeCoverage
