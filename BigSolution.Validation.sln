@@ -10,7 +10,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{14C557FD-8410-423B-BD5E-F102ECDAE91A}"
 	ProjectSection(SolutionItems) = preProject
 		azure-pipelines.yml = azure-pipelines.yml
+		build\build.ps1 = build\build.ps1
 		src\Directory.Build.props = src\Directory.Build.props
+		build\test.ps1 = build\test.ps1
 	EndProjectSection
 EndProject
 Global

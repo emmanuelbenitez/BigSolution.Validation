@@ -2,17 +2,18 @@
 <Project>
 
   <PropertyGroup>
-    <Prerelease Condition=" '$(Prerelease)' == '' ">false</Prerelease>
+    <PreRelease Condition=" '$(PreRelease)' == '' ">false</PreRelease>
     <DelaySign Condition=" '$(DelaySign)' == '' ">true</DelaySign>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile Condition=" '$(DelaySign)' == 'true' ">..\..\build\bigsolution.public.snk</AssemblyOriginatorKeyFile>
-    <AssemblyOriginatorKeyFile Condition=" '$(DelaySign)' == 'false' ">..\..\build\bigsolution.snk</AssemblyOriginatorKeyFile>
-    <!--<PublicSign Condition=" '$(DelaySign)' == 'false'">True</PublicSign>-->
+    <AssemblyOriginatorKeyFile Condition=" '$(DelaySign)' == 'false' And '$(AssemblyOriginatorKeyFile)' == '' ">..\..\build\bigsolution.snk</AssemblyOriginatorKeyFile>
 
     <Major Condition=" '$(Major)' == '' ">1</Major>
     <Minor Condition=" '$(Minor)' == '' ">0</Minor>
-    <Build Condition=" '$(Build)' == '' ">$([System.DateTime]::Now.ToString("yy"))$([System.DateTime]::Now.DayOfYear.ToString("000"))</Build>
+    <Patch Condition=" '$(Patch)' == '' ">0</Patch>
+    <Build Condition=" '$(Build)' == '' ">0</Build>
     <Revision Condition=" '$(Revision)' == '' ">0</Revision>
+    <VersionSuffix Condition="'$(PreRelease)' == 'true'">preview$(Build)</VersionSuffix>
 
     <!-- https://github.com/dotnet/sdk/issues/2 -->
     <AssemblyVersion>$(Major).$(Minor).0.0</AssemblyVersion>
@@ -22,8 +23,8 @@
     <FileVersion>$(Major).$(Minor).$(Build).$(Revision)</FileVersion>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageVersion Condition=" '$(Prerelease)' == 'true' ">$(Major).$(Minor).0-preview$(Build)$(Revision)</PackageVersion>
-    <PackageVersion Condition=" '$(Prerelease)' == 'false' ">$(Major).$(Minor).0</PackageVersion>
+    <PackageVersion Condition=" '$(VersionSuffix)' == '' ">$(AssemblyVersion)</PackageVersion>
+    <PackageVersion Condition=" '$(VersionSuffix)' != '' ">$(AssemblyVersion)-$(VersionSuffix)</PackageVersion>
     <Product>BigSolutin Infra ($(Configuration) Build)</Product>
     <Version>$(Major).$(Minor).$(Build).$(Revision)</Version>
   </PropertyGroup>

@@ -2,7 +2,7 @@
 # Build and run tests for .NET Desktop or Windows classic desktop solutions.
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
-name: $(BuildDefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+name: $(Date:yyyyMMdd).$(Rev:.rr)
 trigger:
 - master
 
@@ -10,24 +10,11 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-- group: validation-variables
-- name: solution
-  value: '**/*.sln'
-- name: buildPlatform
-  value: 'Any CPU'
-- name: buildConfiguration
-  value: 'Release'
-
+ solution: '**/*.sln'
+ buildPlatform: 'Any CPU'
+ buildConfiguration: 'Release'
+ 
 steps:
-- task: PowerShell@2
-  displayName: CalculateVersion
-  inputs:
-    targetType: 'inline'
-    script: |
-      $Build = ('{0:yy}{1:000}' -f [datetime]::Today, [datetime]::Today.DayOfYear)
-      Write-Host "##vso[task.setvariable variable=BuildVersion]$Build"
-      $Revision = [int](([datetime]::Now - [datetime]::Today).TotalSeconds / 1.4)
-      Write-Host "##vso[task.setvariable variable=RevisionVersion]$Revision"
 - task: NuGetToolInstaller@1
 
 - task: DownloadSecureFile@1
@@ -45,17 +32,42 @@ steps:
     includeNuGetOrg: false
     verbosityPack: Normal
 
+- task: GetRevision@1
+  displayName: 'Get Revision'
+  inputs:
+    VariableName: Revision
+    
 - task: DotNetCoreCLI@2
-  displayName: Build
+  displayName: dotnet build
   inputs:
     command: 'build'
-    arguments: '-p:DelaySign=false;AssemblyOriginatorKeyFile=$(privateKey.secureFilePath);Prerelease=$(prerelease);Major=$(MajorVersion);Minor=$(MinorVersion);Build=$(BuildVersion);Revision=$(RevisionVersion);Configuration=$(buildConfiguration);GeneratePackageOnBuild=true --no-restore'
+    arguments: '-p:DelaySign=false;PreRelease=$(prerelease);Configuration=$(buildConfiguration);Build=$(Build.Build)`;Revision=$(Revision);AssemblyOriginatorKeyFile=$(privateKey.secureFilePath);GeneratePackageOnBuild=true --no-restore'
 
+# Run all tests with "/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura" to generate the code coverage file
 - task: DotNetCoreCLI@2
-  displayName: Run Tests
+  displayName: dotnet test
   inputs:
-    command: 'test'
-    arguments: '/p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=./lcov'
+    command: test
+    arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
+    projects: '**/*.Tests.csproj'
+    nobuild: true
+
+# Generate the report using ReportGenerator (https://github.com/danielpalme/ReportGenerator)
+# First install the tool on the machine, then run it
+- script: |
+    dotnet tool install -g dotnet-reportgenerator-globaltool
+    reportgenerator -reports:$(Build.SourcesDirectory)/tests/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/CodeCoverage -reporttypes:HtmlInline_AzurePipelines;Cobertura
+  displayName: Create Code coverage report
+
+# Publish the code coverage result (summary and web site)
+# The summary allows to view the coverage percentage in the summary tab
+# The web site allows to view which lines are covered directly in Azure Pipeline
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage'
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(Build.SourcesDirectory)/CodeCoverage/Cobertura.xml'
+    reportDirectory: '$(Build.SourcesDirectory)/CodeCoverage'
 
 - task: CopyFiles@2
   inputs:
@@ -71,16 +83,3 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'packages'
     publishLocation: 'Container'
-
-- task: GitHubRelease@1
-  inputs:
-    gitHubConnection: 'github.com_emmanuelbenitez'
-    repositoryName: '$(Build.Repository.Name)'
-    action: 'create'
-    target: '$(Build.SourceVersion)'
-    tagSource: 'userSpecifiedTag'
-    tag: 'v$(MajorVersion).$(MinorVersion).$(BuildVersion).$(RevisionVersion)'
-    isDraft: true
-    isPreRelease: $(prerelease)
-    changeLogCompareToRelease: 'lastFullRelease'
-    changeLogType: 'commitBased'
