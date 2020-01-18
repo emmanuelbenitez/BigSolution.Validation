@@ -2,7 +2,7 @@
 # Build and run tests for .NET Desktop or Windows classic desktop solutions.
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
-name: $(Date:yyyyMMdd).$(Rev:.rr)
+name: $(Date:yyyyMMdd)$(Rev:.r)
 trigger:
 - master
 
@@ -41,7 +41,7 @@ steps:
   displayName: dotnet build
   inputs:
     command: 'build'
-    arguments: '-p:DelaySign=false;PreRelease=$(prerelease);Configuration=$(buildConfiguration);Build=$(Build.Build)`;Revision=$(Revision);AssemblyOriginatorKeyFile=$(privateKey.secureFilePath);GeneratePackageOnBuild=true --no-restore'
+    arguments: '-p:DelaySign=false;PreRelease=$(prerelease);Configuration=$(buildConfiguration);Build=$(Build.BuildId);Revision=$(Revision);AssemblyOriginatorKeyFile=$(privateKey.secureFilePath);GeneratePackageOnBuild=true --no-restore'
 
 # Run all tests with "/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura" to generate the code coverage file
 - task: DotNetCoreCLI@2
