@@ -52,7 +52,7 @@ namespace BigSolution
         public static IArgumentValidation<string> IsNotEmpty(this IArgumentValidation<string> argumentValidation)
         {
             return argumentValidation.Validate(
-                value => value?.Length > 0,
+                value => value == null || value.Length > 0,
                 parameterName => new ArgumentException(Resources.StringConstraints.IsNotEmptyErrorMessage, parameterName));
         }
 
