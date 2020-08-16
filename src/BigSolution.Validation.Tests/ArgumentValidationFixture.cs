@@ -23,6 +23,39 @@ namespace BigSolution
 {
     public class ArgumentValidationFixture
     {
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        public void CreationFailedForInvalidParameterName(string parameterName)
+        {
+            Action act = () => Requires.Argument((object)null, parameterName);
+
+            act.Should().ThrowExactly<ArgumentException>()
+                .WithMessage("The value is null or empty. (Parameter 'name')");
+        }
+
+        [Fact]
+        [SuppressMessage("ReSharper", "NotResolvedInText")]
+        public void AddExceptionSucceeds()
+        {
+            var argumentValidation = Requires.Argument((object) null, "param");
+            var exception = new ArgumentException();
+            
+            argumentValidation.AddException(exception);
+
+            argumentValidation.Exceptions.Should().BeEquivalentTo(exception);
+        }
+
+        [Fact]
+        [SuppressMessage("ReSharper", "NotResolvedInText")]
+        public void AddExceptionFailed()
+        {
+            Action act = () => Requires.Argument((object)null, "param").AddException(null);
+
+            act.Should().ThrowExactly<ArgumentNullException>().Which.ParamName.Should().Be("exception");
+        }
+
         [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
         public void CheckThrowsAggregateArgumentException()

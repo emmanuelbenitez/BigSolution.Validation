@@ -25,8 +25,8 @@ namespace BigSolution
     {
         public ArgumentValidation(T value, string name)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
-
+            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException(Resources.StringConstraints.IsNotNullOrEmptyErrorMessage, nameof(name));
+            
             Value = value;
             Name = name;
         }
