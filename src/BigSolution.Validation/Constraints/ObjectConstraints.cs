@@ -16,15 +16,15 @@
 
 #endregion
 
-using JetBrains.Annotations;
+using System;
 
 namespace BigSolution
 {
-    public static class Requires
+    public static class ObjectConstraints
     {
-        public static IArgumentValidation<T> Argument<T>(T value, [InvokerParameterName] string name)
+        public static IArgumentValidation<T> IsNotNull<T>(this IArgumentValidation<T> argumentValidation)
         {
-            return new ArgumentValidation<T>(value, name);
+            return argumentValidation.Validate(value => !Equals(null, value), parameterName => new ArgumentNullException(parameterName));
         }
     }
 }

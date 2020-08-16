@@ -1,5 +1,4 @@
 ﻿#region Copyright & License
-
 // Copyright © 2020 - 2020 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,18 +12,27 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 #endregion
 
-using JetBrains.Annotations;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
+using Xunit;
 
 namespace BigSolution
 {
-    public static class Requires
+    public class ArgumentValidationFixture
     {
-        public static IArgumentValidation<T> Argument<T>(T value, [InvokerParameterName] string name)
+        [Fact]
+        [SuppressMessage("ReSharper", "NotResolvedInText")]
+        public void CheckThrowsAggregateArgumentException()
         {
-            return new ArgumentValidation<T>(value, name);
+            Action act = () => Requires.Argument("value", "param")
+                .IsNotEqualTo("value")
+                .IsNotEqualTo("value")
+                .Check();
+
+            act.Should().ThrowExactly<AggregateArgumentException>().Which.Exceptions.Should().HaveCount(2);
         }
     }
 }

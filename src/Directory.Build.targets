@@ -17,11 +17,5 @@
 
 -->
 <Project>
-  <PropertyGroup>
-    <Major Condition=" '$(Major)' == '' ">2</Major>
-    <Minor Condition=" '$(Minor)' == '' ">0</Minor>
-    <Patch Condition=" '$(Patch)' == '' ">0</Patch>
-  </PropertyGroup>
-
-  <Import Project="$(MSBuildThisFileDirectory)../.resources/Directory.Build.props" />
+	<Import Project="$(MSBuildThisFileDirectory)../.resources/Directory.Build.targets" />
 </Project>

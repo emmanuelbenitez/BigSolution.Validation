@@ -3,16 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BigSolution.Validation", "src\BigSolution.Validation\BigSolution.Validation.csproj", "{90985557-FB2C-46D7-8B1E-1BB07F461179}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Validation", "src\BigSolution.Validation\Validation.csproj", "{90985557-FB2C-46D7-8B1E-1BB07F461179}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BigSolution.Validation.Tests", "src\BigSolution.Validation.Tests\BigSolution.Validation.Tests.csproj", "{05183101-F88A-4F79-BF85-CDA18E521828}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Validation.Tests", "src\BigSolution.Validation.Tests\Validation.Tests.csproj", "{05183101-F88A-4F79-BF85-CDA18E521828}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{14C557FD-8410-423B-BD5E-F102ECDAE91A}"
 	ProjectSection(SolutionItems) = preProject
-		azure-pipelines.yml = azure-pipelines.yml
-		build\build.ps1 = build\build.ps1
+		azure-pipelines-ci.yml = azure-pipelines-ci.yml
 		src\Directory.Build.props = src\Directory.Build.props
-		build\test.ps1 = build\test.ps1
+		src\Directory.Build.targets = src\Directory.Build.targets
 	EndProjectSection
 EndProject
 Global

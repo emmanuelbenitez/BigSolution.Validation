@@ -16,15 +16,22 @@
 
 #endregion
 
-using JetBrains.Annotations;
+using System;
+using System.Collections.Generic;
 
 namespace BigSolution
 {
-    public static class Requires
+    public interface IArgumentValidation
     {
-        public static IArgumentValidation<T> Argument<T>(T value, [InvokerParameterName] string name)
-        {
-            return new ArgumentValidation<T>(value, name);
-        }
+        IReadOnlyCollection<ArgumentException> Exceptions { get; }
+
+        string Name { get; }
+
+        void AddException(ArgumentException exception);
+    }
+
+    public interface IArgumentValidation<out T> : IArgumentValidation
+    {
+        T Value { get; }
     }
 }

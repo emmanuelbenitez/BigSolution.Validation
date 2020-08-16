@@ -16,15 +16,26 @@
 
 #endregion
 
-using JetBrains.Annotations;
+using System;
+using System.Collections.Generic;
+using FluentAssertions;
+using Xunit;
 
 namespace BigSolution
 {
-    public static class Requires
+    public class AggregateArgumentExceptionFixture
     {
-        public static IArgumentValidation<T> Argument<T>(T value, [InvokerParameterName] string name)
+        [Fact]
+        public void CreationSucceeds()
         {
-            return new ArgumentValidation<T>(value, name);
+            new AggregateArgumentException(new List<ArgumentException>()).Message.Should().Be("Argument validation failed for several reasons.");
+        }
+
+        [Fact]
+        public void ExceptionsInitialized()
+        {
+            var argumentException = new ArgumentException();
+            new AggregateArgumentException(new[] { argumentException }).Exceptions.Should().BeEquivalentTo(argumentException);
         }
     }
 }

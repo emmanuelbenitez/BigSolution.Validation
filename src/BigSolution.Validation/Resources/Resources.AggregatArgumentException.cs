@@ -16,15 +16,17 @@
 
 #endregion
 
-using JetBrains.Annotations;
-
 namespace BigSolution
 {
-    public static class Requires
+    internal static partial class Resources
     {
-        public static IArgumentValidation<T> Argument<T>(T value, [InvokerParameterName] string name)
+        #region Nested Type: AggregateArgumentException
+
+        public static class AggregateArgumentException
         {
-            return new ArgumentValidation<T>(value, name);
+            public static string DefaultErrorMessage => GetString($"{nameof(AggregateArgumentException)}_{nameof(DefaultErrorMessage)}");
         }
+
+        #endregion
     }
 }
