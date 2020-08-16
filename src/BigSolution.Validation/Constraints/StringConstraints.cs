@@ -63,6 +63,13 @@ namespace BigSolution
                 parameterName => new ArgumentException(Resources.StringConstraints.IsNotNullOrEmptyErrorMessage, parameterName));
         }
 
+        public static IArgumentValidation<string> IsNotNullOrWhiteSpace(this IArgumentValidation<string> argumentValidation)
+        {
+            return argumentValidation.Validate(
+                value => !string.IsNullOrWhiteSpace(value),
+                parameterName => new ArgumentException(Resources.StringConstraints.IsNotNullOrWhiteSpaceErrorMessage, parameterName));
+        }
+
         public static IArgumentValidation<string> Matches(
             this IArgumentValidation<string> argumentValidation,
             [RegexPattern] string pattern,

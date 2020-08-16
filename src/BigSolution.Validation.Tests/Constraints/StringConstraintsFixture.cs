@@ -29,10 +29,10 @@ namespace BigSolution
         [SuppressMessage("ReSharper", "NotResolvedInText")]
         public void DoesMatchesSucceeds()
         {
-            Action action = () => Requires.Argument("ABC", "param")
+            Action act = () => Requires.Argument("ABC", "param")
                 .DoesNotMatch(@"\d{3}")
                 .Check();
-            action.Should().NotThrow<ArgumentException>();
+            act.Should().NotThrow<ArgumentException>();
         }
 
         [Fact]
@@ -114,10 +114,36 @@ namespace BigSolution
         [SuppressMessage("ReSharper", "NotResolvedInText")]
         public void MatchesSucceeds()
         {
-            Action action = () => Requires.Argument("123", "param")
+            Action act = () => Requires.Argument("123", "param")
                 .Matches(@"\d{3}")
                 .Check();
-            action.Should().NotThrow<ArgumentException>();
+            act.Should().NotThrow<ArgumentException>();
         }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        public void IsNotNullOrWhiteSpaceFailed(string value)
+        {
+            Action act = () => Requires.Argument(value, nameof(value))
+                .IsNotNullOrWhiteSpace()
+                .Check();
+
+            act.Should().ThrowExactly<ArgumentException>()
+                .WithMessage($"The value is null or empty or contains only white spaces. (Parameter '{nameof(value)}')")
+                .Which.ParamName.Should().Be(nameof(value));
+        }
+
+        [Fact]
+        [SuppressMessage("ReSharper", "NotResolvedInText")]
+        public void IsNotNullOrWhiteSpaceSucceeds()
+        {
+            Action act = () => Requires.Argument("value", "param")
+                .IsNotNullOrWhiteSpace()
+                .Check();
+            act.Should().NotThrow<ArgumentException>();
+        }
+
     }
 }

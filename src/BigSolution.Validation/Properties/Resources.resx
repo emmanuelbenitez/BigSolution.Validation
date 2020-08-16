@@ -162,6 +162,9 @@
   <data name="StringConstraints_IsNotNullOrEmptyErrorMessage" xml:space="preserve">
     <value>The value is null or empty.</value>
   </data>
+  <data name="StringConstraints_IsNotNullOrWhiteSpaceErrorMessage" xml:space="preserve">
+    <value>The value is null or empty or contains only white spaces.</value>
+  </data>
   <data name="StringConstraints_MatchesErrorMessage" xml:space="preserve">
     <value>The value '{0}' must match '{1}'.</value>
   </data>
