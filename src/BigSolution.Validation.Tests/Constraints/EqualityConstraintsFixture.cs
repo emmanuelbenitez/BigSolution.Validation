@@ -63,12 +63,12 @@ namespace BigSolution
                 .Which.ParamName.Should().Be(nameof(value));
         }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void EqualsToSucceeds()
+        [Theory]
+        [MemberData(nameof(ValidObjectEqualities))]
+        public void EqualsToSucceeds(EquatableObject value, EquatableObject valueToCompare)
         {
-            Action act = () => Requires.Argument(new EquatableObject(0), "param")
-                .EqualsTo(new EquatableObject(0))
+            Action act = () => Requires.Argument(value, nameof(value))
+                .EqualsTo(valueToCompare)
                 .Check();
 
             act.Should().NotThrow();
@@ -78,8 +78,18 @@ namespace BigSolution
         {
             get
             {
+                yield return new object[] { null, new EquatableObject(0) };
                 yield return new object[] { new EquatableObject(0), null };
                 yield return new object[] { new EquatableObject(0), new EquatableObject(1) };
+            }
+        }
+
+        public static IEnumerable<object[]> ValidObjectEqualities
+        {
+            get
+            {
+                yield return new object[] { new EquatableObject(0), new EquatableObject(0) };
+                yield return new object[] { null, null };
             }
         }
 

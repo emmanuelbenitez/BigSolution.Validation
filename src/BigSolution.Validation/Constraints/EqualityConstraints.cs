@@ -26,7 +26,7 @@ namespace BigSolution
             where T : IEquatable<T>
         {
             return argumentValidation.Validate(
-                value => value == null || !value.Equals(valueToCompare),
+                value => !Equals(value, valueToCompare),
                 parameterName => new ArgumentException(Resources.ComparisonConstraints.IsNotEqualToErrorMessage(valueToCompare), parameterName));
         }
 
@@ -34,7 +34,7 @@ namespace BigSolution
             where T : IEquatable<T>
         {
             return argumentValidation.Validate(
-                value => value == null || value.Equals(valueToCompare),
+                value => Equals(value, valueToCompare),
                 parameterName => new ArgumentException(Resources.ComparisonConstraints.IsEqualToErrorMessage(valueToCompare), parameterName));
         }
     }
