@@ -61,11 +61,13 @@ namespace BigSolution
                 .Which.ParamName.Should().Be("param");
         }
 
-        [Fact]
+        [Theory]
+        [InlineData(null)]
+        [InlineData("value")]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsNotEmptySucceeds()
+        public void IsNotEmptySucceeds(string value)
         {
-            Action act = () => Requires.Argument("this is a text", "param")
+            Action act = () => Requires.Argument(value, nameof(value))
                 .IsNotEmpty()
                 .Check();
 
