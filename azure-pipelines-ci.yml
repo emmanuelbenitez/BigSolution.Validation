@@ -11,7 +11,7 @@ resources:
 extends:
   template: Pipelines/dotnet-nuget/continuous-integration.yml@pipelineTemplateRepository
   parameters:
-    ProjectOrSolutionPath: "$(Build.SourcesDirectory)/Blazor.DynamicComponents.sln"
+    ProjectOrSolutionPath: "$(Build.SourcesDirectory)/Validation.sln"
     Major: 2
     Minor: 0
     Patch: 0
