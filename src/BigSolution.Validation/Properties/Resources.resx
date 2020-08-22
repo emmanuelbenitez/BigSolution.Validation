@@ -153,6 +153,9 @@
   <data name="ComparisonConstraints_IsNotEqualToErrorMessage" xml:space="preserve">
     <value>The value must not be equal to '{0}'.</value>
   </data>
+  <data name="EnumConstraints_IsFlagErrorMessage" xml:space="preserve">
+    <value>The enum '{0}' is not a flag.</value>
+  </data>
   <data name="StringConstraints_DoesNotMatchErrorMessage" xml:space="preserve">
     <value>The value '{0}' must not match '{1}'.</value>
   </data>
