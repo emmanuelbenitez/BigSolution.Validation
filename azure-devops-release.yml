@@ -20,4 +20,4 @@ extends:
     Major: 2
     Minor: 0
     Patch: 0
-    IsPreRelease: $(IsPreRelease)
+    IsPreRelease: ${{ variables.IsPreRelease }}
