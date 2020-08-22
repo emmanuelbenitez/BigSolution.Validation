@@ -1,5 +1,10 @@
-trigger:
-  - master
+trigger: none
+schedules:
+- cron: "0 0 * * *"
+  displayName: Daily midnight build
+  branches:
+    include:
+    - master
 
 variables:
   - name: IsPreRelease
@@ -14,7 +19,7 @@ resources:
       endpoint: github.com_emmanuelbenitez
 
 extends:
-  template: Pipelines/dotnet-nuget/continuous-integration.yml@pipelineTemplateRepository
+  template: Pipelines/dotnet-nuget/release.yml@pipelineTemplateRepository
   parameters:
     ProjectOrSolutionPath: "$(Build.SourcesDirectory)/Validation.sln"
     Major: 2
