@@ -1,4 +1,4 @@
 variables:
-  version.major: 2
-  version.minor: 0
-  version.patch: 0
+  versionMajor: 2
+  versionMinor: 0
+  versionPatch: 0

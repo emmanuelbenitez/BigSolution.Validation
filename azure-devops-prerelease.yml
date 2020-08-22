@@ -20,7 +20,7 @@ extends:
   template: Pipelines/dotnet-nuget/release.yml@pipelineTemplateRepository
   parameters:
     ProjectOrSolutionPath: "$(Build.SourcesDirectory)/Validation.sln"
-    Major: ${{ variables.version.major }}
-    Minor: ${{ variables.version.minor }}
-    Patch: ${{ variables.version.patch }}
+    Major: ${{ variables.versionMajor }}
+    Minor: ${{ variables.versionMinor }}
+    Patch: ${{ variables.versionPatch }}
     IsPreRelease: false
