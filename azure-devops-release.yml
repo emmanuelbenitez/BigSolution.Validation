@@ -6,9 +6,6 @@ schedules:
     include:
     - master
 
-variables:
-  IsPreRelease: true
-
 resources:
   repositories:
     - repository: pipelineTemplateRepository
