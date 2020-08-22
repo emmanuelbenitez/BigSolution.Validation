@@ -8,7 +8,6 @@ schedules:
 
 variables:
   - name: IsPreRelease
-    type: boolean
     value: true
 
 resources:
