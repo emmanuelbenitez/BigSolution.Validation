@@ -2,7 +2,7 @@ trigger:
   - master
 
 variables:
-  - template: /version-variables.yml
+  - template: version-variables.yml
 
 resources:
   repositories:
