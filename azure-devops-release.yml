@@ -7,8 +7,7 @@ schedules:
     - master
 
 variables:
-  - name: IsPreRelease
-    value: true
+  IsPreRelease: true
 
 resources:
   repositories:
