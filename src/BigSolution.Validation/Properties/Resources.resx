@@ -171,4 +171,7 @@
   <data name="StringConstraints_MatchesErrorMessage" xml:space="preserve">
     <value>The value '{0}' must match '{1}'.</value>
   </data>
+  <data name="TypeConstraints_IsInterfaceErrorMessage" xml:space="preserve">
+    <value>The type '{0}' is not an interface.</value>
+  </data>
 </root>
