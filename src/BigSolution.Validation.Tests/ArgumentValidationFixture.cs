@@ -1,5 +1,6 @@
 ﻿#region Copyright & License
-// Copyright © 2020 - 2020 Emmanuel Benitez
+
+// Copyright © 2020 - 2021 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,6 +13,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 #endregion
 
 using System;
@@ -23,16 +25,13 @@ namespace BigSolution
 {
     public class ArgumentValidationFixture
     {
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData(" ")]
-        public void CreationFailedForInvalidParameterName(string parameterName)
+        [Fact]
+        [SuppressMessage("ReSharper", "NotResolvedInText")]
+        public void AddExceptionFailed()
         {
-            Action act = () => Requires.Argument((object)null, parameterName);
+            Action act = () => Requires.Argument((object) null, "param").AddException(null);
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The value is null or empty. (Parameter 'name')");
+            act.Should().ThrowExactly<ArgumentNullException>().Which.ParamName.Should().Be("exception");
         }
 
         [Fact]
@@ -41,19 +40,10 @@ namespace BigSolution
         {
             var argumentValidation = Requires.Argument((object) null, "param");
             var exception = new ArgumentException();
-            
+
             argumentValidation.AddException(exception);
 
             argumentValidation.Exceptions.Should().BeEquivalentTo(exception);
-        }
-
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void AddExceptionFailed()
-        {
-            Action act = () => Requires.Argument((object)null, "param").AddException(null);
-
-            act.Should().ThrowExactly<ArgumentNullException>().Which.ParamName.Should().Be("exception");
         }
 
         [Fact]
@@ -66,6 +56,18 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<AggregateArgumentException>().Which.Exceptions.Should().HaveCount(2);
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        public void CreationFailedForInvalidParameterName(string parameterName)
+        {
+            Action act = () => Requires.Argument((object) null, parameterName);
+
+            act.Should().ThrowExactly<ArgumentException>()
+                .WithMessage("The value is null or empty. (Parameter 'name')");
         }
     }
 }
