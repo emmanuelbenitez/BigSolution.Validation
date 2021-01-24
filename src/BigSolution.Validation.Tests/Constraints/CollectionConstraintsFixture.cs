@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2020 Emmanuel Benitez
+// Copyright © 2020 - 2021 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@ namespace BigSolution
     {
         [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
+        [SuppressMessage("Performance", "CA1825:Avoid zero-length array allocations", Justification = "Testing purpose")]
         public void ContainsSingleFailed()
         {
             Action act = () => Requires.Argument(new object[0], "param")
@@ -147,6 +148,7 @@ namespace BigSolution
             act.Should().NotThrow();
         }
 
+        [SuppressMessage("Performance", "CA1825:Avoid zero-length array allocations", Justification = "Testing purpose")]
         public static IEnumerable<object[]> NullOrEmptyCollections
         {
             get

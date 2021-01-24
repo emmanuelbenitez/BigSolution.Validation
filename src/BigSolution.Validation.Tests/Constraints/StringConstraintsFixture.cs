@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2020 Emmanuel Benitez
+// Copyright © 2020 - 2021 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -99,29 +99,6 @@ namespace BigSolution
             act.Should().NotThrow();
         }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void MatchesFailed()
-        {
-            Action act = () => Requires.Argument("ABC", "param")
-                .Matches(@"\d{3}")
-                .Check();
-
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage(@"The value 'ABC' must match '\d{3}'. (Parameter 'param')")
-                .Which.ParamName.Should().Be("param");
-        }
-
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void MatchesSucceeds()
-        {
-            Action act = () => Requires.Argument("123", "param")
-                .Matches(@"\d{3}")
-                .Check();
-            act.Should().NotThrow<ArgumentException>();
-        }
-
         [Theory]
         [InlineData(null)]
         [InlineData("")]
@@ -147,5 +124,27 @@ namespace BigSolution
             act.Should().NotThrow<ArgumentException>();
         }
 
+        [Fact]
+        [SuppressMessage("ReSharper", "NotResolvedInText")]
+        public void MatchesFailed()
+        {
+            Action act = () => Requires.Argument("ABC", "param")
+                .Matches(@"\d{3}")
+                .Check();
+
+            act.Should().ThrowExactly<ArgumentException>()
+                .WithMessage(@"The value 'ABC' must match '\d{3}'. (Parameter 'param')")
+                .Which.ParamName.Should().Be("param");
+        }
+
+        [Fact]
+        [SuppressMessage("ReSharper", "NotResolvedInText")]
+        public void MatchesSucceeds()
+        {
+            Action act = () => Requires.Argument("123", "param")
+                .Matches(@"\d{3}")
+                .Check();
+            act.Should().NotThrow<ArgumentException>();
+        }
     }
 }

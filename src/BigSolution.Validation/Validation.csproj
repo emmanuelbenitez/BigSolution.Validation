@@ -2,8 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.0;netcoreapp3.1;netstandard2.1;netstandard2.0;net471;net472;net48</TargetFrameworks>
-    <AssemblyTitle>BigSolution.Infra.Validation</AssemblyTitle>
-    <AssemblyName>BigSolution.Validation</AssemblyName>
+    <AssemblyTitle>BigSolution.Infra.Validation</AssemblyTitle> <AssemblyName>BigSolution.Validation</AssemblyName>
     <RootNamespace>BigSolution</RootNamespace>
   </PropertyGroup>
 
@@ -19,13 +18,11 @@
 
   <PropertyGroup>
     <GeneratePackageOnBuild Condition=" '$(GeneratePackageOnBuild)' == '' ">false</GeneratePackageOnBuild>
-    <PackageId>$(AssemblyTitle)</PackageId>
-    <PackageDescription>$(Description)</PackageDescription>
+    <PackageId>$(AssemblyTitle)</PackageId> <PackageDescription>$(Description)</PackageDescription>
     <!--<PackageIconUrl>icon url prop</PackageIconUrl>-->
     <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
     <!--<PackageReleaseNotes>release notes prop</PackageReleaseNotes>-->
-    <PackageTags>validation utility</PackageTags>
-    <IncludeSymbols>true</IncludeSymbols>
+    <PackageTags>validation utility</PackageTags> <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
@@ -34,8 +31,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
+    <PackageReference Include="JetBrains.Annotations" Version="2020.3.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

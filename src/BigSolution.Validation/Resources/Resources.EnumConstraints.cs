@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2020 Emmanuel Benitez
+// Copyright © 2020 - 2021 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ namespace BigSolution
 {
     internal static partial class Resources
     {
+        #region Nested Type: EnumConstraints
+
         public static class EnumConstraints
         {
             public static string IsFlagErrorMessage(Type enumType)
@@ -29,5 +31,7 @@ namespace BigSolution
                 return GetFormattedString($"{nameof(EnumConstraints)}_{nameof(IsFlagErrorMessage)}", null, enumType);
             }
         }
+
+        #endregion
     }
 }

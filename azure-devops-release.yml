@@ -8,6 +8,7 @@ resources:
     - repository: pipelineTemplateRepository
       type: github
       name: emmanuelbenitez/BigSolution.Build.Agent.Yaml.Pipeline.Templates
+      ref: 'refs/heads/refactor-version-number'
       endpoint: github.com_emmanuelbenitez
 
 extends:
@@ -17,4 +18,3 @@ extends:
     Major: ${{ variables.versionMajor }}
     Minor: ${{ variables.versionMinor }}
     Patch: ${{ variables.versionPatch }}
-    IsPreRelease: false
