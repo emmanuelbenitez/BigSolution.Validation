@@ -17,21 +17,18 @@
 #endregion
 
 using System;
+using FluentAssertions;
+using Xunit;
 
 namespace BigSolution
 {
-    internal static partial class Resources
+    public class ArgumentValidationExtensionsFixture
     {
-        #region Nested Type: TypeConstraints
-
-        public static class TypeConstraints
+        [Fact]
+        public void CheckSucceedsWhenArgumentValidationIsNull()
         {
-            public static string IsInterfaceErrorMessage(Type type)
-            {
-                return GetFormattedString($"{nameof(TypeConstraints)}_{nameof(IsInterfaceErrorMessage)}", null, type.AssemblyQualifiedName);
-            }
+            Action act = () => ArgumentValidationExtensions.Check<object>(null);
+            act.Should().NotThrow();
         }
-
-        #endregion
     }
 }

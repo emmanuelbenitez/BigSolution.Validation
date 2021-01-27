@@ -26,6 +26,7 @@ namespace BigSolution
     [Serializable]
     public class AggregateArgumentException : ArgumentException
     {
+        [ExcludeFromCodeCoverage]
         public AggregateArgumentException() { }
 
         public AggregateArgumentException(IEnumerable<ArgumentException> exceptions)
@@ -43,11 +44,13 @@ namespace BigSolution
             Exceptions = exceptions ?? Enumerable.Empty<ArgumentException>();
         }
 
+        [ExcludeFromCodeCoverage]
         protected AggregateArgumentException(SerializationInfo info, StreamingContext context)
             : base(info, context) { }
 
         #region Base Class Member Overrides
 
+        [ExcludeFromCodeCoverage]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);

@@ -25,47 +25,51 @@ namespace BigSolution
 {
     public class StringConstraintsFixture
     {
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void DoesMatchesSucceeds()
+        [Theory]
+        [InlineData(null)]
+        [InlineData("ABC")]
+        public void DoesMatchesSucceeds(string value)
         {
-            Action act = () => Requires.Argument("ABC", "param")
+            Action act = () => Requires.Argument(value, nameof(value))
                 .DoesNotMatch(@"\d{3}")
                 .Check();
             act.Should().NotThrow<ArgumentException>();
         }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void DoesNotMatchFailed()
+        [Theory]
+        [InlineData("123")]
+        public void DoesNotMatchFailed(string value)
         {
-            Action act = () => Requires.Argument("123", "param")
+            Action act = () => Requires.Argument(value, nameof(value))
                 .DoesNotMatch(@"\d{3}")
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage(@"The value '123' must not match '\d{3}'.*")
-                .Which.ParamName.Should().Be("param");
+                .WithMessage(@"The value '*' must not match '\d{3}'.*")
+                .Which.ParamName.Should().Be(nameof(value));
         }
 
-        [Fact]
+        [Theory]
+        [InlineData("ABC")]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void MatchesFailed()
+        public void MatchesFailed(string value)
         {
-            Action act = () => Requires.Argument("ABC", "param")
+            Action act = () => Requires.Argument(value, nameof(value))
                 .Matches(@"\d{3}")
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
                 .WithMessage(@"The value 'ABC' must match '\d{3}'.*")
-                .Which.ParamName.Should().Be("param");
+                .Which.ParamName.Should().Be(nameof(value));
         }
 
-        [Fact]
+        [Theory]
+        [InlineData("123")]
+        [InlineData(null)]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void MatchesSucceeds()
+        public void MatchesSucceeds(string value)
         {
-            Action act = () => Requires.Argument("123", "param")
+            Action act = () => Requires.Argument(value, nameof(value))
                 .Matches(@"\d{3}")
                 .Check();
             act.Should().NotThrow<ArgumentException>();

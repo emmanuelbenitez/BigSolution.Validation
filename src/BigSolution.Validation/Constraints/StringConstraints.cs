@@ -45,7 +45,7 @@ namespace BigSolution
                 .Check();
 
             return argumentValidation.Validate(
-                value => !regularExpression.IsMatch(value),
+                value => value == null || !regularExpression.IsMatch(value),
                 parameterName => new ArgumentException(
                     Resources.StringConstraints.DoesNotMatchErrorMessage(argumentValidation?.Value, regularExpression.ToString()),
                     parameterName));
