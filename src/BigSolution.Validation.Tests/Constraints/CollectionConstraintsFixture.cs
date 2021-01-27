@@ -124,6 +124,17 @@ namespace BigSolution
             act.Should().NotThrow();
         }
 
+        [Fact]
+        [SuppressMessage("ReSharper", "NotResolvedInText")]
+        public void NotEmptySucceedsWhenCollectionIsNull()
+        {
+            Action act = () => Requires.Argument((ICollection<object>) null, "param")
+                .IsNotEmpty()
+                .Check();
+
+            act.Should().NotThrow();
+        }
+
         [Theory]
         [MemberData(nameof(NullOrEmptyCollections))]
         public void NotNullOrEmptyFailed(object[] param)

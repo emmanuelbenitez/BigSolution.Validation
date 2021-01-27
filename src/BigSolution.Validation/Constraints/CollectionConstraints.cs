@@ -41,14 +41,14 @@ namespace BigSolution
         public static IArgumentValidation<ICollection<T>> IsEmpty<T>(this IArgumentValidation<ICollection<T>> argumentValidation)
         {
             return argumentValidation.Validate(
-                collection => collection.Count == 0,
+                collection => collection == null || collection.Count == 0,
                 parameterName => new ArgumentException(Resources.CollectionConstraints.IsEmptyErrorMessage, parameterName));
         }
 
         public static IArgumentValidation<ICollection<T>> IsNotEmpty<T>(this IArgumentValidation<ICollection<T>> argumentValidation)
         {
             return argumentValidation.Validate(
-                collection => collection?.Count > 0,
+                collection => collection == null || collection.Count > 0,
                 parameterName => new ArgumentException(Resources.CollectionConstraints.IsNotEmptyErrorMessage, parameterName));
         }
 
