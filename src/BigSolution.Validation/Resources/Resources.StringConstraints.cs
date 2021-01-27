@@ -26,6 +26,15 @@ namespace BigSolution
 
         public static class StringConstraints
         {
+            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
+            public static string IsNotEmptyErrorMessage => GetString($"{nameof(StringConstraints)}_{nameof(IsNotEmptyErrorMessage)}");
+
+            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
+            public static string IsNotNullOrEmptyErrorMessage => GetString($"{nameof(StringConstraints)}_{nameof(IsNotNullOrEmptyErrorMessage)}");
+
+            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
+            public static string IsNotNullOrWhiteSpaceErrorMessage => GetString($"{nameof(StringConstraints)}_{nameof(IsNotNullOrWhiteSpaceErrorMessage)}");
+
             public static string DoesNotMatchErrorMessage(string value, string pattern)
             {
                 return GetFormattedString($"{nameof(StringConstraints)}_{nameof(DoesNotMatchErrorMessage)}", null, value, pattern);

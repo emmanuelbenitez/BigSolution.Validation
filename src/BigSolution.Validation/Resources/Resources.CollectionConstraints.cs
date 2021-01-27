@@ -30,16 +30,13 @@ namespace BigSolution
 
             public static string DoesNotContainNullElementErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(DoesNotContainNullElementErrorMessage)}");
 
-#pragma warning disable IDE0079 // Remove unnecessary suppression
-            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Error message generation")]
+            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
             public static string IsEmptyErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(IsEmptyErrorMessage)}");
-            
-            // 'dotnet_remove_unnecessary_suppression_exclusions = IDE0051'
-            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Error message generation")]
+
+            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
             public static string IsNotEmptyErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(IsNotEmptyErrorMessage)}");
 
-            // 'dotnet_remove_unnecessary_suppression_exclusions = IDE0051'
-            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Error message generation")]
+            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
             public static string IsNotNullOrEmptyErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(IsNotNullOrEmptyErrorMessage)}");
 #pragma warning restore IDE0079 // Remove unnecessary suppression
         }

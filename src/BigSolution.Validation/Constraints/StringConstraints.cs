@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 
@@ -36,6 +37,7 @@ namespace BigSolution
             return argumentValidation.DoesNotMatch(new Regex(pattern, options));
         }
 
+        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
         public static IArgumentValidation<string> DoesNotMatch(this IArgumentValidation<string> argumentValidation, Regex regularExpression)
         {
             Requires.Argument(regularExpression, nameof(regularExpression))
@@ -82,6 +84,7 @@ namespace BigSolution
             return argumentValidation.Matches(new Regex(pattern, options));
         }
 
+        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
         public static IArgumentValidation<string> Matches(this IArgumentValidation<string> argumentValidation, Regex regularExpression)
         {
             Requires.Argument(regularExpression, nameof(regularExpression))

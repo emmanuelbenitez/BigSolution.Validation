@@ -44,7 +44,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage(@"The value '123' must not match '\d{3}'. (Parameter 'param')")
+                .WithMessage(@"The value '123' must not match '\d{3}'.*")
                 .Which.ParamName.Should().Be("param");
         }
 
@@ -57,7 +57,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The value is empty. (Parameter 'param')")
+                .WithMessage("The value is empty.*")
                 .Which.ParamName.Should().Be("param");
         }
 
@@ -84,7 +84,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The value is null or empty. (Parameter '{nameof(param)}')")
+                .WithMessage($"The value is null or empty.*")
                 .Which.ParamName.Should().Be(nameof(param));
         }
 
@@ -110,7 +110,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The value is null or empty or contains only white spaces. (Parameter '{nameof(value)}')")
+                .WithMessage($"The value is null or empty or contains only white spaces.*")
                 .Which.ParamName.Should().Be(nameof(value));
         }
 
@@ -133,7 +133,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage(@"The value 'ABC' must match '\d{3}'. (Parameter 'param')")
+                .WithMessage(@"The value 'ABC' must match '\d{3}'.*")
                 .Which.ParamName.Should().Be("param");
         }
 

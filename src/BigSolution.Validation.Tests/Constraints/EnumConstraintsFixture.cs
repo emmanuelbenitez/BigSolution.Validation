@@ -34,7 +34,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The enum 'BigSolution.EnumConstraintsFixture+Enum' is not a flag. (Parameter 'param')")
+                .WithMessage("The enum 'BigSolution.EnumConstraintsFixture+Enum' is not a flag.*")
                 .Which.ParamName.Should().Be("param");
         }
 

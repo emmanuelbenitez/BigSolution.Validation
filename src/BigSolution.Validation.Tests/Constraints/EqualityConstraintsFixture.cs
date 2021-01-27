@@ -35,7 +35,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The value must not be equal to '*'. (Parameter 'param')")
+                .WithMessage("The value must not be equal to '*'.*")
                 .Which.ParamName.Should().Be("param");
         }
 
@@ -59,7 +59,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The value must be equal to '*'. (Parameter '{nameof(value)}')")
+                .WithMessage($"The value must be equal to '*'.*")
                 .Which.ParamName.Should().Be(nameof(value));
         }
 
