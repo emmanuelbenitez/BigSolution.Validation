@@ -27,7 +27,7 @@ namespace BigSolution
     {
         [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsFlagFailed()
+        public void FlagFailed()
         {
             Action act = () => Requires.Argument(Enum.None, "param")
                 .IsFlag()
@@ -40,7 +40,7 @@ namespace BigSolution
 
         [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsFlagSucceeds()
+        public void FlagSucceeds()
         {
             Action act = () => Requires.Argument(FlagEnum.None, "param")
                 .IsFlag()

@@ -59,7 +59,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The value must be equal to '*'.*")
+                .WithMessage("The value must be equal to '*'.*")
                 .Which.ParamName.Should().Be(nameof(value));
         }
 
