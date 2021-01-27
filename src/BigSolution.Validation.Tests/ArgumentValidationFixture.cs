@@ -67,7 +67,7 @@ namespace BigSolution
             Action act = () => Requires.Argument((object) null, parameterName);
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The value is null or empty. (Parameter 'name')");
+                .WithMessage("The value is null or empty.*");
         }
     }
 }

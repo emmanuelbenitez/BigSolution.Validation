@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BigSolution
 {
@@ -29,24 +30,10 @@ namespace BigSolution
             return argumentValidation;
         }
 
-        public static IArgumentValidation<T?> IsEqualTo<T>(this IArgumentValidation<T?> argumentValidation, T? valueToCompare)
-            where T : struct, IComparable<T>
-        {
-            if (argumentValidation?.Value != null && valueToCompare.HasValue) argumentValidation.IsEqualTo(argumentValidation.Value.Value, valueToCompare.Value);
-            return argumentValidation;
-        }
-
         public static IArgumentValidation<T?> IsGreaterOrEqualThan<T>(this IArgumentValidation<T?> argumentValidation, T valueToCompare)
             where T : struct, IComparable<T>
         {
             if (argumentValidation?.Value != null) argumentValidation.IsGreaterOrEqualThan(argumentValidation.Value.Value, valueToCompare);
-            return argumentValidation;
-        }
-
-        public static IArgumentValidation<T?> IsGreaterOrEqualThan<T>(this IArgumentValidation<T?> argumentValidation, T? valueToCompare)
-            where T : struct, IComparable<T>
-        {
-            if (argumentValidation?.Value != null && valueToCompare.HasValue) argumentValidation.IsGreaterOrEqualThan(argumentValidation.Value.Value, valueToCompare.Value);
             return argumentValidation;
         }
 
@@ -57,24 +44,10 @@ namespace BigSolution
             return argumentValidation;
         }
 
-        public static IArgumentValidation<T?> IsGreaterThan<T>(this IArgumentValidation<T?> argumentValidation, T? valueToCompare)
-            where T : struct, IComparable<T>
-        {
-            if (argumentValidation?.Value != null && valueToCompare.HasValue) argumentValidation.IsGreaterThan(argumentValidation.Value.Value, valueToCompare.Value);
-            return argumentValidation;
-        }
-
         public static IArgumentValidation<T?> IsLessOrEqualThan<T>(this IArgumentValidation<T?> argumentValidation, T valueToCompare)
             where T : struct, IComparable<T>
         {
             if (argumentValidation?.Value != null) argumentValidation.IsLessOrEqualThan(argumentValidation.Value.Value, valueToCompare);
-            return argumentValidation;
-        }
-
-        public static IArgumentValidation<T?> IsLessOrEqualThan<T>(this IArgumentValidation<T?> argumentValidation, T? valueToCompare)
-            where T : struct, IComparable<T>
-        {
-            if (argumentValidation?.Value != null && valueToCompare.HasValue) argumentValidation.IsLessOrEqualThan(argumentValidation.Value.Value, valueToCompare.Value);
             return argumentValidation;
         }
 
@@ -85,24 +58,10 @@ namespace BigSolution
             return argumentValidation;
         }
 
-        public static IArgumentValidation<T?> IsLessThan<T>(this IArgumentValidation<T?> argumentValidation, T? valueToCompare)
-            where T : struct, IComparable<T>
-        {
-            if (argumentValidation?.Value != null && valueToCompare.HasValue) argumentValidation.IsLessThan(argumentValidation.Value.Value, valueToCompare.Value);
-            return argumentValidation;
-        }
-
         public static IArgumentValidation<T?> IsNotEqualTo<T>(this IArgumentValidation<T?> argumentValidation, T valueToCompare)
             where T : struct, IComparable<T>
         {
             if (argumentValidation?.Value != null) argumentValidation.IsNotEqualTo(argumentValidation.Value.Value, valueToCompare);
-            return argumentValidation;
-        }
-
-        public static IArgumentValidation<T?> IsNotEqualTo<T>(this IArgumentValidation<T?> argumentValidation, T? valueToCompare)
-            where T : struct, IComparable<T>
-        {
-            if (argumentValidation?.Value != null && valueToCompare.HasValue) argumentValidation.IsNotEqualTo(argumentValidation.Value.Value, valueToCompare.Value);
             return argumentValidation;
         }
     }

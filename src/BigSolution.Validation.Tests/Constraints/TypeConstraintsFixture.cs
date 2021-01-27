@@ -34,7 +34,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The type '*' is not an interface. (Parameter 'param')")
+                .WithMessage("The type '*' is not an interface.*")
                 .Which.ParamName.Should().Be("param");
         }
 

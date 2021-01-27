@@ -27,8 +27,8 @@ namespace BigSolution
     public class CollectionConstraintsFixture
     {
         [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
         [SuppressMessage("Performance", "CA1825:Avoid zero-length array allocations", Justification = "Testing purpose")]
+        [SuppressMessage("ReSharper", "NotResolvedInText", Justification = "Testing purpose")]
         public void ContainsSingleFailed()
         {
             Action act = () => Requires.Argument(new object[0], "param")
@@ -36,7 +36,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The collection must contain only one element. (Parameter 'param')")
+                .WithMessage("The collection must contain only one element.*")
                 .And.ParamName.Should().Be("param");
         }
 
@@ -60,7 +60,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The collection contains at least one null element. (Parameter 'param')")
+                .WithMessage("The collection contains at least one null element.*")
                 .Which.ParamName.Should().Be("param");
         }
 
@@ -85,7 +85,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The collection is not empty. (Parameter 'param')")
+                .WithMessage("The collection is not empty.*")
                 .And.ParamName.Should().Be("param");
         }
 
@@ -109,7 +109,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The collection is empty. (Parameter 'param')")
+                .WithMessage("The collection is empty.*")
                 .And.ParamName.Should().Be("param");
         }
 
@@ -133,7 +133,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The collection is null or empty. (Parameter '{nameof(param)}')")
+                .WithMessage($"The collection is null or empty.*")
                 .And.ParamName.Should().Be(nameof(param));
         }
 

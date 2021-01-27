@@ -33,7 +33,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The value must be equal to '*'. (Parameter '{nameof(value)}')")
+                .WithMessage($"The value must be equal to '*'.*")
                 .Which.ParamName.Should().Be(nameof(value));
         }
 
@@ -58,7 +58,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The value '*' must be greater or equal than '*'. (Parameter '{nameof(param)}')");
+                .WithMessage($"The value '*' must be greater or equal than '*'.*");
         }
 
         [Theory]
@@ -83,7 +83,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The value '*' must be greater than '*'. (Parameter '{nameof(param)}')");
+                .WithMessage($"The value '*' must be greater than '*'.*");
         }
 
         [Theory]
@@ -107,7 +107,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The value '*' must be less or equal than '*'. (Parameter '{nameof(value)}')")
+                .WithMessage($"The value '*' must be less or equal than '*'.*")
                 .Which.ParamName.Should().Be(nameof(value));
         }
 
@@ -133,7 +133,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The value '*' must be less than '*'. (Parameter '{nameof(value)}')")
+                .WithMessage($"The value '*' must be less than '*'.*")
                 .Which.ParamName.Should().Be(nameof(value));
         }
 
@@ -157,7 +157,7 @@ namespace BigSolution
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The value must not be equal to '*'. (Parameter '{nameof(value)}')")
+                .WithMessage($"The value must not be equal to '*'.*")
                 .Which.ParamName.Should().Be(nameof(value));
         }
 

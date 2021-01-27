@@ -16,6 +16,8 @@
 
 #endregion
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace BigSolution
 {
     internal static partial class Resources
@@ -28,10 +30,13 @@ namespace BigSolution
 
             public static string DoesNotContainNullElementErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(DoesNotContainNullElementErrorMessage)}");
 
+            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
             public static string IsEmptyErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(IsEmptyErrorMessage)}");
 
+            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
             public static string IsNotEmptyErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(IsNotEmptyErrorMessage)}");
 
+            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
             public static string IsNotNullOrEmptyErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(IsNotNullOrEmptyErrorMessage)}");
         }
 
