@@ -27,7 +27,7 @@ namespace BigSolution
     {
         [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText", Justification = "Testing purpose")]
-        public void IsInterfaceFailed()
+        public void InterfaceFailed()
         {
             Action act = () => Requires.Argument(typeof(object), "param")
                 .IsInterface()
@@ -41,7 +41,7 @@ namespace BigSolution
         [Theory]
         [InlineData(null)]
         [InlineData(typeof(IArgumentValidation))]
-        public void IsInterfaceSucceeds(Type type)
+        public void InterfaceSucceeds(Type type)
         {
             Action act = () => Requires.Argument(type, nameof(type))
                 .IsInterface()

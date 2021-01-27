@@ -78,7 +78,7 @@ namespace BigSolution
 
         [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsEmptyFailed()
+        public void EmptyFailed()
         {
             Action act = () => Requires.Argument(new List<object> { new object() }, "param")
                 .IsEmpty()
@@ -91,7 +91,7 @@ namespace BigSolution
 
         [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsEmptySucceeds()
+        public void EmptySucceeds()
         {
             Action act = () => Requires.Argument(new List<object>(), "param")
                 .IsEmpty()
@@ -102,7 +102,7 @@ namespace BigSolution
 
         [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsNotEmptyFailed()
+        public void NotEmptyFailed()
         {
             Action act = () => Requires.Argument(new List<object>(), "param")
                 .IsNotEmpty()
@@ -115,7 +115,7 @@ namespace BigSolution
 
         [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsNotEmptySucceeds()
+        public void NotEmptySucceeds()
         {
             Action act = () => Requires.Argument(new List<object> { new object() }, "param")
                 .IsNotEmpty()
@@ -126,20 +126,20 @@ namespace BigSolution
 
         [Theory]
         [MemberData(nameof(NullOrEmptyCollections))]
-        public void IsNotNullOrEmptyFailed(object[] param)
+        public void NotNullOrEmptyFailed(object[] param)
         {
             Action act = () => Requires.Argument(param, nameof(param))
                 .IsNotNullOrEmpty()
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The collection is null or empty.*")
+                .WithMessage("The collection is null or empty.*")
                 .And.ParamName.Should().Be(nameof(param));
         }
 
         [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsNotNullOrEmptySucceeds()
+        public void NotNullOrEmptySucceeds()
         {
             Action act = () => Requires.Argument(new List<object> { new object() }, "param")
                 .IsNotNullOrEmpty()

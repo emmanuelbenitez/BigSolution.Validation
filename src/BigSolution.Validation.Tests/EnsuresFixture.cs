@@ -25,28 +25,28 @@ namespace BigSolution
     public class EnsuresFixture
     {
         [Fact]
-        public void IsValidGenericSucceedsWhenConditionIsFalse()
+        public void ValidGenericSucceedsWhenConditionIsFalse()
         {
             Action action = () => Ensures.IsValid<Exception>(false);
             action.Should().ThrowExactly<Exception>();
         }
 
         [Fact]
-        public void IsValidGenericSucceedsWhenConditionIsTrue()
+        public void ValidGenericSucceedsWhenConditionIsTrue()
         {
             Action action = () => Ensures.IsValid<Exception>(true);
             action.Should().NotThrow<Exception>();
         }
 
         [Fact]
-        public void IsValidSucceedsWhenConditionIsFalse()
+        public void ValidSucceedsWhenConditionIsFalse()
         {
             Action action = () => Ensures.IsValid(false, "It is an error");
             action.Should().ThrowExactly<InvalidOperationException>().WithMessage("It is an error");
         }
 
         [Fact]
-        public void IsValidSucceedsWhenConditionIsTrue()
+        public void ValidSucceedsWhenConditionIsTrue()
         {
             Action action = () => Ensures.IsValid(true, string.Empty);
             action.Should().NotThrow<InvalidOperationException>();

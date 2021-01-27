@@ -27,7 +27,7 @@ namespace BigSolution
     {
         [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsEqualToFailed()
+        public void EqualToFailed()
         {
             Action act = () => Requires.Argument(1, "param")
                 .IsEqualTo(0)
@@ -40,7 +40,7 @@ namespace BigSolution
 
         [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsEqualToSucceeds()
+        public void EqualToSucceeds()
         {
             Action act = () => Requires.Argument(1, "param")
                 .IsEqualTo(1)
@@ -51,14 +51,14 @@ namespace BigSolution
 
         [Theory]
         [InlineData("a", "z")]
-        public void IsGreaterOrEqualThanFailed(string value, string valueToCompare)
+        public void GreaterOrEqualThanFailed(string value, string valueToCompare)
         {
             Action act = () => Requires.Argument(value, nameof(value))
                 .IsGreaterOrEqualThan(valueToCompare)
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The value '*' must be greater or equal than '*'.*")
+                .WithMessage("The value '*' must be greater or equal than '*'.*")
                 .Which.ParamName.Should().Be(nameof(value));
         }
 
@@ -66,7 +66,7 @@ namespace BigSolution
         [InlineData("z", "a")]
         [InlineData("z", "z")]
         [InlineData("z", null)]
-        public void IsGreaterOrEqualThanSucceeds(string value, string valueToCompare)
+        public void GreaterOrEqualThanSucceeds(string value, string valueToCompare)
         {
             Action act = () => Requires.Argument(value, nameof(value))
                 .IsGreaterOrEqualThan(valueToCompare)
@@ -78,21 +78,21 @@ namespace BigSolution
         [Theory]
         [InlineData("a", "z")]
         [InlineData("z", "z")]
-        public void IsGreaterThanFailed(string value, string valueToCompare)
+        public void GreaterThanFailed(string value, string valueToCompare)
         {
             Action act = () => Requires.Argument(value, nameof(value))
                 .IsGreaterThan(valueToCompare)
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The value '*' must be greater than '*'.*")
+                .WithMessage("The value '*' must be greater than '*'.*")
                 .Which.ParamName.Should().Be(nameof(value));
         }
 
         [Theory]
         [InlineData("z", "a")]
         [InlineData("z", null)]
-        public void IsGreaterThanSucceeds(string value, string valueToCompare)
+        public void GreaterThanSucceeds(string value, string valueToCompare)
         {
             Action act = () => Requires.Argument(value, nameof(value))
                 .IsGreaterThan(valueToCompare)
@@ -104,21 +104,21 @@ namespace BigSolution
         [Theory]
         [InlineData("z", "a")]
         [InlineData("z", null)]
-        public void IsLessOrEqualThanFailed(string value, string valueToCompare)
+        public void LessOrEqualThanFailed(string value, string valueToCompare)
         {
             Action act = () => Requires.Argument(value, nameof(value))
                 .IsLessOrEqualThan(valueToCompare)
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The value '*' must be less or equal than '*'.*")
+                .WithMessage("The value '*' must be less or equal than '*'.*")
                 .Which.ParamName.Should().Be(nameof(value));
         }
 
         [Theory]
         [InlineData("a", "z")]
         [InlineData("z", "z")]
-        public void IsLessOrEqualThanSucceeds(string value, string valueToCompare)
+        public void LessOrEqualThanSucceeds(string value, string valueToCompare)
         {
             Action act = () => Requires.Argument(value, nameof(value))
                 .IsLessOrEqualThan(valueToCompare)
@@ -131,20 +131,20 @@ namespace BigSolution
         [InlineData("z", "a")]
         [InlineData("z", "z")]
         [InlineData("z", null)]
-        public void IsLessThanFailed(string value, string valueToCompare)
+        public void LessThanFailed(string value, string valueToCompare)
         {
             Action act = () => Requires.Argument(value, nameof(value))
                 .IsLessThan(valueToCompare)
                 .Check();
 
             act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The value '*' must be less than '*'.*")
+                .WithMessage("The value '*' must be less than '*'.*")
                 .Which.ParamName.Should().Be(nameof(value));
         }
 
         [Theory]
         [InlineData("a", "z")]
-        public void IsLessThanSucceeds(string value, string valueToCompare)
+        public void LessThanSucceeds(string value, string valueToCompare)
         {
             Action act = () => Requires.Argument(value, nameof(value))
                 .IsLessThan(valueToCompare)
@@ -155,7 +155,7 @@ namespace BigSolution
 
         [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsNotEqualToFailed()
+        public void NotEqualToFailed()
         {
             Action act = () => Requires.Argument(1, "param")
                 .IsNotEqualTo(1)
@@ -168,7 +168,7 @@ namespace BigSolution
 
         [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsNotEqualToSucceeds()
+        public void NotEqualToSucceeds()
         {
             Action act = () => Requires.Argument(1, "param")
                 .IsNotEqualTo(0)

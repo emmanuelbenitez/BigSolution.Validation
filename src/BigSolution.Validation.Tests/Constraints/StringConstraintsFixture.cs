@@ -50,82 +50,6 @@ namespace BigSolution
 
         [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsNotEmptyFailed()
-        {
-            Action act = () => Requires.Argument(string.Empty, "param")
-                .IsNotEmpty()
-                .Check();
-
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The value is empty.*")
-                .Which.ParamName.Should().Be("param");
-        }
-
-        [Theory]
-        [InlineData(null)]
-        [InlineData("value")]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsNotEmptySucceeds(string value)
-        {
-            Action act = () => Requires.Argument(value, nameof(value))
-                .IsNotEmpty()
-                .Check();
-
-            act.Should().NotThrow();
-        }
-
-        [Theory]
-        [InlineData("")]
-        [InlineData(null)]
-        public void IsNotNullOrEmptyFailed(string param)
-        {
-            Action act = () => Requires.Argument(param, nameof(param))
-                .IsNotNullOrEmpty()
-                .Check();
-
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The value is null or empty.*")
-                .Which.ParamName.Should().Be(nameof(param));
-        }
-
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsNotNullOrEmptySucceeds()
-        {
-            Action act = () => Requires.Argument("this is a text", "param")
-                .IsNotNullOrEmpty()
-                .Check();
-
-            act.Should().NotThrow();
-        }
-
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData(" ")]
-        public void IsNotNullOrWhiteSpaceFailed(string value)
-        {
-            Action act = () => Requires.Argument(value, nameof(value))
-                .IsNotNullOrWhiteSpace()
-                .Check();
-
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The value is null or empty or contains only white spaces.*")
-                .Which.ParamName.Should().Be(nameof(value));
-        }
-
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsNotNullOrWhiteSpaceSucceeds()
-        {
-            Action act = () => Requires.Argument("value", "param")
-                .IsNotNullOrWhiteSpace()
-                .Check();
-            act.Should().NotThrow<ArgumentException>();
-        }
-
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
         public void MatchesFailed()
         {
             Action act = () => Requires.Argument("ABC", "param")
@@ -143,6 +67,82 @@ namespace BigSolution
         {
             Action act = () => Requires.Argument("123", "param")
                 .Matches(@"\d{3}")
+                .Check();
+            act.Should().NotThrow<ArgumentException>();
+        }
+
+        [Fact]
+        [SuppressMessage("ReSharper", "NotResolvedInText")]
+        public void NotEmptyFailed()
+        {
+            Action act = () => Requires.Argument(string.Empty, "param")
+                .IsNotEmpty()
+                .Check();
+
+            act.Should().ThrowExactly<ArgumentException>()
+                .WithMessage("The value is empty.*")
+                .Which.ParamName.Should().Be("param");
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("value")]
+        [SuppressMessage("ReSharper", "NotResolvedInText")]
+        public void NotEmptySucceeds(string value)
+        {
+            Action act = () => Requires.Argument(value, nameof(value))
+                .IsNotEmpty()
+                .Check();
+
+            act.Should().NotThrow();
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void NotNullOrEmptyFailed(string param)
+        {
+            Action act = () => Requires.Argument(param, nameof(param))
+                .IsNotNullOrEmpty()
+                .Check();
+
+            act.Should().ThrowExactly<ArgumentException>()
+                .WithMessage("The value is null or empty.*")
+                .Which.ParamName.Should().Be(nameof(param));
+        }
+
+        [Fact]
+        [SuppressMessage("ReSharper", "NotResolvedInText")]
+        public void NotNullOrEmptySucceeds()
+        {
+            Action act = () => Requires.Argument("this is a text", "param")
+                .IsNotNullOrEmpty()
+                .Check();
+
+            act.Should().NotThrow();
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        public void NotNullOrWhiteSpaceFailed(string value)
+        {
+            Action act = () => Requires.Argument(value, nameof(value))
+                .IsNotNullOrWhiteSpace()
+                .Check();
+
+            act.Should().ThrowExactly<ArgumentException>()
+                .WithMessage("The value is null or empty or contains only white spaces.*")
+                .Which.ParamName.Should().Be(nameof(value));
+        }
+
+        [Fact]
+        [SuppressMessage("ReSharper", "NotResolvedInText")]
+        public void NotNullOrWhiteSpaceSucceeds()
+        {
+            Action act = () => Requires.Argument("value", "param")
+                .IsNotNullOrWhiteSpace()
                 .Check();
             act.Should().NotThrow<ArgumentException>();
         }
