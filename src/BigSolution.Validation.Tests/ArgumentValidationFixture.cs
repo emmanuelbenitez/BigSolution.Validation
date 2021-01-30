@@ -25,6 +25,7 @@ namespace BigSolution
 {
     public class ArgumentValidationFixture
     {
+#pragma warning disable IDE0079 // Remove unnecessary suppression
         [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
         public void AddExceptionFailed()
@@ -57,6 +58,7 @@ namespace BigSolution
 
             act.Should().ThrowExactly<AggregateArgumentException>().Which.Exceptions.Should().HaveCount(2);
         }
+#pragma warning restore IDE0079 // Remove unnecessary suppression
 
         [Theory]
         [InlineData(null)]
