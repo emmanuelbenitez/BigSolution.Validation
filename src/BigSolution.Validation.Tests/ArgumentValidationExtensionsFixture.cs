@@ -16,18 +16,17 @@
 
 #endregion
 
+using FluentAssertions;
+using Xunit;
+
 namespace BigSolution;
 
-public interface IArgumentValidation
+public class ArgumentValidationExtensionsFixture
 {
-    IReadOnlyCollection<ArgumentException> Exceptions { get; }
-
-    string Name { get; }
-
-    void AddException(ArgumentException exception);
-}
-
-public interface IArgumentValidation<out T> : IArgumentValidation
-{
-    T Value { get; }
+    [Fact]
+    public void CheckSucceedsWhenArgumentValidationIsNull()
+    {
+        var act = () => ArgumentValidationExtensions.Check<object>(null);
+        act.Should().NotThrow();
+    }
 }

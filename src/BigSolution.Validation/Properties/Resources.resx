@@ -156,6 +156,9 @@
   <data name="EnumConstraints_IsFlagErrorMessage" xml:space="preserve">
     <value>The enum '{0}' is not a flag.</value>
   </data>
+  <data name="EnumerableConstraints_IsNotEmptyErrorMessage" xml:space="preserve">
+    <value>The enumerable is empty.</value>
+  </data>
   <data name="StringConstraints_DoesNotMatchErrorMessage" xml:space="preserve">
     <value>The value '{0}' must not match '{1}'.</value>
   </data>

@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,17 +20,16 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
 
-namespace BigSolution
+namespace BigSolution;
+
+public class RequiresFixture
 {
-    public class RequiresFixture
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void ArgumentValidationProvided()
     {
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void ArgumentValidationProvided()
-        {
-            Requires.Argument((object) null, "param")
-                .Should().Match<IArgumentValidation<object>>(validation => validation.Value == null && validation.Name == "param")
-                .And.BeAssignableTo<IArgumentValidation<object>>().Which.Exceptions.Should().BeEmpty();
-        }
+        Requires.Argument((object?)null, "param")
+            .Should().Match<IArgumentValidation<object?>>(validation => validation.Value == null && validation.Name == "param")
+            .And.BeAssignableTo<IArgumentValidation<object?>>().Which.Exceptions.Should().BeEmpty();
     }
 }

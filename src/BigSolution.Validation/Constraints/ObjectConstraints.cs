@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,15 +16,12 @@
 
 #endregion
 
-using System;
+namespace BigSolution;
 
-namespace BigSolution
+public static class ObjectConstraints
 {
-    public static class ObjectConstraints
+    public static IArgumentValidation<T> IsNotNull<T>(this IArgumentValidation<T> argumentValidation)
     {
-        public static IArgumentValidation<T> IsNotNull<T>(this IArgumentValidation<T> argumentValidation)
-        {
-            return argumentValidation.Validate(value => !Equals(null, value), parameterName => new ArgumentNullException(parameterName));
-        }
+        return argumentValidation.Validate(value => !Equals(null, value), parameterName => new ArgumentNullException(parameterName));
     }
 }

@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,17 +16,16 @@
 
 #endregion
 
-namespace BigSolution
+namespace BigSolution;
+
+internal static partial class Resources
 {
-    internal static partial class Resources
+    #region Nested Type: AggregateArgumentException
+
+    public static class AggregateArgumentException
     {
-        #region Nested Type: AggregateArgumentException
-
-        public static class AggregateArgumentException
-        {
-            public static string DefaultErrorMessage => GetString($"{nameof(AggregateArgumentException)}_{nameof(DefaultErrorMessage)}");
-        }
-
-        #endregion
+        public static string DefaultErrorMessage => GetString($"{nameof(AggregateArgumentException)}_{nameof(DefaultErrorMessage)}");
     }
+
+    #endregion
 }

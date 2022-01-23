@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,26 +16,23 @@
 
 #endregion
 
-using System;
+namespace BigSolution;
 
-namespace BigSolution
+public static class EqualityConstraints
 {
-    public static class EqualityConstraints
+    public static IArgumentValidation<T> DoesNotEqualTo<T>(this IArgumentValidation<T> argumentValidation, T? valueToCompare)
+        where T : IEquatable<T>?
     {
-        public static IArgumentValidation<T> DoesNotEqualTo<T>(this IArgumentValidation<T> argumentValidation, IEquatable<T> valueToCompare)
-            where T : IEquatable<T>
-        {
-            return argumentValidation.Validate(
-                value => !Equals(value, valueToCompare),
-                parameterName => new ArgumentException(Resources.ComparisonConstraints.IsNotEqualToErrorMessage(valueToCompare), parameterName));
-        }
+        return argumentValidation.Validate(
+            value => !Equals(value, valueToCompare),
+            parameterName => new ArgumentException(Resources.ComparisonConstraints.IsNotEqualToErrorMessage(valueToCompare), parameterName));
+    }
 
-        public static IArgumentValidation<T> EqualsTo<T>(this IArgumentValidation<T> argumentValidation, T valueToCompare)
-            where T : IEquatable<T>
-        {
-            return argumentValidation.Validate(
-                value => Equals(value, valueToCompare),
-                parameterName => new ArgumentException(Resources.ComparisonConstraints.IsEqualToErrorMessage(valueToCompare), parameterName));
-        }
+    public static IArgumentValidation<T> EqualsTo<T>(this IArgumentValidation<T> argumentValidation, T? valueToCompare)
+        where T : IEquatable<T>?
+    {
+        return argumentValidation.Validate(
+            value => Equals(value, valueToCompare),
+            parameterName => new ArgumentException(Resources.ComparisonConstraints.IsEqualToErrorMessage(valueToCompare), parameterName));
     }
 }

@@ -18,16 +18,14 @@
 
 namespace BigSolution;
 
-public interface IArgumentValidation
+internal static partial class Resources
 {
-    IReadOnlyCollection<ArgumentException> Exceptions { get; }
+    #region Nested Type: EnumerableConstraints
 
-    string Name { get; }
+    public static class EnumerableConstraints
+    {
+        public static string IsNotEmptyErrorMessage => GetString($"{nameof(EnumerableConstraints)}_{nameof(IsNotEmptyErrorMessage)}");
+    }
 
-    void AddException(ArgumentException exception);
-}
-
-public interface IArgumentValidation<out T> : IArgumentValidation
-{
-    T Value { get; }
+    #endregion
 }

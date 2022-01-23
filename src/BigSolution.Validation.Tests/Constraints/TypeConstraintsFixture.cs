@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,38 +16,36 @@
 
 #endregion
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
 
-namespace BigSolution
+namespace BigSolution;
+
+public class TypeConstraintsFixture
 {
-    public class TypeConstraintsFixture
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText", Justification = "Testing purpose")]
+    public void InterfaceFailed()
     {
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText", Justification = "Testing purpose")]
-        public void IsInterfaceFailed()
-        {
-            Action act = () => Requires.Argument(typeof(object), "param")
-                .IsInterface()
-                .Check();
+        var act = () => Requires.Argument(typeof(object), "param")
+            .IsInterface()
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The type '*' is not an interface. (Parameter 'param')")
-                .Which.ParamName.Should().Be("param");
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The type '*' is not an interface.*")
+            .Which.ParamName.Should().Be("param");
+    }
 
-        [Theory]
-        [InlineData(null)]
-        [InlineData(typeof(IArgumentValidation))]
-        public void IsInterfaceSucceeds(Type type)
-        {
-            Action act = () => Requires.Argument(type, nameof(type))
-                .IsInterface()
-                .Check();
+    [Theory]
+    [InlineData(null)]
+    [InlineData(typeof(IArgumentValidation))]
+    public void InterfaceSucceeds(Type? type)
+    {
+        var act = () => Requires.Argument(type, nameof(type))
+            .IsInterface()
+            .Check();
 
-            act.Should().NotThrow();
-        }
+        act.Should().NotThrow();
     }
 }

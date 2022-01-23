@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,18 +16,15 @@
 
 #endregion
 
-using System;
+namespace BigSolution;
 
-namespace BigSolution
+public static class EnumConstraints
 {
-    public static class EnumConstraints
+    public static IArgumentValidation<T> IsFlag<T>(this IArgumentValidation<T> argumentValidation)
+        where T : Enum
     {
-        public static IArgumentValidation<T> IsFlag<T>(this IArgumentValidation<T> argumentValidation)
-            where T : Enum
-        {
-            return argumentValidation.Validate(
-                value => value.IsFlag(),
-                parameterName => new ArgumentException(Resources.EnumConstraints.IsFlagErrorMessage(typeof(T)), parameterName));
-        }
+        return argumentValidation.Validate(
+            value => value.IsFlag(),
+            parameterName => new ArgumentException(Resources.EnumConstraints.IsFlagErrorMessage(typeof(T)), parameterName));
     }
 }

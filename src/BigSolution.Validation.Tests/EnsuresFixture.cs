@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,54 +16,52 @@
 
 #endregion
 
-using System;
 using FluentAssertions;
 using Xunit;
 
-namespace BigSolution
+namespace BigSolution;
+
+public class EnsuresFixture
 {
-    public class EnsuresFixture
+    [Fact]
+    public void NotNullSucceedsWhitNotNullValue()
     {
-        [Fact]
-        public void IsValidGenericSucceedsWhenConditionIsFalse()
-        {
-            Action action = () => Ensures.IsValid<Exception>(false);
-            action.Should().ThrowExactly<Exception>();
-        }
+        var action = () => Ensures.NotNull(string.Empty, "The value is null");
+        action.Should().NotThrow<InvalidOperationException>();
+    }
 
-        [Fact]
-        public void IsValidGenericSucceedsWhenConditionIsTrue()
-        {
-            Action action = () => Ensures.IsValid<Exception>(true);
-            action.Should().NotThrow<Exception>();
-        }
+    [Fact]
+    public void NotNullSucceedsWhitNullValue()
+    {
+        var action = () => Ensures.NotNull((string?)null, "The value is null");
+        action.Should().ThrowExactly<InvalidOperationException>().WithMessage("The value is null");
+    }
 
-        [Fact]
-        public void IsValidSucceedsWhenConditionIsFalse()
-        {
-            Action action = () => Ensures.IsValid(false, "It is an error");
-            action.Should().ThrowExactly<InvalidOperationException>().WithMessage("It is an error");
-        }
+    [Fact]
+    public void ValidGenericSucceedsWhenConditionIsFalse()
+    {
+        var action = () => Ensures.IsValid<Exception>(false);
+        action.Should().ThrowExactly<Exception>();
+    }
 
-        [Fact]
-        public void IsValidSucceedsWhenConditionIsTrue()
-        {
-            Action action = () => Ensures.IsValid(true, string.Empty);
-            action.Should().NotThrow<InvalidOperationException>();
-        }
+    [Fact]
+    public void ValidGenericSucceedsWhenConditionIsTrue()
+    {
+        var action = () => Ensures.IsValid<Exception>(true);
+        action.Should().NotThrow<Exception>();
+    }
 
-        [Fact]
-        public void NotNullSucceedsWhitNotNullValue()
-        {
-            Action action = () => Ensures.NotNull(string.Empty, "The value is null");
-            action.Should().NotThrow<InvalidOperationException>();
-        }
+    [Fact]
+    public void ValidSucceedsWhenConditionIsFalse()
+    {
+        var action = () => Ensures.IsValid(false, "It is an error");
+        action.Should().ThrowExactly<InvalidOperationException>().WithMessage("It is an error");
+    }
 
-        [Fact]
-        public void NotNullSucceedsWhitNullValue()
-        {
-            Action action = () => Ensures.NotNull((string) null, "The value is null");
-            action.Should().ThrowExactly<InvalidOperationException>().WithMessage("The value is null");
-        }
+    [Fact]
+    public void ValidSucceedsWhenConditionIsTrue()
+    {
+        var action = () => Ensures.IsValid(true, string.Empty);
+        action.Should().NotThrow<InvalidOperationException>();
     }
 }

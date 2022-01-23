@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,32 +18,27 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace BigSolution
+namespace BigSolution;
+
+internal static partial class Resources
 {
-    internal static partial class Resources
+    #region Nested Type: CollectionConstraints
+
+    public static class CollectionConstraints
     {
-        #region Nested Type: CollectionConstraints
+        public static string ContainsSingleErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(ContainsSingleErrorMessage)}");
 
-        public static class CollectionConstraints
-        {
-            public static string ContainsSingleErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(ContainsSingleErrorMessage)}");
+        public static string DoesNotContainNullElementErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(DoesNotContainNullElementErrorMessage)}");
 
-            public static string DoesNotContainNullElementErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(DoesNotContainNullElementErrorMessage)}");
+        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
+        public static string IsEmptyErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(IsEmptyErrorMessage)}");
 
-#pragma warning disable IDE0079 // Remove unnecessary suppression
-            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Error message generation")]
-            public static string IsEmptyErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(IsEmptyErrorMessage)}");
-            
-            // 'dotnet_remove_unnecessary_suppression_exclusions = IDE0051'
-            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Error message generation")]
-            public static string IsNotEmptyErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(IsNotEmptyErrorMessage)}");
+        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
+        public static string IsNotEmptyErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(IsNotEmptyErrorMessage)}");
 
-            // 'dotnet_remove_unnecessary_suppression_exclusions = IDE0051'
-            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Error message generation")]
-            public static string IsNotNullOrEmptyErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(IsNotNullOrEmptyErrorMessage)}");
-#pragma warning restore IDE0079 // Remove unnecessary suppression
-        }
-
-        #endregion
+        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
+        public static string IsNotNullOrEmptyErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(IsNotNullOrEmptyErrorMessage)}");
     }
+
+    #endregion
 }

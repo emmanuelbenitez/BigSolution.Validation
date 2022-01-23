@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,46 +16,46 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
-namespace BigSolution
+namespace BigSolution;
+
+[Serializable]
+public class AggregateArgumentException : ArgumentException
 {
-    [Serializable]
-    public class AggregateArgumentException : ArgumentException
+    [ExcludeFromCodeCoverage]
+    public AggregateArgumentException() { }
+
+    public AggregateArgumentException(IEnumerable<ArgumentException> exceptions)
+        : this(Resources.AggregateArgumentException.DefaultErrorMessage, exceptions) { }
+
+    public AggregateArgumentException(string message, IEnumerable<ArgumentException> exceptions)
+        : base(message)
     {
-        public AggregateArgumentException() { }
-
-        public AggregateArgumentException(IEnumerable<ArgumentException> exceptions)
-            : this(Resources.AggregateArgumentException.DefaultErrorMessage, exceptions) { }
-
-        public AggregateArgumentException(string message, IEnumerable<ArgumentException> exceptions)
-            : base(message)
-        {
-            Exceptions = exceptions ?? Enumerable.Empty<ArgumentException>();
-        }
-
-        public AggregateArgumentException(string message, string paramName, IEnumerable<ArgumentException> exceptions)
-            : base(message, paramName)
-        {
-            Exceptions = exceptions ?? Enumerable.Empty<ArgumentException>();
-        }
-
-        protected AggregateArgumentException(SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
-
-        #region Base Class Member Overrides
-
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddValue("Exceptions", Exceptions, typeof(IEnumerable<Exception>));
-        }
-
-        #endregion
-
-        public IEnumerable<ArgumentException> Exceptions { get; }
+        Exceptions = exceptions.ToArray();
     }
+
+    public AggregateArgumentException(string message, string paramName, IEnumerable<ArgumentException> exceptions)
+        : base(message, paramName)
+    {
+        Exceptions = exceptions.ToArray();
+    }
+
+    [ExcludeFromCodeCoverage]
+    protected AggregateArgumentException(SerializationInfo info, StreamingContext context)
+        : base(info, context) { }
+
+    #region Base Class Member Overrides
+
+    [ExcludeFromCodeCoverage]
+    public override void GetObjectData(SerializationInfo info, StreamingContext context)
+    {
+        base.GetObjectData(info, context);
+        info.AddValue("Exceptions", Exceptions, typeof(IEnumerable<Exception>));
+    }
+
+    #endregion
+
+    public ArgumentException[] Exceptions { get; } = Array.Empty<ArgumentException>();
 }

@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,155 +16,167 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
 
-namespace BigSolution
+namespace BigSolution;
+
+public class CollectionConstraintsFixture
 {
-    public class CollectionConstraintsFixture
+    [SuppressMessage("ReSharper", "NotResolvedInText", Justification = "Testing purpose")]
+    [Fact]
+    public void ContainsSingleFailed()
     {
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        [SuppressMessage("Performance", "CA1825:Avoid zero-length array allocations", Justification = "Testing purpose")]
-        public void ContainsSingleFailed()
-        {
-            Action act = () => Requires.Argument(new object[0], "param")
-                .ContainsSingle()
-                .Check();
+        var act = () => Requires.Argument(new object[2], "param")!
+            .ContainsSingle()
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The collection must contain only one element. (Parameter 'param')")
-                .And.ParamName.Should().Be("param");
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The collection must contain only one element.*")
+            .And.ParamName.Should().Be("param");
+    }
 
-        [Theory]
-        [MemberData(nameof(NullOrSingleElementCollections))]
-        public void ContainsSingleSucceeds(object[] param)
-        {
-            Action act = () => Requires.Argument(param, nameof(param))
-                .ContainsSingle()
-                .Check();
+    [SuppressMessage("ReSharper", "NotResolvedInText", Justification = "Testing purpose")]
+    [Fact]
+    public void ContainsSingleFailedForEmptyCollection()
+    {
+        var act = () => Requires.Argument(Array.Empty<object?>(), "param")!
+            .ContainsSingle()
+            .Check();
 
-            act.Should().NotThrow();
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The collection must contain only one element.*")
+            .And.ParamName.Should().Be("param");
+    }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void DoesNotContainNullElementFailed()
-        {
-            Action act = () => Requires.Argument(new object[] { null }, "param")
-                .DoesNotContainNullElement()
-                .Check();
+    [Theory]
+    [MemberData(nameof(NullOrSingleElementCollections))]
+    public void ContainsSingleSucceeds(object?[] param)
+    {
+        var act = () => Requires.Argument(param, nameof(param))!
+            .ContainsSingle()
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The collection contains at least one null element. (Parameter 'param')")
-                .Which.ParamName.Should().Be("param");
-        }
+        act.Should().NotThrow();
+    }
 
-        [Theory]
-        [MemberData(nameof(NullOrSingleElementCollections))]
-        [MemberData(nameof(NullOrEmptyCollections))]
-        public void DoesNotContainNullElementSucceeds(object[] value)
-        {
-            Action act = () => Requires.Argument(value, nameof(value))
-                .DoesNotContainNullElement()
-                .Check();
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    [Fact]
+    public void DoesNotContainNullElementFailed()
+    {
+        var act = () => Requires.Argument(new object?[] { null }, "param")!
+            .DoesNotContainNullElement()
+            .Check();
 
-            act.Should().NotThrow();
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The collection contains at least one null element.*")
+            .Which.ParamName.Should().Be("param");
+    }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsEmptyFailed()
-        {
-            Action act = () => Requires.Argument(new List<object> { new object() }, "param")
-                .IsEmpty()
-                .Check();
+    [Theory]
+    [MemberData(nameof(NullOrSingleElementCollections))]
+    [MemberData(nameof(NullOrEmptyCollections))]
+    public void DoesNotContainNullElementSucceeds(object[]? value)
+    {
+        var act = () => Requires.Argument(value, nameof(value))!
+            .DoesNotContainNullElement()
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The collection is not empty. (Parameter 'param')")
-                .And.ParamName.Should().Be("param");
-        }
+        act.Should().NotThrow();
+    }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsEmptySucceeds()
-        {
-            Action act = () => Requires.Argument(new List<object>(), "param")
-                .IsEmpty()
-                .Check();
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    [Fact]
+    public void EmptyFailed()
+    {
+        var act = () => Requires.Argument(new List<object> { new() }, "param")!
+            .IsEmpty()
+            .Check();
 
-            act.Should().NotThrow();
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The collection is not empty.*")
+            .And.ParamName.Should().Be("param");
+    }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsNotEmptyFailed()
-        {
-            Action act = () => Requires.Argument(new List<object>(), "param")
-                .IsNotEmpty()
-                .Check();
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    [Fact]
+    public void EmptySucceeds()
+    {
+        var act = () => Requires.Argument(new List<object>(), "param")!
+            .IsEmpty()
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The collection is empty. (Parameter 'param')")
-                .And.ParamName.Should().Be("param");
-        }
+        act.Should().NotThrow();
+    }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsNotEmptySucceeds()
-        {
-            Action act = () => Requires.Argument(new List<object> { new object() }, "param")
-                .IsNotEmpty()
-                .Check();
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    [Fact]
+    public void NotEmptyFailed()
+    {
+        var act = () => Requires.Argument(new List<object>(), "param")!
+            .IsNotEmpty()
+            .Check();
 
-            act.Should().NotThrow();
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The collection is empty.*")
+            .And.ParamName.Should().Be("param");
+    }
 
-        [Theory]
-        [MemberData(nameof(NullOrEmptyCollections))]
-        public void IsNotNullOrEmptyFailed(object[] param)
-        {
-            Action act = () => Requires.Argument(param, nameof(param))
-                .IsNotNullOrEmpty()
-                .Check();
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    [Fact]
+    public void NotEmptySucceeds()
+    {
+        var act = () => Requires.Argument(new List<object> { new() }, "param")!
+            .IsNotEmpty()
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The collection is null or empty. (Parameter '{nameof(param)}')")
-                .And.ParamName.Should().Be(nameof(param));
-        }
+        act.Should().NotThrow();
+    }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsNotNullOrEmptySucceeds()
-        {
-            Action act = () => Requires.Argument(new List<object> { new object() }, "param")
-                .IsNotNullOrEmpty()
-                .Check();
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    [Fact]
+    public void NotEmptySucceedsWhenCollectionIsNull()
+    {
+        var act = () => Requires.Argument((ICollection<object>?)null, "param")!
+            .IsNotEmpty()
+            .Check();
 
-            act.Should().NotThrow();
-        }
+        act.Should().NotThrow();
+    }
 
-        [SuppressMessage("Performance", "CA1825:Avoid zero-length array allocations", Justification = "Testing purpose")]
-        public static IEnumerable<object[]> NullOrEmptyCollections
-        {
-            get
-            {
-                yield return new object[] { null };
-                yield return new object[] { new object[0] };
-            }
-        }
+    [Theory]
+    [MemberData(nameof(NullOrEmptyCollections))]
+    public void NotNullOrEmptyFailed(object[] param)
+    {
+        var act = () => Requires.Argument(param, nameof(param))!
+            .IsNotNullOrEmpty()
+            .Check();
 
-        public static IEnumerable<object[]> NullOrSingleElementCollections
-        {
-            get
-            {
-                yield return new object[] { null };
-                yield return new object[] { new[] { new object() } };
-            }
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The collection is null or empty.*")
+            .And.ParamName.Should().Be(nameof(param));
+    }
+
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    [Fact]
+    public void NotNullOrEmptySucceeds()
+    {
+        var act = () => Requires.Argument(new List<object> { new() }, "param")!
+            .IsNotNullOrEmpty()
+            .Check();
+
+        act.Should().NotThrow();
+    }
+
+    [SuppressMessage("Performance", "CA1825:Avoid zero-length array allocations", Justification = "Testing purpose")]
+    public static IEnumerable<object[]> NullOrEmptyCollections
+    {
+        get { yield return new object[] { Array.Empty<object>() }; }
+    }
+
+    public static IEnumerable<object[]> NullOrSingleElementCollections
+    {
+        get { yield return new object[] { new[] { new object() } }; }
     }
 }

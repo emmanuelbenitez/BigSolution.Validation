@@ -18,16 +18,13 @@
 
 namespace BigSolution;
 
-public interface IArgumentValidation
+public static class EnumerableConstraints
 {
-    IReadOnlyCollection<ArgumentException> Exceptions { get; }
-
-    string Name { get; }
-
-    void AddException(ArgumentException exception);
-}
-
-public interface IArgumentValidation<out T> : IArgumentValidation
-{
-    T Value { get; }
+    public static IArgumentValidation<IEnumerable<T?>?> IsNotEmpty<T>(this IArgumentValidation<IEnumerable<T?>?> argumentValidation)
+    {
+        argumentValidation.Validate(
+            enumerable => enumerable == null || enumerable.Any(),
+            parameterName => new ArgumentException(Resources.EnumerableConstraints.IsNotEmptyErrorMessage, parameterName));
+        return argumentValidation;
+    }
 }

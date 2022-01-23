@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,35 +18,33 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace BigSolution
+namespace BigSolution;
+
+internal static partial class Resources
 {
-    internal static partial class Resources
+    #region Nested Type: StringConstraints
+
+    public static class StringConstraints
     {
-        #region Nested Type: StringConstraints
+        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
+        public static string IsNotEmptyErrorMessage => GetString($"{nameof(StringConstraints)}_{nameof(IsNotEmptyErrorMessage)}");
 
-        public static class StringConstraints
+        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
+        public static string IsNotNullOrEmptyErrorMessage => GetString($"{nameof(StringConstraints)}_{nameof(IsNotNullOrEmptyErrorMessage)}");
+
+        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
+        public static string IsNotNullOrWhiteSpaceErrorMessage => GetString($"{nameof(StringConstraints)}_{nameof(IsNotNullOrWhiteSpaceErrorMessage)}");
+
+        public static string DoesNotMatchErrorMessage(string? value, string pattern)
         {
-            public static string DoesNotMatchErrorMessage(string value, string pattern)
-            {
-                return GetFormattedString($"{nameof(StringConstraints)}_{nameof(DoesNotMatchErrorMessage)}", null, value, pattern);
-            }
-
-            public static string MatchesErrorMessage(string value, string pattern)
-            {
-                return GetFormattedString($"{nameof(StringConstraints)}_{nameof(MatchesErrorMessage)}", null, value, pattern);
-            }
-#pragma warning disable IDE0079 // Remove unnecessary suppression
-            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Error message generation")]
-            public static string IsNotEmptyErrorMessage => GetString($"{nameof(StringConstraints)}_{nameof(IsNotEmptyErrorMessage)}");
-
-            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Error message generation")]
-            public static string IsNotNullOrEmptyErrorMessage => GetString($"{nameof(StringConstraints)}_{nameof(IsNotNullOrEmptyErrorMessage)}");
-
-            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Error message generation")]
-            public static string IsNotNullOrWhiteSpaceErrorMessage => GetString($"{nameof(StringConstraints)}_{nameof(IsNotNullOrWhiteSpaceErrorMessage)}");
-#pragma warning restore IDE0079 // Remove unnecessary suppression
+            return GetFormattedString($"{nameof(StringConstraints)}_{nameof(DoesNotMatchErrorMessage)}", null, value, pattern);
         }
 
-        #endregion
+        public static string MatchesErrorMessage(string? value, string pattern)
+        {
+            return GetFormattedString($"{nameof(StringConstraints)}_{nameof(MatchesErrorMessage)}", null, value, pattern);
+        }
     }
+
+    #endregion
 }

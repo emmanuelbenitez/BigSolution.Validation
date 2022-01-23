@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,38 +16,32 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
+namespace BigSolution;
 
-namespace BigSolution
+internal sealed class ArgumentValidation<T> : IArgumentValidation<T>
 {
-    internal sealed class ArgumentValidation<T> : IArgumentValidation<T>
+    public ArgumentValidation(T value, string name)
     {
-        public ArgumentValidation(T value, string name)
-        {
-            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException(Resources.StringConstraints.IsNotNullOrEmptyErrorMessage, nameof(name));
+        if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException(Resources.StringConstraints.IsNotNullOrEmptyErrorMessage, nameof(name));
 
-            Value = value;
-            Name = name;
-        }
-
-        #region IArgumentValidation<T> Members
-
-        public void AddException(ArgumentException exception)
-        {
-            if (exception == null) throw new ArgumentNullException(nameof(exception));
-
-            _exceptions.Add(exception);
-        }
-
-        public IReadOnlyCollection<ArgumentException> Exceptions => _exceptions.AsReadOnly();
-
-        public string Name { get; }
-
-        public T Value { get; }
-
-        #endregion
-
-        private readonly List<ArgumentException> _exceptions = new List<ArgumentException>();
+        Value = value;
+        Name = name;
     }
+
+    #region IArgumentValidation<T> Members
+
+    public void AddException(ArgumentException exception)
+    {
+        _exceptions.Add(exception);
+    }
+
+    public IReadOnlyCollection<ArgumentException> Exceptions => _exceptions.AsReadOnly();
+
+    public string Name { get; }
+
+    public T Value { get; }
+
+    #endregion
+
+    private readonly List<ArgumentException> _exceptions = new();
 }

@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,135 +16,137 @@
 
 #endregion
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
 
-namespace BigSolution
+namespace BigSolution;
+
+public class StringConstraintsFixture
 {
-    public class StringConstraintsFixture
+    [Theory]
+    [InlineData(null)]
+    [InlineData("ABC")]
+    public void DoesMatchesSucceeds(string? value)
     {
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void DoesMatchesSucceeds()
-        {
-            Action act = () => Requires.Argument("ABC", "param")
-                .DoesNotMatch(@"\d{3}")
-                .Check();
-            act.Should().NotThrow<ArgumentException>();
-        }
+        var act = () => Requires.Argument(value, nameof(value))
+            .DoesNotMatch(@"\d{3}")
+            .Check();
+        act.Should().NotThrow<ArgumentException>();
+    }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void DoesNotMatchFailed()
-        {
-            Action act = () => Requires.Argument("123", "param")
-                .DoesNotMatch(@"\d{3}")
-                .Check();
+    [Theory]
+    [InlineData("123")]
+    public void DoesNotMatchFailed(string? value)
+    {
+        var act = () => Requires.Argument(value, nameof(value))
+            .DoesNotMatch(@"\d{3}")
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage(@"The value '123' must not match '\d{3}'. (Parameter 'param')")
-                .Which.ParamName.Should().Be("param");
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage(@"The value '*' must not match '\d{3}'.*")
+            .Which.ParamName.Should().Be(nameof(value));
+    }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsNotEmptyFailed()
-        {
-            Action act = () => Requires.Argument(string.Empty, "param")
-                .IsNotEmpty()
-                .Check();
+    [Theory]
+    [InlineData("ABC")]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void MatchesFailed(string? value)
+    {
+        var act = () => Requires.Argument(value, nameof(value))
+            .Matches(@"\d{3}")
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The value is empty. (Parameter 'param')")
-                .Which.ParamName.Should().Be("param");
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage(@"The value 'ABC' must match '\d{3}'.*")
+            .Which.ParamName.Should().Be(nameof(value));
+    }
 
-        [Theory]
-        [InlineData(null)]
-        [InlineData("value")]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsNotEmptySucceeds(string value)
-        {
-            Action act = () => Requires.Argument(value, nameof(value))
-                .IsNotEmpty()
-                .Check();
+    [Theory]
+    [InlineData("123")]
+    [InlineData(null)]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void MatchesSucceeds(string? value)
+    {
+        var act = () => Requires.Argument(value, nameof(value))
+            .Matches(@"\d{3}")
+            .Check();
+        act.Should().NotThrow<ArgumentException>();
+    }
 
-            act.Should().NotThrow();
-        }
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void NotEmptyFailed()
+    {
+        var act = () => Requires.Argument(string.Empty, "param")
+            .IsNotEmpty()
+            .Check();
 
-        [Theory]
-        [InlineData("")]
-        [InlineData(null)]
-        public void IsNotNullOrEmptyFailed(string param)
-        {
-            Action act = () => Requires.Argument(param, nameof(param))
-                .IsNotNullOrEmpty()
-                .Check();
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The value is empty.*")
+            .Which.ParamName.Should().Be("param");
+    }
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The value is null or empty. (Parameter '{nameof(param)}')")
-                .Which.ParamName.Should().Be(nameof(param));
-        }
+    [Theory]
+    [InlineData(null)]
+    [InlineData("value")]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void NotEmptySucceeds(string? value)
+    {
+        var act = () => Requires.Argument(value, nameof(value))
+            .IsNotEmpty()
+            .Check();
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsNotNullOrEmptySucceeds()
-        {
-            Action act = () => Requires.Argument("this is a text", "param")
-                .IsNotNullOrEmpty()
-                .Check();
+        act.Should().NotThrow();
+    }
 
-            act.Should().NotThrow();
-        }
+    [Theory]
+    [InlineData("")]
+    [InlineData(null)]
+    public void NotNullOrEmptyFailed(string? param)
+    {
+        var act = () => Requires.Argument(param, nameof(param))
+            .IsNotNullOrEmpty()
+            .Check();
 
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData(" ")]
-        public void IsNotNullOrWhiteSpaceFailed(string value)
-        {
-            Action act = () => Requires.Argument(value, nameof(value))
-                .IsNotNullOrWhiteSpace()
-                .Check();
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The value is null or empty.*")
+            .Which.ParamName.Should().Be(nameof(param));
+    }
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The value is null or empty or contains only white spaces. (Parameter '{nameof(value)}')")
-                .Which.ParamName.Should().Be(nameof(value));
-        }
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void NotNullOrEmptySucceeds()
+    {
+        var act = () => Requires.Argument("this is a text", "param")
+            .IsNotNullOrEmpty()
+            .Check();
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsNotNullOrWhiteSpaceSucceeds()
-        {
-            Action act = () => Requires.Argument("value", "param")
-                .IsNotNullOrWhiteSpace()
-                .Check();
-            act.Should().NotThrow<ArgumentException>();
-        }
+        act.Should().NotThrow();
+    }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void MatchesFailed()
-        {
-            Action act = () => Requires.Argument("ABC", "param")
-                .Matches(@"\d{3}")
-                .Check();
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData(" ")]
+    public void NotNullOrWhiteSpaceFailed(string? value)
+    {
+        var act = () => Requires.Argument(value, nameof(value))
+            .IsNotNullOrWhiteSpace()
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage(@"The value 'ABC' must match '\d{3}'. (Parameter 'param')")
-                .Which.ParamName.Should().Be("param");
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The value is null or empty or contains only white spaces.*")
+            .Which.ParamName.Should().Be(nameof(value));
+    }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void MatchesSucceeds()
-        {
-            Action act = () => Requires.Argument("123", "param")
-                .Matches(@"\d{3}")
-                .Check();
-            act.Should().NotThrow<ArgumentException>();
-        }
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void NotNullOrWhiteSpaceSucceeds()
+    {
+        var act = () => Requires.Argument("value", "param")
+            .IsNotNullOrWhiteSpace()
+            .Check();
+        act.Should().NotThrow<ArgumentException>();
     }
 }

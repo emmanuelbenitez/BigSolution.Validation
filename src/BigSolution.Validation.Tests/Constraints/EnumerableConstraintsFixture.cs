@@ -22,36 +22,38 @@ using Xunit;
 
 namespace BigSolution;
 
-public class ObjectConstraintsFixture
+public class EnumerableConstraintsFixture
 {
-    [Fact]
     [SuppressMessage("ReSharper", "NotResolvedInText")]
-    public void NotNullFailed()
+    [Fact]
+    public void NotEmptyFailed()
     {
-        var act = () => Requires.Argument((object?)null, "param")
-            .IsNotNull()
+        var act = () => Requires.Argument(Enumerable.Empty<object>(), "param")
+            .IsNotEmpty()
             .Check();
 
-        act.Should().ThrowExactly<ArgumentNullException>().Which.ParamName.Should().Be("param");
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The enumerable is empty.*")
+            .And.ParamName.Should().Be("param");
     }
 
-    [Fact]
     [SuppressMessage("ReSharper", "NotResolvedInText")]
-    public void NotNullFailedForNullable()
+    [Fact]
+    public void NotEmptySucceeds()
     {
-        var act = () => Requires.Argument((int?)null, "param")
-            .IsNotNull()
+        var act = () => Requires.Argument((IEnumerable<object?>)new List<object?> { new() }, "param")
+            .IsNotEmpty()
             .Check();
 
-        act.Should().ThrowExactly<ArgumentNullException>().Which.ParamName.Should().Be("param");
+        act.Should().NotThrow();
     }
 
-    [Fact]
     [SuppressMessage("ReSharper", "NotResolvedInText")]
-    public void NotNullSucceeds()
+    [Fact]
+    public void NotEmptySucceedsWhenNull()
     {
-        var act = () => Requires.Argument(new object(), "param")
-            .IsNotNull()
+        var act = () => Requires.Argument((IEnumerable<object?>?)null, "param")
+            .IsNotEmpty()
             .Check();
 
         act.Should().NotThrow();

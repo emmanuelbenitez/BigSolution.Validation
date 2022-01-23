@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,48 +16,46 @@
 
 #endregion
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
 
-namespace BigSolution
+namespace BigSolution;
+
+public class EnumConstraintsFixture
 {
-    public class EnumConstraintsFixture
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void FlagFailed()
     {
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsFlagFailed()
-        {
-            Action act = () => Requires.Argument(Enum.None, "param")
-                .IsFlag()
-                .Check();
+        var act = () => Requires.Argument(Enum.None, "param")
+            .IsFlag()
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage($"The enum 'BigSolution.EnumConstraintsFixture+Enum' is not a flag. (Parameter 'param')")
-                .Which.ParamName.Should().Be("param");
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The enum 'BigSolution.EnumConstraintsFixture+Enum' is not a flag.*")
+            .Which.ParamName.Should().Be("param");
+    }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void IsFlagSucceeds()
-        {
-            Action act = () => Requires.Argument(FlagEnum.None, "param")
-                .IsFlag()
-                .Check();
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void FlagSucceeds()
+    {
+        var act = () => Requires.Argument(FlagEnum.None, "param")
+            .IsFlag()
+            .Check();
 
-            act.Should().NotThrow();
-        }
+        act.Should().NotThrow();
+    }
 
-        [Flags]
-        private enum FlagEnum
-        {
-            None
-        }
+    [Flags]
+    private enum FlagEnum
+    {
+        None
+    }
 
-        private enum Enum
-        {
-            None
-        }
+    private enum Enum
+    {
+        None
     }
 }
