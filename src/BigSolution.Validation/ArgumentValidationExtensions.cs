@@ -16,48 +16,47 @@
 
 #endregion
 
-namespace BigSolution
+namespace BigSolution;
+
+public static class ArgumentValidationExtensions
 {
-    public static class ArgumentValidationExtensions
+    public static void Check<T>(this IArgumentValidation<T>? argumentValidation)
     {
-        public static void Check<T>(this IArgumentValidation<T>? argumentValidation)
+        if (argumentValidation == null) return;
+
+        var exceptions = argumentValidation.Exceptions;
+
+        switch (exceptions.Count)
         {
-            if (argumentValidation == null) return;
-
-            var exceptions = argumentValidation.Exceptions;
-
-            switch (exceptions.Count)
-            {
-                case 0:
-                    return;
-                case 1:
-                    throw exceptions.Single();
-                default:
-                    throw new AggregateArgumentException(Resources.AggregateArgumentException.DefaultErrorMessage, argumentValidation.Name, exceptions);
-            }
+            case 0:
+                return;
+            case 1:
+                throw exceptions.Single();
+            default:
+                throw new AggregateArgumentException(Resources.AggregateArgumentException.DefaultErrorMessage, argumentValidation.Name, exceptions);
         }
+    }
 
-        internal static T? GetValueOrDefault<T>(this IArgumentValidation<T?> argumentValidation)
-        {
-            return argumentValidation.Value;
-        }
+    internal static T? GetValueOrDefault<T>(this IArgumentValidation<T?> argumentValidation)
+    {
+        return argumentValidation.Value;
+    }
 
-        internal static IArgumentValidation<T> Validate<T>(
-            this IArgumentValidation<T> argumentValidation,
-            Func<T?, bool> condition,
-            Func<string, ArgumentException> exceptionFactory)
-        {
-            if (!condition(argumentValidation.Value)) argumentValidation.AddException(exceptionFactory(argumentValidation.Name));
+    internal static IArgumentValidation<T> Validate<T>(
+        this IArgumentValidation<T> argumentValidation,
+        Func<T?, bool> condition,
+        Func<string, ArgumentException> exceptionFactory)
+    {
+        if (!condition(argumentValidation.Value)) argumentValidation.AddException(exceptionFactory(argumentValidation.Name));
 
-            return argumentValidation;
-        }
+        return argumentValidation;
+    }
 
-        internal static void Validate(
-            this IArgumentValidation argumentValidation,
-            Func<bool> condition,
-            Func<string, ArgumentException> exceptionFactory)
-        {
-            if (!condition()) argumentValidation.AddException(exceptionFactory(argumentValidation.Name));
-        }
+    internal static void Validate(
+        this IArgumentValidation argumentValidation,
+        Func<bool> condition,
+        Func<string, ArgumentException> exceptionFactory)
+    {
+        if (!condition()) argumentValidation.AddException(exceptionFactory(argumentValidation.Name));
     }
 }

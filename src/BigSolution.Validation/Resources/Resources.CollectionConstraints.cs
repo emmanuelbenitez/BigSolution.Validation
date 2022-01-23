@@ -18,28 +18,27 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace BigSolution
+namespace BigSolution;
+
+internal static partial class Resources
 {
-    internal static partial class Resources
+    #region Nested Type: CollectionConstraints
+
+    public static class CollectionConstraints
     {
-        #region Nested Type: CollectionConstraints
+        public static string ContainsSingleErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(ContainsSingleErrorMessage)}");
 
-        public static class CollectionConstraints
-        {
-            public static string ContainsSingleErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(ContainsSingleErrorMessage)}");
+        public static string DoesNotContainNullElementErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(DoesNotContainNullElementErrorMessage)}");
 
-            public static string DoesNotContainNullElementErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(DoesNotContainNullElementErrorMessage)}");
+        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
+        public static string IsEmptyErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(IsEmptyErrorMessage)}");
 
-            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
-            public static string IsEmptyErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(IsEmptyErrorMessage)}");
+        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
+        public static string IsNotEmptyErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(IsNotEmptyErrorMessage)}");
 
-            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
-            public static string IsNotEmptyErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(IsNotEmptyErrorMessage)}");
-
-            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
-            public static string IsNotNullOrEmptyErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(IsNotNullOrEmptyErrorMessage)}");
-        }
-
-        #endregion
+        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
+        public static string IsNotNullOrEmptyErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(IsNotNullOrEmptyErrorMessage)}");
     }
+
+    #endregion
 }

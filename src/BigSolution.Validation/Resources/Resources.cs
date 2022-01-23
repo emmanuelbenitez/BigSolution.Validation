@@ -19,23 +19,22 @@
 using System.Globalization;
 using System.Resources;
 
-namespace BigSolution
+namespace BigSolution;
+
+internal static partial class Resources
 {
-    internal static partial class Resources
+    private static string GetFormattedString(string key, CultureInfo? culture = null, params object?[] arguments)
     {
-        private static string GetFormattedString(string key, CultureInfo? culture = null, params object?[] arguments)
-        {
-            return string.Format(
-                culture ?? CultureInfo.CurrentCulture,
-                _resourceManager.GetString(key, culture ?? CultureInfo.CurrentCulture) ?? string.Empty,
-                arguments);
-        }
-
-        private static string GetString(string key, CultureInfo? culture = null)
-        {
-            return _resourceManager.GetString(key, culture ?? CultureInfo.CurrentCulture) ?? string.Empty;
-        }
-
-        private static readonly ResourceManager _resourceManager = new("BigSolution.Properties.Resources", typeof(Resources).Assembly);
+        return string.Format(
+            culture ?? CultureInfo.CurrentCulture,
+            _resourceManager.GetString(key, culture ?? CultureInfo.CurrentCulture) ?? string.Empty,
+            arguments);
     }
+
+    private static string GetString(string key, CultureInfo? culture = null)
+    {
+        return _resourceManager.GetString(key, culture ?? CultureInfo.CurrentCulture) ?? string.Empty;
+    }
+
+    private static readonly ResourceManager _resourceManager = new("BigSolution.Properties.Resources", typeof(Resources).Assembly);
 }

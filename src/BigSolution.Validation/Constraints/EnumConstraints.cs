@@ -16,16 +16,15 @@
 
 #endregion
 
-namespace BigSolution
+namespace BigSolution;
+
+public static class EnumConstraints
 {
-    public static class EnumConstraints
+    public static IArgumentValidation<T> IsFlag<T>(this IArgumentValidation<T> argumentValidation)
+        where T : Enum
     {
-        public static IArgumentValidation<T> IsFlag<T>(this IArgumentValidation<T> argumentValidation)
-            where T : Enum
-        {
-            return argumentValidation.Validate(
-                value => value.IsFlag(),
-                parameterName => new ArgumentException(Resources.EnumConstraints.IsFlagErrorMessage(typeof(T)), parameterName));
-        }
+        return argumentValidation.Validate(
+            value => value.IsFlag(),
+            parameterName => new ArgumentException(Resources.EnumConstraints.IsFlagErrorMessage(typeof(T)), parameterName));
     }
 }

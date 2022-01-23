@@ -16,20 +16,19 @@
 
 #endregion
 
-namespace BigSolution
+namespace BigSolution;
+
+internal static partial class Resources
 {
-    internal static partial class Resources
+    #region Nested Type: TypeConstraints
+
+    public static class TypeConstraints
     {
-        #region Nested Type: TypeConstraints
-
-        public static class TypeConstraints
+        public static string IsInterfaceErrorMessage(Type? type)
         {
-            public static string IsInterfaceErrorMessage(Type? type)
-            {
-                return GetFormattedString($"{nameof(TypeConstraints)}_{nameof(IsInterfaceErrorMessage)}", null, type?.AssemblyQualifiedName);
-            }
+            return GetFormattedString($"{nameof(TypeConstraints)}_{nameof(IsInterfaceErrorMessage)}", null, type?.AssemblyQualifiedName);
         }
-
-        #endregion
     }
+
+    #endregion
 }

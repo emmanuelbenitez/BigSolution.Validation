@@ -16,45 +16,44 @@
 
 #endregion
 
-namespace BigSolution
+namespace BigSolution;
+
+internal static partial class Resources
 {
-    internal static partial class Resources
+    #region Nested Type: ComparisonConstraints
+
+    public static class ComparisonConstraints
     {
-        #region Nested Type: ComparisonConstraints
-
-        public static class ComparisonConstraints
+        public static string IsEqualToErrorMessage(object? valueToCompare)
         {
-            public static string IsEqualToErrorMessage(object? valueToCompare)
-            {
-                return GetFormattedString($"{nameof(ComparisonConstraints)}_{nameof(IsEqualToErrorMessage)}", null, valueToCompare);
-            }
-
-            public static string IsGreaterOrEqualThanErrorMessage(object? value, object? valueToCompare)
-            {
-                return GetFormattedString($"{nameof(ComparisonConstraints)}_{nameof(IsGreaterOrEqualThanErrorMessage)}", null, value, valueToCompare);
-            }
-
-            public static string IsGreaterThanErrorMessage(object? value, object? valueToCompare)
-            {
-                return GetFormattedString($"{nameof(ComparisonConstraints)}_{nameof(IsGreaterThanErrorMessage)}", null, value, valueToCompare);
-            }
-
-            public static string IsLessOrEqualThanErrorMessage(object? value, object? valueToCompare)
-            {
-                return GetFormattedString($"{nameof(ComparisonConstraints)}_{nameof(IsLessOrEqualThanErrorMessage)}", null, value, valueToCompare);
-            }
-
-            public static string IsLessThanErrorMessage(object? value, object? valueToCompare)
-            {
-                return GetFormattedString($"{nameof(ComparisonConstraints)}_{nameof(IsLessThanErrorMessage)}", null, value, valueToCompare);
-            }
-
-            public static string IsNotEqualToErrorMessage(object? valueToCompare)
-            {
-                return GetFormattedString($"{nameof(ComparisonConstraints)}_{nameof(IsNotEqualToErrorMessage)}", null, valueToCompare);
-            }
+            return GetFormattedString($"{nameof(ComparisonConstraints)}_{nameof(IsEqualToErrorMessage)}", null, valueToCompare);
         }
 
-        #endregion
+        public static string IsGreaterOrEqualThanErrorMessage(object? value, object? valueToCompare)
+        {
+            return GetFormattedString($"{nameof(ComparisonConstraints)}_{nameof(IsGreaterOrEqualThanErrorMessage)}", null, value, valueToCompare);
+        }
+
+        public static string IsGreaterThanErrorMessage(object? value, object? valueToCompare)
+        {
+            return GetFormattedString($"{nameof(ComparisonConstraints)}_{nameof(IsGreaterThanErrorMessage)}", null, value, valueToCompare);
+        }
+
+        public static string IsLessOrEqualThanErrorMessage(object? value, object? valueToCompare)
+        {
+            return GetFormattedString($"{nameof(ComparisonConstraints)}_{nameof(IsLessOrEqualThanErrorMessage)}", null, value, valueToCompare);
+        }
+
+        public static string IsLessThanErrorMessage(object? value, object? valueToCompare)
+        {
+            return GetFormattedString($"{nameof(ComparisonConstraints)}_{nameof(IsLessThanErrorMessage)}", null, value, valueToCompare);
+        }
+
+        public static string IsNotEqualToErrorMessage(object? valueToCompare)
+        {
+            return GetFormattedString($"{nameof(ComparisonConstraints)}_{nameof(IsNotEqualToErrorMessage)}", null, valueToCompare);
+        }
     }
+
+    #endregion
 }

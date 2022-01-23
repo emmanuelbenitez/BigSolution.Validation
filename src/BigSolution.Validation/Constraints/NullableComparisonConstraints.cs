@@ -16,50 +16,49 @@
 
 #endregion
 
-namespace BigSolution
+namespace BigSolution;
+
+public static class NullableComparisonConstraints
 {
-    public static class NullableComparisonConstraints
+    public static IArgumentValidation<T?> IsEqualTo<T>(this IArgumentValidation<T?> argumentValidation, T valueToCompare)
+        where T : struct, IComparable<T>
     {
-        public static IArgumentValidation<T?> IsEqualTo<T>(this IArgumentValidation<T?> argumentValidation, T valueToCompare)
-            where T : struct, IComparable<T>
-        {
-            if (argumentValidation.Value != null) argumentValidation.IsEqualTo(argumentValidation.Value.Value, valueToCompare);
-            return argumentValidation;
-        }
+        if (argumentValidation.Value != null) argumentValidation.IsEqualTo(argumentValidation.Value.Value, valueToCompare);
+        return argumentValidation;
+    }
 
-        public static IArgumentValidation<T?> IsGreaterOrEqualThan<T>(this IArgumentValidation<T?> argumentValidation, T valueToCompare)
-            where T : struct, IComparable<T>
-        {
-            if (argumentValidation.Value != null) argumentValidation.IsGreaterOrEqualThan(argumentValidation.Value.Value, valueToCompare);
-            return argumentValidation;
-        }
+    public static IArgumentValidation<T?> IsGreaterOrEqualThan<T>(this IArgumentValidation<T?> argumentValidation, T valueToCompare)
+        where T : struct, IComparable<T>
+    {
+        if (argumentValidation.Value != null) argumentValidation.IsGreaterOrEqualThan(argumentValidation.Value.Value, valueToCompare);
+        return argumentValidation;
+    }
 
-        public static IArgumentValidation<T?> IsGreaterThan<T>(this IArgumentValidation<T?> argumentValidation, T valueToCompare)
-            where T : struct, IComparable<T>
-        {
-            if (argumentValidation.Value != null) argumentValidation.IsGreaterThan(argumentValidation.Value.Value, valueToCompare);
-            return argumentValidation;
-        }
+    public static IArgumentValidation<T?> IsGreaterThan<T>(this IArgumentValidation<T?> argumentValidation, T valueToCompare)
+        where T : struct, IComparable<T>
+    {
+        if (argumentValidation.Value != null) argumentValidation.IsGreaterThan(argumentValidation.Value.Value, valueToCompare);
+        return argumentValidation;
+    }
 
-        public static IArgumentValidation<T?> IsLessOrEqualThan<T>(this IArgumentValidation<T?> argumentValidation, T valueToCompare)
-            where T : struct, IComparable<T>
-        {
-            if (argumentValidation.Value != null) argumentValidation.IsLessOrEqualThan(argumentValidation.Value.Value, valueToCompare);
-            return argumentValidation;
-        }
+    public static IArgumentValidation<T?> IsLessOrEqualThan<T>(this IArgumentValidation<T?> argumentValidation, T valueToCompare)
+        where T : struct, IComparable<T>
+    {
+        if (argumentValidation.Value != null) argumentValidation.IsLessOrEqualThan(argumentValidation.Value.Value, valueToCompare);
+        return argumentValidation;
+    }
 
-        public static IArgumentValidation<T?> IsLessThan<T>(this IArgumentValidation<T?> argumentValidation, T valueToCompare)
-            where T : struct, IComparable<T>
-        {
-            if (argumentValidation.Value != null) argumentValidation.IsLessThan(argumentValidation.Value.Value, valueToCompare);
-            return argumentValidation;
-        }
+    public static IArgumentValidation<T?> IsLessThan<T>(this IArgumentValidation<T?> argumentValidation, T valueToCompare)
+        where T : struct, IComparable<T>
+    {
+        if (argumentValidation.Value != null) argumentValidation.IsLessThan(argumentValidation.Value.Value, valueToCompare);
+        return argumentValidation;
+    }
 
-        public static IArgumentValidation<T?> IsNotEqualTo<T>(this IArgumentValidation<T?> argumentValidation, T valueToCompare)
-            where T : struct, IComparable<T>
-        {
-            if (argumentValidation.Value != null) argumentValidation.IsNotEqualTo(argumentValidation.Value.Value, valueToCompare);
-            return argumentValidation;
-        }
+    public static IArgumentValidation<T?> IsNotEqualTo<T>(this IArgumentValidation<T?> argumentValidation, T valueToCompare)
+        where T : struct, IComparable<T>
+    {
+        if (argumentValidation.Value != null) argumentValidation.IsNotEqualTo(argumentValidation.Value.Value, valueToCompare);
+        return argumentValidation;
     }
 }

@@ -16,19 +16,18 @@
 
 #endregion
 
-namespace BigSolution
+namespace BigSolution;
+
+public interface IArgumentValidation
 {
-    public interface IArgumentValidation
-    {
-        IReadOnlyCollection<ArgumentException> Exceptions { get; }
+    IReadOnlyCollection<ArgumentException> Exceptions { get; }
 
-        string Name { get; }
+    string Name { get; }
 
-        void AddException(ArgumentException exception);
-    }
+    void AddException(ArgumentException exception);
+}
 
-    public interface IArgumentValidation<out T> : IArgumentValidation
-    {
-        T Value { get; }
-    }
+public interface IArgumentValidation<out T> : IArgumentValidation
+{
+    T Value { get; }
 }

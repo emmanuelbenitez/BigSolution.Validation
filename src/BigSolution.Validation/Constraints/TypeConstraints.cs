@@ -16,15 +16,14 @@
 
 #endregion
 
-namespace BigSolution
+namespace BigSolution;
+
+public static class TypeConstraints
 {
-    public static class TypeConstraints
+    public static IArgumentValidation<Type?> IsInterface(this IArgumentValidation<Type?> argumentValidation)
     {
-        public static IArgumentValidation<Type?> IsInterface(this IArgumentValidation<Type?> argumentValidation)
-        {
-            return argumentValidation.Validate(
-                type => type?.IsInterface ?? true,
-                parameterName => new ArgumentException(Resources.TypeConstraints.IsInterfaceErrorMessage(argumentValidation.Value), parameterName));
-        }
+        return argumentValidation.Validate(
+            type => type?.IsInterface ?? true,
+            parameterName => new ArgumentException(Resources.TypeConstraints.IsInterfaceErrorMessage(argumentValidation.Value), parameterName));
     }
 }

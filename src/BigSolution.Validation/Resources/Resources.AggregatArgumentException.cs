@@ -16,17 +16,16 @@
 
 #endregion
 
-namespace BigSolution
+namespace BigSolution;
+
+internal static partial class Resources
 {
-    internal static partial class Resources
+    #region Nested Type: AggregateArgumentException
+
+    public static class AggregateArgumentException
     {
-        #region Nested Type: AggregateArgumentException
-
-        public static class AggregateArgumentException
-        {
-            public static string DefaultErrorMessage => GetString($"{nameof(AggregateArgumentException)}_{nameof(DefaultErrorMessage)}");
-        }
-
-        #endregion
+        public static string DefaultErrorMessage => GetString($"{nameof(AggregateArgumentException)}_{nameof(DefaultErrorMessage)}");
     }
+
+    #endregion
 }

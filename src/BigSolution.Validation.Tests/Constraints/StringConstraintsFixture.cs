@@ -20,134 +20,133 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
 
-namespace BigSolution
+namespace BigSolution;
+
+public class StringConstraintsFixture
 {
-    public class StringConstraintsFixture
+    [Theory]
+    [InlineData(null)]
+    [InlineData("ABC")]
+    public void DoesMatchesSucceeds(string? value)
     {
-        [Theory]
-        [InlineData(null)]
-        [InlineData("ABC")]
-        public void DoesMatchesSucceeds(string? value)
-        {
-            var act = () => Requires.Argument(value, nameof(value))
-                .DoesNotMatch(@"\d{3}")
-                .Check();
-            act.Should().NotThrow<ArgumentException>();
-        }
+        var act = () => Requires.Argument(value, nameof(value))
+            .DoesNotMatch(@"\d{3}")
+            .Check();
+        act.Should().NotThrow<ArgumentException>();
+    }
 
-        [Theory]
-        [InlineData("123")]
-        public void DoesNotMatchFailed(string? value)
-        {
-            var act = () => Requires.Argument(value, nameof(value))
-                .DoesNotMatch(@"\d{3}")
-                .Check();
+    [Theory]
+    [InlineData("123")]
+    public void DoesNotMatchFailed(string? value)
+    {
+        var act = () => Requires.Argument(value, nameof(value))
+            .DoesNotMatch(@"\d{3}")
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage(@"The value '*' must not match '\d{3}'.*")
-                .Which.ParamName.Should().Be(nameof(value));
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage(@"The value '*' must not match '\d{3}'.*")
+            .Which.ParamName.Should().Be(nameof(value));
+    }
 
-        [Theory]
-        [InlineData("ABC")]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void MatchesFailed(string? value)
-        {
-            var act = () => Requires.Argument(value, nameof(value))
-                .Matches(@"\d{3}")
-                .Check();
+    [Theory]
+    [InlineData("ABC")]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void MatchesFailed(string? value)
+    {
+        var act = () => Requires.Argument(value, nameof(value))
+            .Matches(@"\d{3}")
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage(@"The value 'ABC' must match '\d{3}'.*")
-                .Which.ParamName.Should().Be(nameof(value));
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage(@"The value 'ABC' must match '\d{3}'.*")
+            .Which.ParamName.Should().Be(nameof(value));
+    }
 
-        [Theory]
-        [InlineData("123")]
-        [InlineData(null)]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void MatchesSucceeds(string? value)
-        {
-            var act = () => Requires.Argument(value, nameof(value))
-                .Matches(@"\d{3}")
-                .Check();
-            act.Should().NotThrow<ArgumentException>();
-        }
+    [Theory]
+    [InlineData("123")]
+    [InlineData(null)]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void MatchesSucceeds(string? value)
+    {
+        var act = () => Requires.Argument(value, nameof(value))
+            .Matches(@"\d{3}")
+            .Check();
+        act.Should().NotThrow<ArgumentException>();
+    }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void NotEmptyFailed()
-        {
-            var act = () => Requires.Argument(string.Empty, "param")
-                .IsNotEmpty()
-                .Check();
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void NotEmptyFailed()
+    {
+        var act = () => Requires.Argument(string.Empty, "param")
+            .IsNotEmpty()
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The value is empty.*")
-                .Which.ParamName.Should().Be("param");
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The value is empty.*")
+            .Which.ParamName.Should().Be("param");
+    }
 
-        [Theory]
-        [InlineData(null)]
-        [InlineData("value")]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void NotEmptySucceeds(string? value)
-        {
-            var act = () => Requires.Argument(value, nameof(value))
-                .IsNotEmpty()
-                .Check();
+    [Theory]
+    [InlineData(null)]
+    [InlineData("value")]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void NotEmptySucceeds(string? value)
+    {
+        var act = () => Requires.Argument(value, nameof(value))
+            .IsNotEmpty()
+            .Check();
 
-            act.Should().NotThrow();
-        }
+        act.Should().NotThrow();
+    }
 
-        [Theory]
-        [InlineData("")]
-        [InlineData(null)]
-        public void NotNullOrEmptyFailed(string? param)
-        {
-            var act = () => Requires.Argument(param, nameof(param))
-                .IsNotNullOrEmpty()
-                .Check();
+    [Theory]
+    [InlineData("")]
+    [InlineData(null)]
+    public void NotNullOrEmptyFailed(string? param)
+    {
+        var act = () => Requires.Argument(param, nameof(param))
+            .IsNotNullOrEmpty()
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The value is null or empty.*")
-                .Which.ParamName.Should().Be(nameof(param));
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The value is null or empty.*")
+            .Which.ParamName.Should().Be(nameof(param));
+    }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void NotNullOrEmptySucceeds()
-        {
-            var act = () => Requires.Argument("this is a text", "param")
-                .IsNotNullOrEmpty()
-                .Check();
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void NotNullOrEmptySucceeds()
+    {
+        var act = () => Requires.Argument("this is a text", "param")
+            .IsNotNullOrEmpty()
+            .Check();
 
-            act.Should().NotThrow();
-        }
+        act.Should().NotThrow();
+    }
 
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData(" ")]
-        public void NotNullOrWhiteSpaceFailed(string? value)
-        {
-            var act = () => Requires.Argument(value, nameof(value))
-                .IsNotNullOrWhiteSpace()
-                .Check();
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData(" ")]
+    public void NotNullOrWhiteSpaceFailed(string? value)
+    {
+        var act = () => Requires.Argument(value, nameof(value))
+            .IsNotNullOrWhiteSpace()
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The value is null or empty or contains only white spaces.*")
-                .Which.ParamName.Should().Be(nameof(value));
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The value is null or empty or contains only white spaces.*")
+            .Which.ParamName.Should().Be(nameof(value));
+    }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void NotNullOrWhiteSpaceSucceeds()
-        {
-            var act = () => Requires.Argument("value", "param")
-                .IsNotNullOrWhiteSpace()
-                .Check();
-            act.Should().NotThrow<ArgumentException>();
-        }
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void NotNullOrWhiteSpaceSucceeds()
+    {
+        var act = () => Requires.Argument("value", "param")
+            .IsNotNullOrWhiteSpace()
+            .Check();
+        act.Should().NotThrow<ArgumentException>();
     }
 }

@@ -17,43 +17,42 @@
 #endregion
 
 
-namespace BigSolution
+namespace BigSolution;
+
+public static class CollectionConstraints
 {
-    public static class CollectionConstraints
+    public static IArgumentValidation<ICollection<T?>> ContainsSingle<T>(this IArgumentValidation<ICollection<T?>> argumentValidation)
     {
-        public static IArgumentValidation<ICollection<T?>> ContainsSingle<T>(this IArgumentValidation<ICollection<T?>> argumentValidation)
-        {
-            return argumentValidation.Validate(
-                collection => collection?.Any() ?? true,
-                parameterName => new ArgumentException(Resources.CollectionConstraints.ContainsSingleErrorMessage, parameterName));
-        }
+        return argumentValidation.Validate(
+            collection => collection?.Any() ?? true,
+            parameterName => new ArgumentException(Resources.CollectionConstraints.ContainsSingleErrorMessage, parameterName));
+    }
 
-        public static IArgumentValidation<ICollection<T?>> DoesNotContainNullElement<T>(this IArgumentValidation<ICollection<T?>> argumentValidation)
-        {
-            return argumentValidation.Validate(
-                collection => collection == null || !collection.Any() || collection.Any(element => !Equals(element, null)),
-                parameterName => new ArgumentException(Resources.CollectionConstraints.DoesNotContainNullElementErrorMessage, parameterName));
-        }
+    public static IArgumentValidation<ICollection<T?>> DoesNotContainNullElement<T>(this IArgumentValidation<ICollection<T?>> argumentValidation)
+    {
+        return argumentValidation.Validate(
+            collection => collection == null || !collection.Any() || collection.Any(element => !Equals(element, null)),
+            parameterName => new ArgumentException(Resources.CollectionConstraints.DoesNotContainNullElementErrorMessage, parameterName));
+    }
 
-        public static IArgumentValidation<ICollection<T?>> IsEmpty<T>(this IArgumentValidation<ICollection<T?>> argumentValidation)
-        {
-            return argumentValidation.Validate(
-                collection => collection == null || collection.Count == 0,
-                parameterName => new ArgumentException(Resources.CollectionConstraints.IsEmptyErrorMessage, parameterName));
-        }
+    public static IArgumentValidation<ICollection<T?>> IsEmpty<T>(this IArgumentValidation<ICollection<T?>> argumentValidation)
+    {
+        return argumentValidation.Validate(
+            collection => collection == null || collection.Count == 0,
+            parameterName => new ArgumentException(Resources.CollectionConstraints.IsEmptyErrorMessage, parameterName));
+    }
 
-        public static IArgumentValidation<ICollection<T?>> IsNotEmpty<T>(this IArgumentValidation<ICollection<T?>> argumentValidation)
-        {
-            return argumentValidation.Validate(
-                collection => collection == null || collection.Count > 0,
-                parameterName => new ArgumentException(Resources.CollectionConstraints.IsNotEmptyErrorMessage, parameterName));
-        }
+    public static IArgumentValidation<ICollection<T?>> IsNotEmpty<T>(this IArgumentValidation<ICollection<T?>> argumentValidation)
+    {
+        return argumentValidation.Validate(
+            collection => collection == null || collection.Count > 0,
+            parameterName => new ArgumentException(Resources.CollectionConstraints.IsNotEmptyErrorMessage, parameterName));
+    }
 
-        public static IArgumentValidation<ICollection<T?>> IsNotNullOrEmpty<T>(this IArgumentValidation<ICollection<T?>> argumentValidation)
-        {
-            return argumentValidation.Validate(
-                collection => collection is { Count: > 0 },
-                parameterName => new ArgumentException(Resources.CollectionConstraints.IsNotNullOrEmptyErrorMessage, parameterName));
-        }
+    public static IArgumentValidation<ICollection<T?>> IsNotNullOrEmpty<T>(this IArgumentValidation<ICollection<T?>> argumentValidation)
+    {
+        return argumentValidation.Validate(
+            collection => collection is { Count: > 0 },
+            parameterName => new ArgumentException(Resources.CollectionConstraints.IsNotNullOrEmptyErrorMessage, parameterName));
     }
 }

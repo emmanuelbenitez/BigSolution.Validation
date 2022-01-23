@@ -19,15 +19,14 @@
 using FluentAssertions;
 using Xunit;
 
-namespace BigSolution
+namespace BigSolution;
+
+public class ArgumentValidationExtensionsFixture
 {
-    public class ArgumentValidationExtensionsFixture
+    [Fact]
+    public void CheckSucceedsWhenArgumentValidationIsNull()
     {
-        [Fact]
-        public void CheckSucceedsWhenArgumentValidationIsNull()
-        {
-            var act = () => ArgumentValidationExtensions.Check<object>(null);
-            act.Should().NotThrow();
-        }
+        var act = () => ArgumentValidationExtensions.Check<object>(null);
+        act.Should().NotThrow();
     }
 }

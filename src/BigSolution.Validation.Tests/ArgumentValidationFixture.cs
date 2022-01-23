@@ -20,45 +20,44 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
 
-namespace BigSolution
+namespace BigSolution;
+
+public class ArgumentValidationFixture
 {
-    public class ArgumentValidationFixture
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    [Fact]
+    public void AddExceptionSucceeds()
     {
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        [Fact]
-        public void AddExceptionSucceeds()
-        {
-            var argumentValidation = Requires.Argument(string.Empty, "param");
-            var exception = new ArgumentException();
+        var argumentValidation = Requires.Argument(string.Empty, "param");
+        var exception = new ArgumentException();
 
-            argumentValidation.AddException(exception);
+        argumentValidation.AddException(exception);
 
-            argumentValidation.Exceptions.Should().BeEquivalentTo(new[] { exception });
-        }
+        argumentValidation.Exceptions.Should().BeEquivalentTo(new[] { exception });
+    }
 
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        [Fact]
-        public void CheckThrowsAggregateArgumentException()
-        {
-            var act = () => Requires.Argument("value", "param")
-                .IsNotEqualTo("value")
-                .IsNotEqualTo("value")
-                .Check();
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    [Fact]
+    public void CheckThrowsAggregateArgumentException()
+    {
+        var act = () => Requires.Argument("value", "param")
+            .IsNotEqualTo("value")
+            .IsNotEqualTo("value")
+            .Check();
 
-            act.Should().ThrowExactly<AggregateArgumentException>().Which.Exceptions.Should().HaveCount(2);
-        }
+        act.Should().ThrowExactly<AggregateArgumentException>().Which.Exceptions.Should().HaveCount(2);
+    }
 #pragma warning restore IDE0079 // Remove unnecessary suppression
 
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData(" ")]
-        public void CreationFailedForInvalidParameterName(string parameterName)
-        {
-            Action act = () => Requires.Argument(string.Empty, parameterName);
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData(" ")]
+    public void CreationFailedForInvalidParameterName(string parameterName)
+    {
+        Action act = () => Requires.Argument(string.Empty, parameterName);
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The value is null or empty.*");
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The value is null or empty.*");
     }
 }

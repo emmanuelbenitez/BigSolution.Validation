@@ -20,43 +20,42 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
 
-namespace BigSolution
+namespace BigSolution;
+
+public class EnumConstraintsFixture
 {
-    public class EnumConstraintsFixture
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void FlagFailed()
     {
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void FlagFailed()
-        {
-            var act = () => Requires.Argument(Enum.None, "param")
-                .IsFlag()
-                .Check();
+        var act = () => Requires.Argument(Enum.None, "param")
+            .IsFlag()
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The enum 'BigSolution.EnumConstraintsFixture+Enum' is not a flag.*")
-                .Which.ParamName.Should().Be("param");
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The enum 'BigSolution.EnumConstraintsFixture+Enum' is not a flag.*")
+            .Which.ParamName.Should().Be("param");
+    }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void FlagSucceeds()
-        {
-            var act = () => Requires.Argument(FlagEnum.None, "param")
-                .IsFlag()
-                .Check();
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void FlagSucceeds()
+    {
+        var act = () => Requires.Argument(FlagEnum.None, "param")
+            .IsFlag()
+            .Check();
 
-            act.Should().NotThrow();
-        }
+        act.Should().NotThrow();
+    }
 
-        [Flags]
-        private enum FlagEnum
-        {
-            None
-        }
+    [Flags]
+    private enum FlagEnum
+    {
+        None
+    }
 
-        private enum Enum
-        {
-            None
-        }
+    private enum Enum
+    {
+        None
     }
 }

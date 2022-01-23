@@ -20,69 +20,68 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 
-namespace BigSolution
+namespace BigSolution;
+
+public static class StringConstraints
 {
-    public static class StringConstraints
+    public static IArgumentValidation<string?> DoesNotMatch(
+        this IArgumentValidation<string?> argumentValidation,
+        [RegexPattern] string pattern,
+        RegexOptions options = RegexOptions.None)
     {
-        public static IArgumentValidation<string?> DoesNotMatch(
-            this IArgumentValidation<string?> argumentValidation,
-            [RegexPattern] string pattern,
-            RegexOptions options = RegexOptions.None)
-        {
-            return argumentValidation.DoesNotMatch(new Regex(pattern, options));
-        }
+        return argumentValidation.DoesNotMatch(new Regex(pattern, options));
+    }
 
-        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Public API.")]
-        public static IArgumentValidation<string?> DoesNotMatch(this IArgumentValidation<string?> argumentValidation, Regex regularExpression)
-        {
-            return argumentValidation.Validate(
-                value => value == null || !regularExpression.IsMatch(value),
-                parameterName => new ArgumentException(
-                    Resources.StringConstraints.DoesNotMatchErrorMessage(argumentValidation.Value, regularExpression.ToString()),
-                    parameterName));
-        }
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Public API.")]
+    public static IArgumentValidation<string?> DoesNotMatch(this IArgumentValidation<string?> argumentValidation, Regex regularExpression)
+    {
+        return argumentValidation.Validate(
+            value => value == null || !regularExpression.IsMatch(value),
+            parameterName => new ArgumentException(
+                Resources.StringConstraints.DoesNotMatchErrorMessage(argumentValidation.Value, regularExpression.ToString()),
+                parameterName));
+    }
 
-        public static IArgumentValidation<string?> IsNotEmpty(this IArgumentValidation<string?> argumentValidation)
-        {
-            return argumentValidation.Validate(
-                value => value == null || value.Length > 0,
-                parameterName => new ArgumentException(Resources.StringConstraints.IsNotEmptyErrorMessage, parameterName));
-        }
+    public static IArgumentValidation<string?> IsNotEmpty(this IArgumentValidation<string?> argumentValidation)
+    {
+        return argumentValidation.Validate(
+            value => value == null || value.Length > 0,
+            parameterName => new ArgumentException(Resources.StringConstraints.IsNotEmptyErrorMessage, parameterName));
+    }
 
-        public static IArgumentValidation<string?> IsNotNullOrEmpty(this IArgumentValidation<string?> argumentValidation)
-        {
-            return argumentValidation.Validate(
-                value => !string.IsNullOrEmpty(value),
-                parameterName => new ArgumentException(Resources.StringConstraints.IsNotNullOrEmptyErrorMessage, parameterName));
-        }
+    public static IArgumentValidation<string?> IsNotNullOrEmpty(this IArgumentValidation<string?> argumentValidation)
+    {
+        return argumentValidation.Validate(
+            value => !string.IsNullOrEmpty(value),
+            parameterName => new ArgumentException(Resources.StringConstraints.IsNotNullOrEmptyErrorMessage, parameterName));
+    }
 
-        public static IArgumentValidation<string?> IsNotNullOrWhiteSpace(this IArgumentValidation<string?> argumentValidation)
-        {
-            return argumentValidation.Validate(
-                value => !string.IsNullOrWhiteSpace(value),
-                parameterName => new ArgumentException(Resources.StringConstraints.IsNotNullOrWhiteSpaceErrorMessage, parameterName));
-        }
+    public static IArgumentValidation<string?> IsNotNullOrWhiteSpace(this IArgumentValidation<string?> argumentValidation)
+    {
+        return argumentValidation.Validate(
+            value => !string.IsNullOrWhiteSpace(value),
+            parameterName => new ArgumentException(Resources.StringConstraints.IsNotNullOrWhiteSpaceErrorMessage, parameterName));
+    }
 
-        public static IArgumentValidation<string?> Matches(
-            this IArgumentValidation<string?> argumentValidation,
-            [RegexPattern] string pattern,
-            RegexOptions options = RegexOptions.None)
-        {
-            Requires.Argument(pattern, nameof(pattern))
-                .IsNotEmpty()
-                .Check();
+    public static IArgumentValidation<string?> Matches(
+        this IArgumentValidation<string?> argumentValidation,
+        [RegexPattern] string pattern,
+        RegexOptions options = RegexOptions.None)
+    {
+        Requires.Argument(pattern, nameof(pattern))
+            .IsNotEmpty()
+            .Check();
 
-            return argumentValidation.Matches(new Regex(pattern, options));
-        }
+        return argumentValidation.Matches(new Regex(pattern, options));
+    }
 
-        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Public API.")]
-        public static IArgumentValidation<string?> Matches(this IArgumentValidation<string?> argumentValidation, Regex regularExpression)
-        {
-            return argumentValidation.Validate(
-                value => value == null || regularExpression.IsMatch(value),
-                parameterName => new ArgumentException(
-                    Resources.StringConstraints.MatchesErrorMessage(argumentValidation.Value, regularExpression.ToString()),
-                    parameterName));
-        }
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Public API.")]
+    public static IArgumentValidation<string?> Matches(this IArgumentValidation<string?> argumentValidation, Regex regularExpression)
+    {
+        return argumentValidation.Validate(
+            value => value == null || regularExpression.IsMatch(value),
+            parameterName => new ArgumentException(
+                Resources.StringConstraints.MatchesErrorMessage(argumentValidation.Value, regularExpression.ToString()),
+                parameterName));
     }
 }

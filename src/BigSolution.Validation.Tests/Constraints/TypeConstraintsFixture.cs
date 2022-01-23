@@ -20,33 +20,32 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
 
-namespace BigSolution
+namespace BigSolution;
+
+public class TypeConstraintsFixture
 {
-    public class TypeConstraintsFixture
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText", Justification = "Testing purpose")]
+    public void InterfaceFailed()
     {
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText", Justification = "Testing purpose")]
-        public void InterfaceFailed()
-        {
-            var act = () => Requires.Argument(typeof(object), "param")
-                .IsInterface()
-                .Check();
+        var act = () => Requires.Argument(typeof(object), "param")
+            .IsInterface()
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The type '*' is not an interface.*")
-                .Which.ParamName.Should().Be("param");
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The type '*' is not an interface.*")
+            .Which.ParamName.Should().Be("param");
+    }
 
-        [Theory]
-        [InlineData(null)]
-        [InlineData(typeof(IArgumentValidation))]
-        public void InterfaceSucceeds(Type? type)
-        {
-            var act = () => Requires.Argument(type, nameof(type))
-                .IsInterface()
-                .Check();
+    [Theory]
+    [InlineData(null)]
+    [InlineData(typeof(IArgumentValidation))]
+    public void InterfaceSucceeds(Type? type)
+    {
+        var act = () => Requires.Argument(type, nameof(type))
+            .IsInterface()
+            .Check();
 
-            act.Should().NotThrow();
-        }
+        act.Should().NotThrow();
     }
 }

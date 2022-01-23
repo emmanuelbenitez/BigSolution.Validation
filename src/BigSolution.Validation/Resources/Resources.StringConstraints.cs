@@ -18,34 +18,33 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace BigSolution
+namespace BigSolution;
+
+internal static partial class Resources
 {
-    internal static partial class Resources
+    #region Nested Type: StringConstraints
+
+    public static class StringConstraints
     {
-        #region Nested Type: StringConstraints
+        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
+        public static string IsNotEmptyErrorMessage => GetString($"{nameof(StringConstraints)}_{nameof(IsNotEmptyErrorMessage)}");
 
-        public static class StringConstraints
+        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
+        public static string IsNotNullOrEmptyErrorMessage => GetString($"{nameof(StringConstraints)}_{nameof(IsNotNullOrEmptyErrorMessage)}");
+
+        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
+        public static string IsNotNullOrWhiteSpaceErrorMessage => GetString($"{nameof(StringConstraints)}_{nameof(IsNotNullOrWhiteSpaceErrorMessage)}");
+
+        public static string DoesNotMatchErrorMessage(string? value, string pattern)
         {
-            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
-            public static string IsNotEmptyErrorMessage => GetString($"{nameof(StringConstraints)}_{nameof(IsNotEmptyErrorMessage)}");
-
-            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
-            public static string IsNotNullOrEmptyErrorMessage => GetString($"{nameof(StringConstraints)}_{nameof(IsNotNullOrEmptyErrorMessage)}");
-
-            [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
-            public static string IsNotNullOrWhiteSpaceErrorMessage => GetString($"{nameof(StringConstraints)}_{nameof(IsNotNullOrWhiteSpaceErrorMessage)}");
-
-            public static string DoesNotMatchErrorMessage(string? value, string pattern)
-            {
-                return GetFormattedString($"{nameof(StringConstraints)}_{nameof(DoesNotMatchErrorMessage)}", null, value, pattern);
-            }
-
-            public static string MatchesErrorMessage(string? value, string pattern)
-            {
-                return GetFormattedString($"{nameof(StringConstraints)}_{nameof(MatchesErrorMessage)}", null, value, pattern);
-            }
+            return GetFormattedString($"{nameof(StringConstraints)}_{nameof(DoesNotMatchErrorMessage)}", null, value, pattern);
         }
 
-        #endregion
+        public static string MatchesErrorMessage(string? value, string pattern)
+        {
+            return GetFormattedString($"{nameof(StringConstraints)}_{nameof(MatchesErrorMessage)}", null, value, pattern);
+        }
     }
+
+    #endregion
 }

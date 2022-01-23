@@ -19,44 +19,43 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
-namespace BigSolution
+namespace BigSolution;
+
+[Serializable]
+public class AggregateArgumentException : ArgumentException
 {
-    [Serializable]
-    public class AggregateArgumentException : ArgumentException
+    [ExcludeFromCodeCoverage]
+    public AggregateArgumentException() { }
+
+    public AggregateArgumentException(IEnumerable<ArgumentException> exceptions)
+        : this(Resources.AggregateArgumentException.DefaultErrorMessage, exceptions) { }
+
+    public AggregateArgumentException(string message, IEnumerable<ArgumentException> exceptions)
+        : base(message)
     {
-        [ExcludeFromCodeCoverage]
-        public AggregateArgumentException() { }
-
-        public AggregateArgumentException(IEnumerable<ArgumentException> exceptions)
-            : this(Resources.AggregateArgumentException.DefaultErrorMessage, exceptions) { }
-
-        public AggregateArgumentException(string message, IEnumerable<ArgumentException> exceptions)
-            : base(message)
-        {
-            Exceptions = exceptions.ToArray();
-        }
-
-        public AggregateArgumentException(string message, string paramName, IEnumerable<ArgumentException> exceptions)
-            : base(message, paramName)
-        {
-            Exceptions = exceptions.ToArray();
-        }
-
-        [ExcludeFromCodeCoverage]
-        protected AggregateArgumentException(SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
-
-        #region Base Class Member Overrides
-
-        [ExcludeFromCodeCoverage]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddValue("Exceptions", Exceptions, typeof(IEnumerable<Exception>));
-        }
-
-        #endregion
-
-        public ArgumentException[] Exceptions { get; } = Array.Empty<ArgumentException>();
+        Exceptions = exceptions.ToArray();
     }
+
+    public AggregateArgumentException(string message, string paramName, IEnumerable<ArgumentException> exceptions)
+        : base(message, paramName)
+    {
+        Exceptions = exceptions.ToArray();
+    }
+
+    [ExcludeFromCodeCoverage]
+    protected AggregateArgumentException(SerializationInfo info, StreamingContext context)
+        : base(info, context) { }
+
+    #region Base Class Member Overrides
+
+    [ExcludeFromCodeCoverage]
+    public override void GetObjectData(SerializationInfo info, StreamingContext context)
+    {
+        base.GetObjectData(info, context);
+        info.AddValue("Exceptions", Exceptions, typeof(IEnumerable<Exception>));
+    }
+
+    #endregion
+
+    public ArgumentException[] Exceptions { get; } = Array.Empty<ArgumentException>();
 }

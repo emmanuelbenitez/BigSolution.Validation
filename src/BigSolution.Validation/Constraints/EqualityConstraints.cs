@@ -16,24 +16,23 @@
 
 #endregion
 
-namespace BigSolution
-{
-    public static class EqualityConstraints
-    {
-        public static IArgumentValidation<T> DoesNotEqualTo<T>(this IArgumentValidation<T> argumentValidation, T? valueToCompare)
-            where T : IEquatable<T>?
-        {
-            return argumentValidation.Validate(
-                value => !Equals(value, valueToCompare),
-                parameterName => new ArgumentException(Resources.ComparisonConstraints.IsNotEqualToErrorMessage(valueToCompare), parameterName));
-        }
+namespace BigSolution;
 
-        public static IArgumentValidation<T> EqualsTo<T>(this IArgumentValidation<T> argumentValidation, T? valueToCompare)
-            where T : IEquatable<T>?
-        {
-            return argumentValidation.Validate(
-                value => Equals(value, valueToCompare),
-                parameterName => new ArgumentException(Resources.ComparisonConstraints.IsEqualToErrorMessage(valueToCompare), parameterName));
-        }
+public static class EqualityConstraints
+{
+    public static IArgumentValidation<T> DoesNotEqualTo<T>(this IArgumentValidation<T> argumentValidation, T? valueToCompare)
+        where T : IEquatable<T>?
+    {
+        return argumentValidation.Validate(
+            value => !Equals(value, valueToCompare),
+            parameterName => new ArgumentException(Resources.ComparisonConstraints.IsNotEqualToErrorMessage(valueToCompare), parameterName));
+    }
+
+    public static IArgumentValidation<T> EqualsTo<T>(this IArgumentValidation<T> argumentValidation, T? valueToCompare)
+        where T : IEquatable<T>?
+    {
+        return argumentValidation.Validate(
+            value => Equals(value, valueToCompare),
+            parameterName => new ArgumentException(Resources.ComparisonConstraints.IsEqualToErrorMessage(valueToCompare), parameterName));
     }
 }

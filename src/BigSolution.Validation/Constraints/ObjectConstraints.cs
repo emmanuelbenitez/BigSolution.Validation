@@ -16,13 +16,12 @@
 
 #endregion
 
-namespace BigSolution
+namespace BigSolution;
+
+public static class ObjectConstraints
 {
-    public static class ObjectConstraints
+    public static IArgumentValidation<T> IsNotNull<T>(this IArgumentValidation<T> argumentValidation)
     {
-        public static IArgumentValidation<T> IsNotNull<T>(this IArgumentValidation<T> argumentValidation)
-        {
-            return argumentValidation.Validate(value => !Equals(null, value), parameterName => new ArgumentNullException(parameterName));
-        }
+        return argumentValidation.Validate(value => !Equals(null, value), parameterName => new ArgumentNullException(parameterName));
     }
 }

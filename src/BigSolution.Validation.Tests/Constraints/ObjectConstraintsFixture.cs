@@ -20,41 +20,40 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
 
-namespace BigSolution
+namespace BigSolution;
+
+public class ObjectConstraintsFixture
 {
-    public class ObjectConstraintsFixture
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void NotNullFailed()
     {
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void NotNullFailed()
-        {
-            var act = () => Requires.Argument((object?)null, "param")
-                .IsNotNull()
-                .Check();
+        var act = () => Requires.Argument((object?)null, "param")
+            .IsNotNull()
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentNullException>().Which.ParamName.Should().Be("param");
-        }
+        act.Should().ThrowExactly<ArgumentNullException>().Which.ParamName.Should().Be("param");
+    }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void NotNullFailedForNullable()
-        {
-            var act = () => Requires.Argument((int?)null, "param")
-                .IsNotNull()
-                .Check();
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void NotNullFailedForNullable()
+    {
+        var act = () => Requires.Argument((int?)null, "param")
+            .IsNotNull()
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentNullException>().Which.ParamName.Should().Be("param");
-        }
+        act.Should().ThrowExactly<ArgumentNullException>().Which.ParamName.Should().Be("param");
+    }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void NotNullSucceeds()
-        {
-            var act = () => Requires.Argument(new object(), "param")
-                .IsNotNull()
-                .Check();
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void NotNullSucceeds()
+    {
+        var act = () => Requires.Argument(new object(), "param")
+            .IsNotNull()
+            .Check();
 
-            act.Should().NotThrow();
-        }
+        act.Should().NotThrow();
     }
 }

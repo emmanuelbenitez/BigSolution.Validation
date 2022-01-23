@@ -16,20 +16,19 @@
 
 #endregion
 
-namespace BigSolution
+namespace BigSolution;
+
+internal static partial class Resources
 {
-    internal static partial class Resources
+    #region Nested Type: EnumConstraints
+
+    public static class EnumConstraints
     {
-        #region Nested Type: EnumConstraints
-
-        public static class EnumConstraints
+        public static string IsFlagErrorMessage(Type? enumType)
         {
-            public static string IsFlagErrorMessage(Type? enumType)
-            {
-                return GetFormattedString($"{nameof(EnumConstraints)}_{nameof(IsFlagErrorMessage)}", null, enumType);
-            }
+            return GetFormattedString($"{nameof(EnumConstraints)}_{nameof(IsFlagErrorMessage)}", null, enumType);
         }
-
-        #endregion
     }
+
+    #endregion
 }

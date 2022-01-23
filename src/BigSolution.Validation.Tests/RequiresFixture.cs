@@ -20,17 +20,16 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
 
-namespace BigSolution
+namespace BigSolution;
+
+public class RequiresFixture
 {
-    public class RequiresFixture
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void ArgumentValidationProvided()
     {
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void ArgumentValidationProvided()
-        {
-            Requires.Argument((object?)null, "param")
-                .Should().Match<IArgumentValidation<object?>>(validation => validation.Value == null && validation.Name == "param")
-                .And.BeAssignableTo<IArgumentValidation<object?>>().Which.Exceptions.Should().BeEmpty();
-        }
+        Requires.Argument((object?)null, "param")
+            .Should().Match<IArgumentValidation<object?>>(validation => validation.Value == null && validation.Name == "param")
+            .And.BeAssignableTo<IArgumentValidation<object?>>().Which.Exceptions.Should().BeEmpty();
     }
 }

@@ -19,16 +19,15 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace BigSolution
+namespace BigSolution;
+
+public static class EnumExtensions
 {
-    public static class EnumExtensions
+    [SuppressMessage("ReSharper", "UnusedParameter.Global")]
+    [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
+    public static bool IsFlag<TEnum>(this TEnum? value)
+        where TEnum : Enum
     {
-        [SuppressMessage("ReSharper", "UnusedParameter.Global")]
-        [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
-        public static bool IsFlag<TEnum>(this TEnum? value)
-            where TEnum : Enum
-        {
-            return typeof(TEnum).GetCustomAttribute<FlagsAttribute>() != null;
-        }
+        return typeof(TEnum).GetCustomAttribute<FlagsAttribute>() != null;
     }
 }

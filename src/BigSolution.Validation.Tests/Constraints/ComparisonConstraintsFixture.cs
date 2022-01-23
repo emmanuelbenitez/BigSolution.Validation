@@ -20,160 +20,159 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
 
-namespace BigSolution
+namespace BigSolution;
+
+public class ComparisonConstraintsFixture
 {
-    public class ComparisonConstraintsFixture
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void EqualToFailed()
     {
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void EqualToFailed()
-        {
-            var act = () => Requires.Argument(1, "param")
-                .IsEqualTo(0)
-                .Check();
+        var act = () => Requires.Argument(1, "param")
+            .IsEqualTo(0)
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The value must be equal to '0'.*")
-                .Which.ParamName.Should().Be("param");
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The value must be equal to '0'.*")
+            .Which.ParamName.Should().Be("param");
+    }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void EqualToSucceeds()
-        {
-            var act = () => Requires.Argument(1, "param")
-                .IsEqualTo(1)
-                .Check();
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void EqualToSucceeds()
+    {
+        var act = () => Requires.Argument(1, "param")
+            .IsEqualTo(1)
+            .Check();
 
-            act.Should().NotThrow();
-        }
+        act.Should().NotThrow();
+    }
 
-        [Theory]
-        [InlineData("a", "z")]
-        public void GreaterOrEqualThanFailed(string? value, string? valueToCompare)
-        {
-            var act = () => Requires.Argument(value, nameof(value))
-                .IsGreaterOrEqualThan(valueToCompare)
-                .Check();
+    [Theory]
+    [InlineData("a", "z")]
+    public void GreaterOrEqualThanFailed(string? value, string? valueToCompare)
+    {
+        var act = () => Requires.Argument(value, nameof(value))
+            .IsGreaterOrEqualThan(valueToCompare)
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The value '*' must be greater or equal than '*'.*")
-                .Which.ParamName.Should().Be(nameof(value));
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The value '*' must be greater or equal than '*'.*")
+            .Which.ParamName.Should().Be(nameof(value));
+    }
 
-        [Theory]
-        [InlineData("z", "a")]
-        [InlineData("z", "z")]
-        [InlineData("z", null)]
-        public void GreaterOrEqualThanSucceeds(string? value, string? valueToCompare)
-        {
-            var act = () => Requires.Argument(value, nameof(value))
-                .IsGreaterOrEqualThan(valueToCompare)
-                .Check();
+    [Theory]
+    [InlineData("z", "a")]
+    [InlineData("z", "z")]
+    [InlineData("z", null)]
+    public void GreaterOrEqualThanSucceeds(string? value, string? valueToCompare)
+    {
+        var act = () => Requires.Argument(value, nameof(value))
+            .IsGreaterOrEqualThan(valueToCompare)
+            .Check();
 
-            act.Should().NotThrow();
-        }
+        act.Should().NotThrow();
+    }
 
-        [Theory]
-        [InlineData("a", "z")]
-        [InlineData("z", "z")]
-        public void GreaterThanFailed(string? value, string? valueToCompare)
-        {
-            var act = () => Requires.Argument(value, nameof(value))
-                .IsGreaterThan(valueToCompare)
-                .Check();
+    [Theory]
+    [InlineData("a", "z")]
+    [InlineData("z", "z")]
+    public void GreaterThanFailed(string? value, string? valueToCompare)
+    {
+        var act = () => Requires.Argument(value, nameof(value))
+            .IsGreaterThan(valueToCompare)
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The value '*' must be greater than '*'.*")
-                .Which.ParamName.Should().Be(nameof(value));
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The value '*' must be greater than '*'.*")
+            .Which.ParamName.Should().Be(nameof(value));
+    }
 
-        [Theory]
-        [InlineData("z", "a")]
-        [InlineData("z", null)]
-        public void GreaterThanSucceeds(string? value, string? valueToCompare)
-        {
-            var act = () => Requires.Argument(value, nameof(value))
-                .IsGreaterThan(valueToCompare)
-                .Check();
+    [Theory]
+    [InlineData("z", "a")]
+    [InlineData("z", null)]
+    public void GreaterThanSucceeds(string? value, string? valueToCompare)
+    {
+        var act = () => Requires.Argument(value, nameof(value))
+            .IsGreaterThan(valueToCompare)
+            .Check();
 
-            act.Should().NotThrow();
-        }
+        act.Should().NotThrow();
+    }
 
-        [Theory]
-        [InlineData("z", "a")]
-        [InlineData("z", null)]
-        public void LessOrEqualThanFailed(string? value, string? valueToCompare)
-        {
-            var act = () => Requires.Argument(value, nameof(value))
-                .IsLessOrEqualThan(valueToCompare)
-                .Check();
+    [Theory]
+    [InlineData("z", "a")]
+    [InlineData("z", null)]
+    public void LessOrEqualThanFailed(string? value, string? valueToCompare)
+    {
+        var act = () => Requires.Argument(value, nameof(value))
+            .IsLessOrEqualThan(valueToCompare)
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The value '*' must be less or equal than '*'.*")
-                .Which.ParamName.Should().Be(nameof(value));
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The value '*' must be less or equal than '*'.*")
+            .Which.ParamName.Should().Be(nameof(value));
+    }
 
-        [Theory]
-        [InlineData("a", "z")]
-        [InlineData("z", "z")]
-        public void LessOrEqualThanSucceeds(string? value, string? valueToCompare)
-        {
-            var act = () => Requires.Argument(value, nameof(value))
-                .IsLessOrEqualThan(valueToCompare)
-                .Check();
+    [Theory]
+    [InlineData("a", "z")]
+    [InlineData("z", "z")]
+    public void LessOrEqualThanSucceeds(string? value, string? valueToCompare)
+    {
+        var act = () => Requires.Argument(value, nameof(value))
+            .IsLessOrEqualThan(valueToCompare)
+            .Check();
 
-            act.Should().NotThrow();
-        }
+        act.Should().NotThrow();
+    }
 
-        [Theory]
-        [InlineData("z", "a")]
-        [InlineData("z", "z")]
-        [InlineData("z", null)]
-        public void LessThanFailed(string? value, string? valueToCompare)
-        {
-            var act = () => Requires.Argument(value, nameof(value))
-                .IsLessThan(valueToCompare)
-                .Check();
+    [Theory]
+    [InlineData("z", "a")]
+    [InlineData("z", "z")]
+    [InlineData("z", null)]
+    public void LessThanFailed(string? value, string? valueToCompare)
+    {
+        var act = () => Requires.Argument(value, nameof(value))
+            .IsLessThan(valueToCompare)
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The value '*' must be less than '*'.*")
-                .Which.ParamName.Should().Be(nameof(value));
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The value '*' must be less than '*'.*")
+            .Which.ParamName.Should().Be(nameof(value));
+    }
 
-        [Theory]
-        [InlineData("a", "z")]
-        public void LessThanSucceeds(string? value, string? valueToCompare)
-        {
-            var act = () => Requires.Argument(value, nameof(value))
-                .IsLessThan(valueToCompare)
-                .Check();
+    [Theory]
+    [InlineData("a", "z")]
+    public void LessThanSucceeds(string? value, string? valueToCompare)
+    {
+        var act = () => Requires.Argument(value, nameof(value))
+            .IsLessThan(valueToCompare)
+            .Check();
 
-            act.Should().NotThrow();
-        }
+        act.Should().NotThrow();
+    }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void NotEqualToFailed()
-        {
-            var act = () => Requires.Argument(1, "param")
-                .IsNotEqualTo(1)
-                .Check();
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void NotEqualToFailed()
+    {
+        var act = () => Requires.Argument(1, "param")
+            .IsNotEqualTo(1)
+            .Check();
 
-            act.Should().ThrowExactly<ArgumentException>()
-                .WithMessage("The value must not be equal to '1'.*")
-                .Which.ParamName.Should().Be("param");
-        }
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The value must not be equal to '1'.*")
+            .Which.ParamName.Should().Be("param");
+    }
 
-        [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void NotEqualToSucceeds()
-        {
-            var act = () => Requires.Argument(1, "param")
-                .IsNotEqualTo(0)
-                .Check();
+    [Fact]
+    [SuppressMessage("ReSharper", "NotResolvedInText")]
+    public void NotEqualToSucceeds()
+    {
+        var act = () => Requires.Argument(1, "param")
+            .IsNotEqualTo(0)
+            .Check();
 
-            act.Should().NotThrow();
-        }
+        act.Should().NotThrow();
     }
 }
