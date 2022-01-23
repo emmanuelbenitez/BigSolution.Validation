@@ -20,7 +20,7 @@ namespace BigSolution;
 
 internal sealed class ArgumentValidation<T> : IArgumentValidation<T>
 {
-    public ArgumentValidation(T value, string name)
+    public ArgumentValidation(T? value, string name)
     {
         if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException(Resources.StringConstraints.IsNotNullOrEmptyErrorMessage, nameof(name));
 
@@ -39,7 +39,7 @@ internal sealed class ArgumentValidation<T> : IArgumentValidation<T>
 
     public string Name { get; }
 
-    public T Value { get; }
+    public T? Value { get; }
 
     #endregion
 

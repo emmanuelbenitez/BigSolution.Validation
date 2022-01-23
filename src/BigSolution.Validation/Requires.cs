@@ -22,11 +22,6 @@ namespace BigSolution;
 
 public static class Requires
 {
-    //public static IArgumentValidation<T> Argument<T>(T value, [InvokerParameterName] string name)
-    //{
-    //    return new ArgumentValidation<T>(value, name);
-    //}
-
     public static IArgumentValidation<T?> Argument<T>(T? value, [InvokerParameterName] string name)
     {
         return new ArgumentValidation<T?>(value, name);

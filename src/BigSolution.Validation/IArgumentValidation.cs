@@ -29,5 +29,5 @@ public interface IArgumentValidation
 
 public interface IArgumentValidation<out T> : IArgumentValidation
 {
-    T Value { get; }
+    T? Value { get; }
 }
