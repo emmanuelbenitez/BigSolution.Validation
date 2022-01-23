@@ -38,7 +38,6 @@ namespace BigSolution
 
             [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
             public static string IsNotNullOrEmptyErrorMessage => GetString($"{nameof(CollectionConstraints)}_{nameof(IsNotNullOrEmptyErrorMessage)}");
-#pragma warning restore IDE0079 // Remove unnecessary suppression
         }
 
         #endregion
