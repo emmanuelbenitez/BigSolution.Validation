@@ -16,19 +16,16 @@
 
 #endregion
 
-using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
+namespace BigSolution;
 
-namespace BigSolution
+internal static partial class Resources
 {
-    public static class EnumExtensions
+    #region Nested Type: EnumerableConstraints
+
+    public static class EnumerableConstraints
     {
-        [SuppressMessage("ReSharper", "UnusedParameter.Global")]
-        [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
-        public static bool IsFlag<TEnum>(this TEnum? value)
-            where TEnum : Enum
-        {
-            return typeof(TEnum).GetCustomAttribute<FlagsAttribute>() != null;
-        }
+        public static string IsNotEmptyErrorMessage => GetString($"{nameof(EnumerableConstraints)}_{nameof(IsNotEmptyErrorMessage)}");
     }
+
+    #endregion
 }

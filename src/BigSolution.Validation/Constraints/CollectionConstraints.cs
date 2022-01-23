@@ -16,7 +16,6 @@
 
 #endregion
 
-
 namespace BigSolution;
 
 public static class CollectionConstraints
@@ -24,7 +23,7 @@ public static class CollectionConstraints
     public static IArgumentValidation<ICollection<T?>> ContainsSingle<T>(this IArgumentValidation<ICollection<T?>> argumentValidation)
     {
         return argumentValidation.Validate(
-            collection => collection?.Any() ?? true,
+            collection => collection == null || collection.Count == 1,
             parameterName => new ArgumentException(Resources.CollectionConstraints.ContainsSingleErrorMessage, parameterName));
     }
 

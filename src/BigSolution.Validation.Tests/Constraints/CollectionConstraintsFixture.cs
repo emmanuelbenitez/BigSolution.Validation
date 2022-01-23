@@ -24,10 +24,22 @@ namespace BigSolution;
 
 public class CollectionConstraintsFixture
 {
-    [SuppressMessage("Performance", "CA1825:Avoid zero-length array allocations", Justification = "Testing purpose")]
     [SuppressMessage("ReSharper", "NotResolvedInText", Justification = "Testing purpose")]
     [Fact]
     public void ContainsSingleFailed()
+    {
+        var act = () => Requires.Argument(new object[2], "param")!
+            .ContainsSingle()
+            .Check();
+
+        act.Should().ThrowExactly<ArgumentException>()
+            .WithMessage("The collection must contain only one element.*")
+            .And.ParamName.Should().Be("param");
+    }
+
+    [SuppressMessage("ReSharper", "NotResolvedInText", Justification = "Testing purpose")]
+    [Fact]
+    public void ContainsSingleFailedForEmptyCollection()
     {
         var act = () => Requires.Argument(Array.Empty<object?>(), "param")!
             .ContainsSingle()

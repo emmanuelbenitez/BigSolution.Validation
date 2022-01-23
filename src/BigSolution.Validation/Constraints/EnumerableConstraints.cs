@@ -16,19 +16,15 @@
 
 #endregion
 
-using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
+namespace BigSolution;
 
-namespace BigSolution
+public static class EnumerableConstraints
 {
-    public static class EnumExtensions
+    public static IArgumentValidation<IEnumerable<T?>?> IsNotEmpty<T>(this IArgumentValidation<IEnumerable<T?>?> argumentValidation)
     {
-        [SuppressMessage("ReSharper", "UnusedParameter.Global")]
-        [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
-        public static bool IsFlag<TEnum>(this TEnum? value)
-            where TEnum : Enum
-        {
-            return typeof(TEnum).GetCustomAttribute<FlagsAttribute>() != null;
-        }
+        argumentValidation.Validate(
+            enumerable => enumerable == null || enumerable.Any(),
+            parameterName => new ArgumentException(Resources.EnumerableConstraints.IsNotEmptyErrorMessage, parameterName));
+        return argumentValidation;
     }
 }
