@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,32 +24,32 @@ namespace BigSolution
 
         public static class ComparisonConstraints
         {
-            public static string IsEqualToErrorMessage(object valueToCompare)
+            public static string IsEqualToErrorMessage(object? valueToCompare)
             {
                 return GetFormattedString($"{nameof(ComparisonConstraints)}_{nameof(IsEqualToErrorMessage)}", null, valueToCompare);
             }
 
-            public static string IsGreaterOrEqualThanErrorMessage(object value, object valueToCompare)
+            public static string IsGreaterOrEqualThanErrorMessage(object? value, object? valueToCompare)
             {
                 return GetFormattedString($"{nameof(ComparisonConstraints)}_{nameof(IsGreaterOrEqualThanErrorMessage)}", null, value, valueToCompare);
             }
 
-            public static string IsGreaterThanErrorMessage(object value, object valueToCompare)
+            public static string IsGreaterThanErrorMessage(object? value, object? valueToCompare)
             {
                 return GetFormattedString($"{nameof(ComparisonConstraints)}_{nameof(IsGreaterThanErrorMessage)}", null, value, valueToCompare);
             }
 
-            public static string IsLessOrEqualThanErrorMessage(object value, object valueToCompare)
+            public static string IsLessOrEqualThanErrorMessage(object? value, object? valueToCompare)
             {
                 return GetFormattedString($"{nameof(ComparisonConstraints)}_{nameof(IsLessOrEqualThanErrorMessage)}", null, value, valueToCompare);
             }
 
-            public static string IsLessThanErrorMessage(object value, object valueToCompare)
+            public static string IsLessThanErrorMessage(object? value, object? valueToCompare)
             {
                 return GetFormattedString($"{nameof(ComparisonConstraints)}_{nameof(IsLessThanErrorMessage)}", null, value, valueToCompare);
             }
 
-            public static string IsNotEqualToErrorMessage(object valueToCompare)
+            public static string IsNotEqualToErrorMessage(object? valueToCompare)
             {
                 return GetFormattedString($"{nameof(ComparisonConstraints)}_{nameof(IsNotEqualToErrorMessage)}", null, valueToCompare);
             }

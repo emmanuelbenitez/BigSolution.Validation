@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,20 +16,18 @@
 
 #endregion
 
-using System;
-
 namespace BigSolution
 {
     public static class ComparisonConstraints
     {
-        public static IArgumentValidation<T> IsEqualTo<T>(this IArgumentValidation<T> argumentValidation, T valueToCompare)
+        public static IArgumentValidation<T?> IsEqualTo<T>(this IArgumentValidation<T?> argumentValidation, T? valueToCompare)
             where T : IComparable<T>
         {
             argumentValidation.IsEqualTo(argumentValidation.GetValueOrDefault(), valueToCompare);
             return argumentValidation;
         }
 
-        internal static void IsEqualTo<T>(this IArgumentValidation argumentValidation, T value, T valueToCompare)
+        internal static void IsEqualTo<T>(this IArgumentValidation argumentValidation, T? value, T? valueToCompare)
             where T : IComparable<T>
         {
             argumentValidation.ValidateComparison(
@@ -39,14 +37,14 @@ namespace BigSolution
                 Resources.ComparisonConstraints.IsEqualToErrorMessage(valueToCompare));
         }
 
-        public static IArgumentValidation<T> IsGreaterOrEqualThan<T>(this IArgumentValidation<T> argumentValidation, T valueToCompare)
+        public static IArgumentValidation<T?> IsGreaterOrEqualThan<T>(this IArgumentValidation<T?> argumentValidation, T? valueToCompare)
             where T : IComparable<T>
         {
             argumentValidation.IsGreaterOrEqualThan(argumentValidation.GetValueOrDefault(), valueToCompare);
             return argumentValidation;
         }
 
-        internal static void IsGreaterOrEqualThan<T>(this IArgumentValidation argumentValidation, T value, T valueToCompare)
+        internal static void IsGreaterOrEqualThan<T>(this IArgumentValidation argumentValidation, T? value, T? valueToCompare)
             where T : IComparable<T>
         {
             argumentValidation.ValidateComparison(
@@ -56,14 +54,14 @@ namespace BigSolution
                 Resources.ComparisonConstraints.IsGreaterOrEqualThanErrorMessage(value, valueToCompare));
         }
 
-        public static IArgumentValidation<T> IsGreaterThan<T>(this IArgumentValidation<T> argumentValidation, T valueToCompare)
+        public static IArgumentValidation<T?> IsGreaterThan<T>(this IArgumentValidation<T?> argumentValidation, T? valueToCompare)
             where T : IComparable<T>
         {
             argumentValidation.IsGreaterThan(argumentValidation.GetValueOrDefault(), valueToCompare);
             return argumentValidation;
         }
 
-        internal static void IsGreaterThan<T>(this IArgumentValidation argumentValidation, T value, T valueToCompare)
+        internal static void IsGreaterThan<T>(this IArgumentValidation argumentValidation, T? value, T? valueToCompare)
             where T : IComparable<T>
         {
             argumentValidation.ValidateComparison(
@@ -73,14 +71,14 @@ namespace BigSolution
                 Resources.ComparisonConstraints.IsGreaterThanErrorMessage(value, valueToCompare));
         }
 
-        public static IArgumentValidation<T> IsLessOrEqualThan<T>(this IArgumentValidation<T> argumentValidation, T valueToCompare)
+        public static IArgumentValidation<T?> IsLessOrEqualThan<T>(this IArgumentValidation<T?> argumentValidation, T? valueToCompare)
             where T : IComparable<T>
         {
             argumentValidation.IsLessOrEqualThan(argumentValidation.GetValueOrDefault(), valueToCompare);
             return argumentValidation;
         }
 
-        internal static void IsLessOrEqualThan<T>(this IArgumentValidation argumentValidation, T value, T valueToCompare)
+        internal static void IsLessOrEqualThan<T>(this IArgumentValidation argumentValidation, T? value, T? valueToCompare)
             where T : IComparable<T>
         {
             argumentValidation.ValidateComparison(
@@ -90,14 +88,14 @@ namespace BigSolution
                 Resources.ComparisonConstraints.IsLessOrEqualThanErrorMessage(value, valueToCompare));
         }
 
-        public static IArgumentValidation<T> IsLessThan<T>(this IArgumentValidation<T> argumentValidation, T valueToCompare)
+        public static IArgumentValidation<T?> IsLessThan<T>(this IArgumentValidation<T?> argumentValidation, T? valueToCompare)
             where T : IComparable<T>
         {
             argumentValidation.IsLessThan(argumentValidation.GetValueOrDefault(), valueToCompare);
             return argumentValidation;
         }
 
-        internal static void IsLessThan<T>(this IArgumentValidation argumentValidation, T value, T valueToCompare)
+        internal static void IsLessThan<T>(this IArgumentValidation argumentValidation, T? value, T? valueToCompare)
             where T : IComparable<T>
         {
             argumentValidation.ValidateComparison(
@@ -107,15 +105,15 @@ namespace BigSolution
                 Resources.ComparisonConstraints.IsLessThanErrorMessage(value, valueToCompare));
         }
 
-        public static IArgumentValidation<T> IsNotEqualTo<T>(this IArgumentValidation<T> argumentValidation, T valueToCompare)
-            where T : IComparable<T>
+        public static IArgumentValidation<T?> IsNotEqualTo<T>(this IArgumentValidation<T?> argumentValidation, T valueToCompare)
+            where T : IComparable<T?>
         {
             argumentValidation.IsNotEqualTo(argumentValidation.GetValueOrDefault(), valueToCompare);
             return argumentValidation;
         }
 
-        internal static void IsNotEqualTo<T>(this IArgumentValidation argumentValidation, T value, T valueToCompare)
-            where T : IComparable<T>
+        internal static void IsNotEqualTo<T>(this IArgumentValidation argumentValidation, T? value, T? valueToCompare)
+            where T : IComparable<T?>
         {
             argumentValidation.ValidateComparison(
                 value,
@@ -126,8 +124,8 @@ namespace BigSolution
 
         private static void ValidateComparison<T>(
             this IArgumentValidation argumentValidation,
-            T value,
-            T valueToCompare,
+            T? value,
+            T? valueToCompare,
             Func<int?, bool> validateComparisonResult,
             string errorMessage)
             where T : IComparable<T>

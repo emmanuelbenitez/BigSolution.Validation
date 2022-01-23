@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 #endregion
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
@@ -25,33 +24,23 @@ namespace BigSolution
 {
     public class ArgumentValidationFixture
     {
-#pragma warning disable IDE0079 // Remove unnecessary suppression
-        [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void AddExceptionFailed()
-        {
-            Action act = () => Requires.Argument((object) null, "param").AddException(null);
-
-            act.Should().ThrowExactly<ArgumentNullException>().Which.ParamName.Should().Be("exception");
-        }
-
         [Fact]
-        [SuppressMessage("ReSharper", "NotResolvedInText")]
         public void AddExceptionSucceeds()
         {
-            var argumentValidation = Requires.Argument((object) null, "param");
+            var argumentValidation = Requires.Argument(string.Empty, "param");
             var exception = new ArgumentException();
 
             argumentValidation.AddException(exception);
 
-            argumentValidation.Exceptions.Should().BeEquivalentTo(exception);
+            argumentValidation.Exceptions.Should().BeEquivalentTo(new[] { exception });
         }
 
-        [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
+        [Fact]
         public void CheckThrowsAggregateArgumentException()
         {
-            Action act = () => Requires.Argument("value", "param")
+            var act = () => Requires.Argument("value", "param")
                 .IsNotEqualTo("value")
                 .IsNotEqualTo("value")
                 .Check();
@@ -66,7 +55,7 @@ namespace BigSolution
         [InlineData(" ")]
         public void CreationFailedForInvalidParameterName(string parameterName)
         {
-            Action act = () => Requires.Argument((object) null, parameterName);
+            Action act = () => Requires.Argument(string.Empty, parameterName);
 
             act.Should().ThrowExactly<ArgumentException>()
                 .WithMessage("The value is null or empty.*");

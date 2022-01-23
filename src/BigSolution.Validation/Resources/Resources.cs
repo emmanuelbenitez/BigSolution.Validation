@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ namespace BigSolution
 {
     internal static partial class Resources
     {
-        private static string GetFormattedString(string key, CultureInfo culture = null, params object[] arguments)
+        private static string GetFormattedString(string key, CultureInfo? culture = null, params object?[] arguments)
         {
             return string.Format(
                 culture ?? CultureInfo.CurrentCulture,
@@ -31,11 +31,11 @@ namespace BigSolution
                 arguments);
         }
 
-        private static string GetString(string key, CultureInfo culture = null)
+        private static string GetString(string key, CultureInfo? culture = null)
         {
-            return _resourceManager.GetString(key, culture ?? CultureInfo.CurrentCulture);
+            return _resourceManager.GetString(key, culture ?? CultureInfo.CurrentCulture) ?? string.Empty;
         }
 
-        private static readonly ResourceManager _resourceManager = new ResourceManager("BigSolution.Properties.Resources", typeof(Resources).Assembly);
+        private static readonly ResourceManager _resourceManager = new("BigSolution.Properties.Resources", typeof(Resources).Assembly);
     }
 }

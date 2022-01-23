@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,9 +15,6 @@
 // limitations under the License.
 
 #endregion
-
-using System;
-using System.Collections.Generic;
 
 namespace BigSolution
 {
@@ -35,8 +32,6 @@ namespace BigSolution
 
         public void AddException(ArgumentException exception)
         {
-            if (exception == null) throw new ArgumentNullException(nameof(exception));
-
             _exceptions.Add(exception);
         }
 
@@ -48,6 +43,6 @@ namespace BigSolution
 
         #endregion
 
-        private readonly List<ArgumentException> _exceptions = new List<ArgumentException>();
+        private readonly List<ArgumentException> _exceptions = new();
     }
 }

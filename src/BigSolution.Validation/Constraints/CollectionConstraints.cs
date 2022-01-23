@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,46 +16,43 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace BigSolution
 {
     public static class CollectionConstraints
     {
-        public static IArgumentValidation<ICollection<T>> ContainsSingle<T>(this IArgumentValidation<ICollection<T>> argumentValidation)
+        public static IArgumentValidation<ICollection<T?>> ContainsSingle<T>(this IArgumentValidation<ICollection<T?>> argumentValidation)
         {
             return argumentValidation.Validate(
                 collection => collection?.Any() ?? true,
                 parameterName => new ArgumentException(Resources.CollectionConstraints.ContainsSingleErrorMessage, parameterName));
         }
 
-        public static IArgumentValidation<ICollection<T>> DoesNotContainNullElement<T>(this IArgumentValidation<ICollection<T>> argumentValidation)
+        public static IArgumentValidation<ICollection<T?>> DoesNotContainNullElement<T>(this IArgumentValidation<ICollection<T?>> argumentValidation)
         {
             return argumentValidation.Validate(
                 collection => collection == null || !collection.Any() || collection.Any(element => !Equals(element, null)),
                 parameterName => new ArgumentException(Resources.CollectionConstraints.DoesNotContainNullElementErrorMessage, parameterName));
         }
 
-        public static IArgumentValidation<ICollection<T>> IsEmpty<T>(this IArgumentValidation<ICollection<T>> argumentValidation)
+        public static IArgumentValidation<ICollection<T?>> IsEmpty<T>(this IArgumentValidation<ICollection<T?>> argumentValidation)
         {
             return argumentValidation.Validate(
                 collection => collection == null || collection.Count == 0,
                 parameterName => new ArgumentException(Resources.CollectionConstraints.IsEmptyErrorMessage, parameterName));
         }
 
-        public static IArgumentValidation<ICollection<T>> IsNotEmpty<T>(this IArgumentValidation<ICollection<T>> argumentValidation)
+        public static IArgumentValidation<ICollection<T?>> IsNotEmpty<T>(this IArgumentValidation<ICollection<T?>> argumentValidation)
         {
             return argumentValidation.Validate(
                 collection => collection == null || collection.Count > 0,
                 parameterName => new ArgumentException(Resources.CollectionConstraints.IsNotEmptyErrorMessage, parameterName));
         }
 
-        public static IArgumentValidation<ICollection<T>> IsNotNullOrEmpty<T>(this IArgumentValidation<ICollection<T>> argumentValidation)
+        public static IArgumentValidation<ICollection<T?>> IsNotNullOrEmpty<T>(this IArgumentValidation<ICollection<T?>> argumentValidation)
         {
             return argumentValidation.Validate(
-                collection => collection != null && collection.Count > 0,
+                collection => collection is { Count: > 0 },
                 parameterName => new ArgumentException(Resources.CollectionConstraints.IsNotNullOrEmptyErrorMessage, parameterName));
         }
     }

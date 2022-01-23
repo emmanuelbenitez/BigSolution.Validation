@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 #endregion
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
@@ -29,7 +28,7 @@ namespace BigSolution
         [SuppressMessage("ReSharper", "NotResolvedInText", Justification = "Testing purpose")]
         public void InterfaceFailed()
         {
-            Action act = () => Requires.Argument(typeof(object), "param")
+            var act = () => Requires.Argument(typeof(object), "param")
                 .IsInterface()
                 .Check();
 
@@ -41,9 +40,9 @@ namespace BigSolution
         [Theory]
         [InlineData(null)]
         [InlineData(typeof(IArgumentValidation))]
-        public void InterfaceSucceeds(Type type)
+        public void InterfaceSucceeds(Type? type)
         {
-            Action act = () => Requires.Argument(type, nameof(type))
+            var act = () => Requires.Argument(type, nameof(type))
                 .IsInterface()
                 .Check();
 

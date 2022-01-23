@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,9 +16,7 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace BigSolution
@@ -35,13 +33,13 @@ namespace BigSolution
         public AggregateArgumentException(string message, IEnumerable<ArgumentException> exceptions)
             : base(message)
         {
-            Exceptions = exceptions ?? Enumerable.Empty<ArgumentException>();
+            Exceptions = exceptions.ToArray();
         }
 
         public AggregateArgumentException(string message, string paramName, IEnumerable<ArgumentException> exceptions)
             : base(message, paramName)
         {
-            Exceptions = exceptions ?? Enumerable.Empty<ArgumentException>();
+            Exceptions = exceptions.ToArray();
         }
 
         [ExcludeFromCodeCoverage]
@@ -59,6 +57,6 @@ namespace BigSolution
 
         #endregion
 
-        public IEnumerable<ArgumentException> Exceptions { get; }
+        public ArgumentException[] Exceptions { get; } = Array.Empty<ArgumentException>();
     }
 }

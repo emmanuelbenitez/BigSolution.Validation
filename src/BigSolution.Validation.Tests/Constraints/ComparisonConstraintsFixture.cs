@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 #endregion
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
@@ -29,7 +28,7 @@ namespace BigSolution
         [SuppressMessage("ReSharper", "NotResolvedInText")]
         public void EqualToFailed()
         {
-            Action act = () => Requires.Argument(1, "param")
+            var act = () => Requires.Argument(1, "param")
                 .IsEqualTo(0)
                 .Check();
 
@@ -42,7 +41,7 @@ namespace BigSolution
         [SuppressMessage("ReSharper", "NotResolvedInText")]
         public void EqualToSucceeds()
         {
-            Action act = () => Requires.Argument(1, "param")
+            var act = () => Requires.Argument(1, "param")
                 .IsEqualTo(1)
                 .Check();
 
@@ -51,9 +50,9 @@ namespace BigSolution
 
         [Theory]
         [InlineData("a", "z")]
-        public void GreaterOrEqualThanFailed(string value, string valueToCompare)
+        public void GreaterOrEqualThanFailed(string? value, string? valueToCompare)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .IsGreaterOrEqualThan(valueToCompare)
                 .Check();
 
@@ -66,9 +65,9 @@ namespace BigSolution
         [InlineData("z", "a")]
         [InlineData("z", "z")]
         [InlineData("z", null)]
-        public void GreaterOrEqualThanSucceeds(string value, string valueToCompare)
+        public void GreaterOrEqualThanSucceeds(string? value, string? valueToCompare)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .IsGreaterOrEqualThan(valueToCompare)
                 .Check();
 
@@ -78,9 +77,9 @@ namespace BigSolution
         [Theory]
         [InlineData("a", "z")]
         [InlineData("z", "z")]
-        public void GreaterThanFailed(string value, string valueToCompare)
+        public void GreaterThanFailed(string? value, string? valueToCompare)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .IsGreaterThan(valueToCompare)
                 .Check();
 
@@ -92,9 +91,9 @@ namespace BigSolution
         [Theory]
         [InlineData("z", "a")]
         [InlineData("z", null)]
-        public void GreaterThanSucceeds(string value, string valueToCompare)
+        public void GreaterThanSucceeds(string? value, string? valueToCompare)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .IsGreaterThan(valueToCompare)
                 .Check();
 
@@ -104,9 +103,9 @@ namespace BigSolution
         [Theory]
         [InlineData("z", "a")]
         [InlineData("z", null)]
-        public void LessOrEqualThanFailed(string value, string valueToCompare)
+        public void LessOrEqualThanFailed(string? value, string? valueToCompare)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .IsLessOrEqualThan(valueToCompare)
                 .Check();
 
@@ -118,9 +117,9 @@ namespace BigSolution
         [Theory]
         [InlineData("a", "z")]
         [InlineData("z", "z")]
-        public void LessOrEqualThanSucceeds(string value, string valueToCompare)
+        public void LessOrEqualThanSucceeds(string? value, string? valueToCompare)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .IsLessOrEqualThan(valueToCompare)
                 .Check();
 
@@ -131,9 +130,9 @@ namespace BigSolution
         [InlineData("z", "a")]
         [InlineData("z", "z")]
         [InlineData("z", null)]
-        public void LessThanFailed(string value, string valueToCompare)
+        public void LessThanFailed(string? value, string? valueToCompare)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .IsLessThan(valueToCompare)
                 .Check();
 
@@ -144,9 +143,9 @@ namespace BigSolution
 
         [Theory]
         [InlineData("a", "z")]
-        public void LessThanSucceeds(string value, string valueToCompare)
+        public void LessThanSucceeds(string? value, string? valueToCompare)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .IsLessThan(valueToCompare)
                 .Check();
 
@@ -157,7 +156,7 @@ namespace BigSolution
         [SuppressMessage("ReSharper", "NotResolvedInText")]
         public void NotEqualToFailed()
         {
-            Action act = () => Requires.Argument(1, "param")
+            var act = () => Requires.Argument(1, "param")
                 .IsNotEqualTo(1)
                 .Check();
 
@@ -170,7 +169,7 @@ namespace BigSolution
         [SuppressMessage("ReSharper", "NotResolvedInText")]
         public void NotEqualToSucceeds()
         {
-            Action act = () => Requires.Argument(1, "param")
+            var act = () => Requires.Argument(1, "param")
                 .IsNotEqualTo(0)
                 .Check();
 

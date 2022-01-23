@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 #endregion
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
@@ -29,7 +28,7 @@ namespace BigSolution
         [SuppressMessage("ReSharper", "NotResolvedInText")]
         public void NotNullFailed()
         {
-            Action act = () => Requires.Argument((object) null, "param")
+            var act = () => Requires.Argument((object?)null, "param")
                 .IsNotNull()
                 .Check();
 
@@ -40,7 +39,7 @@ namespace BigSolution
         [SuppressMessage("ReSharper", "NotResolvedInText")]
         public void NotNullFailedForNullable()
         {
-            Action act = () => Requires.Argument((int?) null, "param")
+            var act = () => Requires.Argument((int?)null, "param")
                 .IsNotNull()
                 .Check();
 
@@ -51,7 +50,7 @@ namespace BigSolution
         [SuppressMessage("ReSharper", "NotResolvedInText")]
         public void NotNullSucceeds()
         {
-            Action act = () => Requires.Argument(new object(), "param")
+            var act = () => Requires.Argument(new object(), "param")
                 .IsNotNull()
                 .Check();
 

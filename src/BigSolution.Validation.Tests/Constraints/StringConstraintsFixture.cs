@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 #endregion
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
@@ -28,9 +27,9 @@ namespace BigSolution
         [Theory]
         [InlineData(null)]
         [InlineData("ABC")]
-        public void DoesMatchesSucceeds(string value)
+        public void DoesMatchesSucceeds(string? value)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .DoesNotMatch(@"\d{3}")
                 .Check();
             act.Should().NotThrow<ArgumentException>();
@@ -38,9 +37,9 @@ namespace BigSolution
 
         [Theory]
         [InlineData("123")]
-        public void DoesNotMatchFailed(string value)
+        public void DoesNotMatchFailed(string? value)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .DoesNotMatch(@"\d{3}")
                 .Check();
 
@@ -52,9 +51,9 @@ namespace BigSolution
         [Theory]
         [InlineData("ABC")]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void MatchesFailed(string value)
+        public void MatchesFailed(string? value)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .Matches(@"\d{3}")
                 .Check();
 
@@ -67,9 +66,9 @@ namespace BigSolution
         [InlineData("123")]
         [InlineData(null)]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void MatchesSucceeds(string value)
+        public void MatchesSucceeds(string? value)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .Matches(@"\d{3}")
                 .Check();
             act.Should().NotThrow<ArgumentException>();
@@ -79,7 +78,7 @@ namespace BigSolution
         [SuppressMessage("ReSharper", "NotResolvedInText")]
         public void NotEmptyFailed()
         {
-            Action act = () => Requires.Argument(string.Empty, "param")
+            var act = () => Requires.Argument(string.Empty, "param")
                 .IsNotEmpty()
                 .Check();
 
@@ -92,9 +91,9 @@ namespace BigSolution
         [InlineData(null)]
         [InlineData("value")]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
-        public void NotEmptySucceeds(string value)
+        public void NotEmptySucceeds(string? value)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .IsNotEmpty()
                 .Check();
 
@@ -104,9 +103,9 @@ namespace BigSolution
         [Theory]
         [InlineData("")]
         [InlineData(null)]
-        public void NotNullOrEmptyFailed(string param)
+        public void NotNullOrEmptyFailed(string? param)
         {
-            Action act = () => Requires.Argument(param, nameof(param))
+            var act = () => Requires.Argument(param, nameof(param))
                 .IsNotNullOrEmpty()
                 .Check();
 
@@ -119,7 +118,7 @@ namespace BigSolution
         [SuppressMessage("ReSharper", "NotResolvedInText")]
         public void NotNullOrEmptySucceeds()
         {
-            Action act = () => Requires.Argument("this is a text", "param")
+            var act = () => Requires.Argument("this is a text", "param")
                 .IsNotNullOrEmpty()
                 .Check();
 
@@ -130,9 +129,9 @@ namespace BigSolution
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
-        public void NotNullOrWhiteSpaceFailed(string value)
+        public void NotNullOrWhiteSpaceFailed(string? value)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .IsNotNullOrWhiteSpace()
                 .Check();
 
@@ -145,7 +144,7 @@ namespace BigSolution
         [SuppressMessage("ReSharper", "NotResolvedInText")]
         public void NotNullOrWhiteSpaceSucceeds()
         {
-            Action act = () => Requires.Argument("value", "param")
+            var act = () => Requires.Argument("value", "param")
                 .IsNotNullOrWhiteSpace()
                 .Check();
             act.Should().NotThrow<ArgumentException>();

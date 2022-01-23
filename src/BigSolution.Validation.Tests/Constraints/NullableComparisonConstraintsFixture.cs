@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 #endregion
 
-using System;
 using FluentAssertions;
 using Xunit;
 
@@ -28,7 +27,7 @@ namespace BigSolution
         [InlineData(0, 1)]
         public void EqualToFailed(int? value, int valueToCompare)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .IsEqualTo(valueToCompare)
                 .Check();
 
@@ -42,7 +41,7 @@ namespace BigSolution
         [InlineData(null, 1)]
         public void EqualToSucceeds(int? value, int valueToCompare)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .IsEqualTo(valueToCompare)
                 .Check();
 
@@ -53,7 +52,7 @@ namespace BigSolution
         [InlineData(0, 1)]
         public void GreaterOrEqualThanFailed(int? param, int valueToCompare)
         {
-            Action act = () => Requires.Argument(param, nameof(param))
+            var act = () => Requires.Argument(param, nameof(param))
                 .IsGreaterOrEqualThan(valueToCompare)
                 .Check();
 
@@ -67,7 +66,7 @@ namespace BigSolution
         [InlineData(0, 0)]
         public void GreaterOrEqualThanSucceeds(int? param, int valueToCompare)
         {
-            Action act = () => Requires.Argument(param, nameof(param))
+            var act = () => Requires.Argument(param, nameof(param))
                 .IsGreaterOrEqualThan(valueToCompare)
                 .Check();
 
@@ -78,7 +77,7 @@ namespace BigSolution
         [InlineData(0, 1)]
         public void GreaterThanFailed(int? param, int valueToCompare)
         {
-            Action act = () => Requires.Argument(param, nameof(param))
+            var act = () => Requires.Argument(param, nameof(param))
                 .IsGreaterThan(valueToCompare)
                 .Check();
 
@@ -91,7 +90,7 @@ namespace BigSolution
         [InlineData(1, 0)]
         public void GreaterThanSucceeds(int? param, int valueToCompare)
         {
-            Action act = () => Requires.Argument(param, nameof(param))
+            var act = () => Requires.Argument(param, nameof(param))
                 .IsGreaterThan(valueToCompare)
                 .Check();
 
@@ -102,7 +101,7 @@ namespace BigSolution
         [InlineData(1, 0)]
         public void LessOrEqualThanFailed(int? value, int valueToCompare)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .IsLessOrEqualThan(valueToCompare)
                 .Check();
 
@@ -116,7 +115,7 @@ namespace BigSolution
         [InlineData(1, 1)]
         public void LessOrEqualThanSucceeds(int? value, int valueToCompare)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .IsLessOrEqualThan(valueToCompare)
                 .Check();
 
@@ -128,7 +127,7 @@ namespace BigSolution
         [InlineData(1, 1)]
         public void LessThanFailed(int? value, int valueToCompare)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .IsLessThan(valueToCompare)
                 .Check();
 
@@ -141,7 +140,7 @@ namespace BigSolution
         [InlineData(0, 1)]
         public void LessThanSucceeds(int? value, int valueToCompare)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .IsLessThan(valueToCompare)
                 .Check();
 
@@ -152,7 +151,7 @@ namespace BigSolution
         [InlineData(1, 1)]
         public void NotEqualToFailed(int? value, int valueToCompare)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))
                 .IsNotEqualTo(valueToCompare)
                 .Check();
 
@@ -166,7 +165,7 @@ namespace BigSolution
         [InlineData(1, 0)]
         public void NotEqualToSucceeds(int? value, int valueToCompare)
         {
-            Action act = () => Requires.Argument(1, nameof(value))
+            var act = () => Requires.Argument(1, nameof(value))
                 .IsNotEqualTo(valueToCompare)
                 .Check();
 

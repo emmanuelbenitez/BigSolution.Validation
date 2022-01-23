@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 #endregion
 
-using System;
 using FluentAssertions;
 using Xunit;
 
@@ -27,7 +26,7 @@ namespace BigSolution
         [Fact]
         public void CheckSucceedsWhenArgumentValidationIsNull()
         {
-            Action act = () => ArgumentValidationExtensions.Check<object>(null);
+            var act = () => ArgumentValidationExtensions.Check<object>(null);
             act.Should().NotThrow();
         }
     }

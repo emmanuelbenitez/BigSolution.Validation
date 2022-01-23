@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
@@ -26,12 +24,12 @@ namespace BigSolution
 {
     public class CollectionConstraintsFixture
     {
-        [Fact]
         [SuppressMessage("Performance", "CA1825:Avoid zero-length array allocations", Justification = "Testing purpose")]
         [SuppressMessage("ReSharper", "NotResolvedInText", Justification = "Testing purpose")]
+        [Fact]
         public void ContainsSingleFailed()
         {
-            Action act = () => Requires.Argument(new object[0], "param")
+            var act = () => Requires.Argument(Array.Empty<object?>(), "param")!
                 .ContainsSingle()
                 .Check();
 
@@ -42,20 +40,20 @@ namespace BigSolution
 
         [Theory]
         [MemberData(nameof(NullOrSingleElementCollections))]
-        public void ContainsSingleSucceeds(object[] param)
+        public void ContainsSingleSucceeds(object?[] param)
         {
-            Action act = () => Requires.Argument(param, nameof(param))
+            var act = () => Requires.Argument(param, nameof(param))!
                 .ContainsSingle()
                 .Check();
 
             act.Should().NotThrow();
         }
 
-        [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
+        [Fact]
         public void DoesNotContainNullElementFailed()
         {
-            Action act = () => Requires.Argument(new object[] { null }, "param")
+            var act = () => Requires.Argument(new object?[] { null }, "param")!
                 .DoesNotContainNullElement()
                 .Check();
 
@@ -67,20 +65,20 @@ namespace BigSolution
         [Theory]
         [MemberData(nameof(NullOrSingleElementCollections))]
         [MemberData(nameof(NullOrEmptyCollections))]
-        public void DoesNotContainNullElementSucceeds(object[] value)
+        public void DoesNotContainNullElementSucceeds(object[]? value)
         {
-            Action act = () => Requires.Argument(value, nameof(value))
+            var act = () => Requires.Argument(value, nameof(value))!
                 .DoesNotContainNullElement()
                 .Check();
 
             act.Should().NotThrow();
         }
 
-        [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
+        [Fact]
         public void EmptyFailed()
         {
-            Action act = () => Requires.Argument(new List<object> { new object() }, "param")
+            var act = () => Requires.Argument(new List<object> { new() }, "param")!
                 .IsEmpty()
                 .Check();
 
@@ -89,22 +87,22 @@ namespace BigSolution
                 .And.ParamName.Should().Be("param");
         }
 
-        [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
+        [Fact]
         public void EmptySucceeds()
         {
-            Action act = () => Requires.Argument(new List<object>(), "param")
+            var act = () => Requires.Argument(new List<object>(), "param")!
                 .IsEmpty()
                 .Check();
 
             act.Should().NotThrow();
         }
 
-        [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
+        [Fact]
         public void NotEmptyFailed()
         {
-            Action act = () => Requires.Argument(new List<object>(), "param")
+            var act = () => Requires.Argument(new List<object>(), "param")!
                 .IsNotEmpty()
                 .Check();
 
@@ -113,22 +111,22 @@ namespace BigSolution
                 .And.ParamName.Should().Be("param");
         }
 
-        [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
+        [Fact]
         public void NotEmptySucceeds()
         {
-            Action act = () => Requires.Argument(new List<object> { new object() }, "param")
+            var act = () => Requires.Argument(new List<object> { new() }, "param")!
                 .IsNotEmpty()
                 .Check();
 
             act.Should().NotThrow();
         }
 
-        [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
+        [Fact]
         public void NotEmptySucceedsWhenCollectionIsNull()
         {
-            Action act = () => Requires.Argument((ICollection<object>) null, "param")
+            var act = () => Requires.Argument((ICollection<object>?)null, "param")!
                 .IsNotEmpty()
                 .Check();
 
@@ -139,7 +137,7 @@ namespace BigSolution
         [MemberData(nameof(NullOrEmptyCollections))]
         public void NotNullOrEmptyFailed(object[] param)
         {
-            Action act = () => Requires.Argument(param, nameof(param))
+            var act = () => Requires.Argument(param, nameof(param))!
                 .IsNotNullOrEmpty()
                 .Check();
 
@@ -148,11 +146,11 @@ namespace BigSolution
                 .And.ParamName.Should().Be(nameof(param));
         }
 
-        [Fact]
         [SuppressMessage("ReSharper", "NotResolvedInText")]
+        [Fact]
         public void NotNullOrEmptySucceeds()
         {
-            Action act = () => Requires.Argument(new List<object> { new object() }, "param")
+            var act = () => Requires.Argument(new List<object> { new() }, "param")!
                 .IsNotNullOrEmpty()
                 .Check();
 
@@ -162,20 +160,12 @@ namespace BigSolution
         [SuppressMessage("Performance", "CA1825:Avoid zero-length array allocations", Justification = "Testing purpose")]
         public static IEnumerable<object[]> NullOrEmptyCollections
         {
-            get
-            {
-                yield return new object[] { null };
-                yield return new object[] { new object[0] };
-            }
+            get { yield return new object[] { Array.Empty<object>() }; }
         }
 
         public static IEnumerable<object[]> NullOrSingleElementCollections
         {
-            get
-            {
-                yield return new object[] { null };
-                yield return new object[] { new[] { new object() } };
-            }
+            get { yield return new object[] { new[] { new object() } }; }
         }
     }
 }

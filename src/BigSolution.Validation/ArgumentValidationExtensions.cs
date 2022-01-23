@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,14 +16,11 @@
 
 #endregion
 
-using System;
-using System.Linq;
-
 namespace BigSolution
 {
     public static class ArgumentValidationExtensions
     {
-        public static void Check<T>(this IArgumentValidation<T> argumentValidation)
+        public static void Check<T>(this IArgumentValidation<T>? argumentValidation)
         {
             if (argumentValidation == null) return;
 
@@ -40,17 +37,17 @@ namespace BigSolution
             }
         }
 
-        internal static T GetValueOrDefault<T>(this IArgumentValidation<T> argumentValidation)
+        internal static T? GetValueOrDefault<T>(this IArgumentValidation<T?> argumentValidation)
         {
-            return argumentValidation == null ? default : argumentValidation.Value;
+            return argumentValidation.Value;
         }
 
         internal static IArgumentValidation<T> Validate<T>(
             this IArgumentValidation<T> argumentValidation,
-            Func<T, bool> condition,
+            Func<T?, bool> condition,
             Func<string, ArgumentException> exceptionFactory)
         {
-            if (argumentValidation != null && !condition(argumentValidation.Value)) argumentValidation.AddException(exceptionFactory(argumentValidation.Name));
+            if (!condition(argumentValidation.Value)) argumentValidation.AddException(exceptionFactory(argumentValidation.Name));
 
             return argumentValidation;
         }
@@ -60,7 +57,7 @@ namespace BigSolution
             Func<bool> condition,
             Func<string, ArgumentException> exceptionFactory)
         {
-            if (argumentValidation != null && !condition()) argumentValidation.AddException(exceptionFactory(argumentValidation.Name));
+            if (!condition()) argumentValidation.AddException(exceptionFactory(argumentValidation.Name));
         }
     }
 }

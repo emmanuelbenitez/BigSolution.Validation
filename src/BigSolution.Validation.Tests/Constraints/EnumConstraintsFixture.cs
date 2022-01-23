@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 #endregion
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
@@ -29,7 +28,7 @@ namespace BigSolution
         [SuppressMessage("ReSharper", "NotResolvedInText")]
         public void FlagFailed()
         {
-            Action act = () => Requires.Argument(Enum.None, "param")
+            var act = () => Requires.Argument(Enum.None, "param")
                 .IsFlag()
                 .Check();
 
@@ -42,7 +41,7 @@ namespace BigSolution
         [SuppressMessage("ReSharper", "NotResolvedInText")]
         public void FlagSucceeds()
         {
-            Action act = () => Requires.Argument(FlagEnum.None, "param")
+            var act = () => Requires.Argument(FlagEnum.None, "param")
                 .IsFlag()
                 .Check();
 

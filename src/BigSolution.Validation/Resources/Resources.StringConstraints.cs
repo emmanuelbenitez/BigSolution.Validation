@@ -1,6 +1,6 @@
 ﻿#region Copyright & License
 
-// Copyright © 2020 - 2021 Emmanuel Benitez
+// Copyright © 2020 - 2022 Emmanuel Benitez
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,12 +35,12 @@ namespace BigSolution
             [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Resource")]
             public static string IsNotNullOrWhiteSpaceErrorMessage => GetString($"{nameof(StringConstraints)}_{nameof(IsNotNullOrWhiteSpaceErrorMessage)}");
 
-            public static string DoesNotMatchErrorMessage(string value, string pattern)
+            public static string DoesNotMatchErrorMessage(string? value, string pattern)
             {
                 return GetFormattedString($"{nameof(StringConstraints)}_{nameof(DoesNotMatchErrorMessage)}", null, value, pattern);
             }
 
-            public static string MatchesErrorMessage(string value, string pattern)
+            public static string MatchesErrorMessage(string? value, string pattern)
             {
                 return GetFormattedString($"{nameof(StringConstraints)}_{nameof(MatchesErrorMessage)}", null, value, pattern);
             }
